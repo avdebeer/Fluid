@@ -5,14 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/styles.css">
-    <script src="/static/app.js" defer></script>
+    <script src="/static/js/functions.js" defer></script>
+    <script src="/static/js/app.js" defer></script>
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-    <h1>testing 123</h1>
-   {% block content %}
-   
-   {% endblock %} 
-    
+        <nav class="navbar">
+            <a class="navbar__logo" href="/">AZEPORO</a>
+            {% if current_user.is_authenticated %}
+            <a class="navbar__link" href="/dashboard">{{current_user.first_name}}</a><br>
+            <a class="navbar__link" href="/logout">logout</a>
+            {% else %}
+            <a class="navbar__link" href="/login">login</a><br>
+            <a class="navbar__link" href="/register">register</a><br>
+            {% endif %}
+        </nav>
+        {% block content %}
+        {% endblock %}
+        <footer> 
+        </footer>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios@0.19.0/dist/axios.js"></script>
 </body>
 </html>

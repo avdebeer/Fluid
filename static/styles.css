@@ -1,9 +1,467 @@
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
 }
 
 body {
-	background-color: pink;
+  font-size: 16px;
+  height: 100vh;
+  background-color: #faf9f9;
 }
+
+.navbar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #f4f2f2;
+  position: relative;
+}
+
+.navbar__logo {
+  color: #eb2f64;
+  font-size: 3rem;
+  font-weight: 300;
+  text-decoration: none;
+  margin-right: auto;
+  padding: 1.5rem;
+}
+
+.navbar__link {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-item-align: stretch;
+      align-self: stretch;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #000;
+  background-color: #f0eeee;
+  padding: 1.5rem;
+}
+
+.navbar__link:hover {
+  color: white;
+  background-color: #ff3366;
+}
+
+.navbar__link:focus {
+  color: white;
+  background-color: #eb2f64;
+}
+
+.is-hidden {
+  display: none;
+}
+
+/* #################### User Dashboard ####################  */
+.user-dashboard {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 100vh;
+}
+
+.user-profile {
+  margin: 2rem 2rem;
+  border-bottom: 2px solid #f0eeee;
+}
+
+.user-projects {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.user-projects__area {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 50%;
+          flex: 1 1 50%;
+  margin: 0 2rem;
+  padding: 2rem;
+  border-radius: 1rem;
+  background-color: #faf9f9;
+  -webkit-box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.3);
+          box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.3);
+}
+
+.user-projects__area--title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f0eeee;
+}
+
+.user-projects__area--title h2 {
+  margin-right: auto;
+}
+
+.user-project-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #000;
+  background-color: #00c2c2;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.user-project-info__data {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0;
+          flex: 1 0;
+}
+
+.user-project-info__buttons {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0;
+          flex: 0 0;
+}
+
+/* #################### Project Dashboard ####################  */
+.project-title {
+  text-align: center;
+  margin: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f0eeee;
+}
+
+.project-title #project-id {
+  display: none;
+}
+
+.project-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 2rem;
+}
+
+.project-content__menu {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 20rem;
+          flex: 0 0 20rem;
+  margin-right: 2rem;
+  background-color: #ccc;
+}
+
+.project-content__menu--link {
+  text-decoration: none;
+  padding: 2rem;
+  color: #000;
+}
+
+.project-content__menu--link:hover {
+  color: #fff;
+  background-color: #eb2f64;
+}
+
+.project-content__data {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1;
+          flex: 1 1;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.section-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 1.5rem;
+}
+
+.record {
+  background-color: #f0eeee;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+  -webkit-box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.3);
+          box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.3);
+}
+
+.record__heading {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #ff3366;
+}
+
+.record__heading h3 {
+  margin-right: auto;
+}
+
+.record__data {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 1rem 0;
+}
+
+.record__data--detail {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 1rem;
+  margin-right: 1rem;
+}
+
+.record__data--detail span {
+  color: white;
+  background-color: #2fbbbb;
+  padding: .5rem;
+  margin-right: .5rem;
+  border-radius: .5rem;
+}
+
+.record__data--expand {
+  padding: 1rem;
+  color: white;
+  background-color: #777;
+  margin-left: auto;
+}
+
+.record-btn {
+  margin-right: 1rem;
+}
+
+/* #################### Registration/Login Page ####################  */
+.admin-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100vh;
+}
+
+.admin-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 33%;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 1rem;
+  -webkit-box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.3);
+          box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.3);
+}
+
+/* #################### MODAL FORM ####################  */
+.form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 2rem;
+}
+
+.form-title {
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid gray;
+}
+
+.form-label {
+  margin-bottom: .5rem;
+}
+
+.form-field {
+  height: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-textarea {
+  height: 12rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-error {
+  color: red;
+}
+
+.results-form__field--diabeled {
+  border: none;
+  color: white;
+  background-color: transparent;
+}
+
+/* #################### BUTTONS ####################  */
+.button {
+  padding: .6rem 1.2rem;
+  outline: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  border: 1px solid gray;
+  border-radius: .5rem;
+  text-transform: capitalize;
+  text-decoration: none;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #ff3366;
+}
+
+.btn-primary:hover {
+  background-color: #eb2f64;
+}
+
+.btn-primary-clear {
+  color: #ff3366;
+  background-color: transparent;
+  border: 1px solid #ff3366;
+}
+
+.btn-primary-clear:hover {
+  color: #eb2f64;
+  border: 1px solid #eb2f64;
+}
+
+.btn-secondary {
+  color: #fff;
+  background-color: #55c57a;
+}
+
+.btn-secondary:hover {
+  background-color: #28b485;
+}
+
+.btn-tertiary {
+  color: #ff3366;
+  background-color: #333;
+}
+
+/* #################### MODAL ####################  */
+.modal {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  pointer-events: none;
+  opacity: 0;
+  -webkit-transition: 250ms opacity ease-in;
+  transition: 250ms opacity ease-in;
+}
+
+.modal__container {
+  background-color: white;
+  width: 50%;
+  -webkit-box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.3);
+          box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.3);
+  border-radius: 1rem;
+}
+
+.modal__container--close {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  margin: 1rem 2rem -2rem;
+}
+
+.modal__buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  margin-top: 1rem;
+  gap: .5rem;
+}
+
+.modal-visible {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 10;
+}
+/*# sourceMappingURL=styles.css.map */

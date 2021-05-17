@@ -1,4 +1,9 @@
+from enum import unique
 from flask_sqlalchemy import SQLAlchemy 
+from flask_bcrypt import Bcrypt
+from flask_login import UserMixin
+
+bcrypt = Bcrypt()
 
 db = SQLAlchemy()
 
@@ -7,23 +12,69 @@ def connect_db(app):
     db.app = app
     db.init_app(app)
 
-# SAMPLE MODEL
+# *********************** USER MODELS *********************** 
+
+class User(UserMixin, db.Model):
+    __tablename__ = 'users'
+
+    id = db.Column (db.Integer, primary_key = True, autoincrement = True)
+    first_name = db.Column(db.String(30), nullable = False)
+    last_name = db.Column(db.String(30), nullable = False)
+    email = db.Column(db.Text, nullable = False)
+    username = db.Column(db.String(20), nullable = False, unique = True)
+    password = db.Column(db.Text, nullable = False)
+
+    projects = db.relationship('Project', cascade = 'all, delete' )
+
+  
+
+    @classmethod
+    def register(cls, first_name, last_name, email, username, password):
+        """Register user w/hashed password & return user."""
+
+        hashed = bcrypt.generate_password_hash(password)
+        hashed_utf8 = hashed.decode("utf8")
+
+        # return instance of user w/username and hashed pwd
+        return cls( first_name=first_name, last_name=last_name, email=email, username=username, password=hashed_utf8)
+
+  
+    @classmethod
+    def authenticate(cls, username, password):
+        """Validate that user exists & password is correct.
+
+        Return user if valid; else return False.
+        """
+
+        user = User.query.filter_by(username=username).first()
+
+        if user and bcrypt.check_password_hash(user.password, password):
+            return user
+        else:
+            return False
+
+# *********************** PROJECT MODELS *********************** 
+
+
 class Project(db.Model):
     __tablename__ = 'projects'
 
-    id = db.Column (db.Text, nullable = False, unique = True)
+    id = db.Column (db.Integer, primary_key = True, autoincrement = True)
+    cip_id = db.Column (db.Text, unique = True)
     name = db.Column (db.Text, nullable = False)
     description = db.Column (db.Text, nullable = True)
-    owner = db.Column (db.Text, nullable = False)
     budget = db.Column(db.Integer, nullable = True)
+    owner = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    change_orders = db.relationship('ChangeOrder')
-    rfis = db.relationship('RFI')
-    issues = db.relationship('Issue')
-    action_items = db.relationship('ActionItem')
-    inspection_logs = db.relationship('InspectionLog)
-    meetings = db.relationship('Meeting')
+
+    change_orders = db.relationship('ChangeOrder', cascade = 'all, delete')
+    rfis = db.relationship('RFI', cascade = 'all, delete')
+    issues = db.relationship('Issue', cascade = 'all, delete')
+    action_items = db.relationship('ActionItem', cascade = 'all, delete')
+    inspection_reports = db.relationship('InspectionReport', cascade = 'all, delete')
     
+
+
 class ChangeOrder(db.Model):
     __tablename__ = 'change_orders'
 
@@ -33,7 +84,8 @@ class ChangeOrder(db.Model):
     description = db.Column (db.Text, nullable = True)
     creator = db.Column (db.Text, nullable = True)
     status = db.Column (db.Text, nullable = False)
-    project_id = db.Column(db.Integer, db.ForeignKey('project.id', ondelete = 'CASCADE'))
+    project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
+
 
 
 class RFI(db.Model):
@@ -45,7 +97,7 @@ class RFI(db.Model):
     description = db.Column (db.Text, nullable = True)
     creator = db.Column (db.Text, nullable = True)
     status = db.Column (db.Text, nullable = False)
-    project_id = db.Column(db.Integer, db.ForeignKey('project.id', ondelete = 'CASCADE'))
+    project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
 
 
 
@@ -58,7 +110,7 @@ class Issue(db.Model):
     description = db.Column (db.Text, nullable = True)
     creator = db.Column (db.Text, nullable = True)
     status = db.Column (db.Text, nullable = False)
-    project_id = db.Column(db.Integer, db.ForeignKey('project.id', ondelete = 'CASCADE'))
+    project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
 
 
 
@@ -73,29 +125,30 @@ class ActionItem(db.Model):
     assignee = db.Column (db.Text, nullable = True)
     due_date = db.Column (db.DateTime, nullable = True)
     status = db.Column (db.Text, nullable = False)
-    project_id = db.Column(db.Integer, db.ForeignKey('project.id', ondelete = 'CASCADE'))
+    project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
 
 
 
-class InspectionLog(db.Model):
-    __tablename__ = 'inspection_logs'
+class InspectionReport(db.Model):
+    __tablename__ = 'inspection_reports'
 
     id = db.Column(db.Integer, primary_key = True, autoincrement = True)   
-    date = db.Column(db.DateTime, nullable = True)
-    name = db.Column (db.Text, nullable = False)
+    date = db.Column(db.Text, nullable = True)
+    title = db.Column (db.Text, nullable = False)
     description = db.Column (db.Text, nullable = True)
-    inspector = db.Column (db.Text, nullable = True)
+    inspector = db.Column (db.Text, nullable = False)
     status = db.Column (db.Text, nullable = False)
-    project_id = db.Column(db.Integer, db.ForeignKey('project.id', ondelete = 'CASCADE'))
+    project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
 
+    def serialize(self):
+            
+            return {
+                'id': self.id,
+                'date': self.date,
+                'title': self.title,
+                'description': self.description,
+                'inspector': self.inspector,
+                'status': self.status,
+                'project_id': self.project_id,
+            }
 
-
-class Meeting(db.Model):
-    __tablename__ = 'meetings'
-
-    id = db.Column(db.Integer, primary_key = True, autoincrement = True)   
-    date = db.Column(db.DateTime, nullable = True)
-    name = db.Column (db.Text, nullable = False)
-    description = db.Column (db.Text, nullable = True)
-    meeting_minutes = db.Column (db.Text, nullable = True)
-    project_id = db.Column(db.Integer, db.ForeignKey('project.id', ondelete = 'CASCADE'))

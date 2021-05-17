@@ -1,0 +1,396 @@
+$color-white: #fff;
+$color-black: #000;
+
+$color-primary: #eb2f64;
+$color-primary-light: #ff3366;
+$color-primary-dark: #ba265d;
+
+$color-secondary: #55c57a;
+$color-secondary-light: #7ed56f;
+$color-secondary-dark: #28b485;
+
+$color-tertiary-primary: #00c2c2;
+
+$color-grey-light-1: #faf9f9;
+$color-grey-light-2: #f4f2f2;
+$color-grey-light-3: #f0eeee;
+$color-grey-light-4: #ccc;
+
+$color-grey-dark-1: #999;
+$color-grey-dark-2: #777;
+$color-grey-dark-3: #333;
+
+$shadow-dark: 0 2rem 6rem rgba(0, 0, 0, .3);
+$shadow-light: 0 2rem 5rem rgba(0, 0, 0, .06);
+$line: 2px solid $color-grey-light-3;
+
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font-size: 16px;
+	height: 100vh;
+	background-color: $color-grey-light-1;
+}
+
+.navbar {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	background-color: $color-grey-light-2;
+	position: relative;
+	// border-bottom: 1px solid $color-primary-light;
+
+	&__logo {
+		color: $color-primary;
+		font-size: 3rem;
+		font-weight: 300;
+		text-decoration: none;
+		margin-right: auto;
+		padding: 1.5rem;
+	}
+
+	&__link {
+		display: flex;
+		align-items: center;
+		align-self: stretch;
+		text-transform: uppercase;
+		text-decoration: none;
+		color: $color-black;
+		background-color: $color-grey-light-3;
+		padding: 1.5rem;
+		&:not(:last-of-type) {
+		}
+		&:hover {
+			color: white;
+			background-color: $color-primary-light;
+		}
+		&:focus {
+			color: white;
+			background-color: $color-primary;
+		}
+	}
+}
+
+.is-hidden {
+	display: none;
+}
+
+/* #################### User Dashboard ####################  */
+
+.user-dashboard {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+}
+
+.user-profile {
+	margin: 2rem 2rem;
+	border-bottom: $line;
+}
+
+.user-projects {
+	display: flex;
+	justify-content: center;
+
+	&__area {
+		flex: 1 1 50%;
+		margin: 0 2rem;
+		padding: 2rem;
+		border-radius: 1rem;
+		background-color: $color-grey-light-1;
+		box-shadow: $shadow-dark;
+
+		&--title {
+			display: flex;
+			align-items: center;
+			margin-bottom: 2rem;
+			padding-bottom: 1rem;
+			border-bottom: 1px solid $color-grey-light-3;
+
+			h2 {
+				margin-right: auto;
+			}
+		}
+	}
+}
+
+.user-project-info {
+	display: flex;
+	align-items: center;
+	color: $color-black;
+	background-color: $color-tertiary-primary;
+	padding: 1rem;
+	border-radius: 5px;
+
+	&__data {
+		flex: 1 0;
+	}
+
+	&__buttons {
+		flex: 0 0;
+	}
+}
+
+/* #################### Project Dashboard ####################  */
+
+.project-title {
+	text-align: center;
+	margin: 2rem;
+	padding-bottom: 1rem;
+	border-bottom: $line;
+
+	#project-id {
+		display: none;
+	}
+}
+
+.project-content {
+	display: flex;
+	margin: 2rem;
+
+	&__menu {
+		display: flex;
+		flex-direction: column;
+		flex: 0 0 20rem;
+		margin-right: 2rem;
+		background-color: $color-grey-light-4;
+
+		&--link {
+			text-decoration: none;
+			padding: 2rem;
+			color: $color-black;
+
+			&:hover {
+				color: $color-white;
+				background-color: $color-primary;
+			}
+		}
+	}
+
+	&__data {
+		display: flex;
+		flex: 1 1;
+		flex-direction: column;
+	}
+}
+
+.section-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1.5rem;
+}
+
+.record {
+	background-color: $color-grey-light-3;
+	padding: 1.5rem;
+	border-radius: 1rem;
+	margin-bottom: 2rem;
+	box-shadow: $shadow-dark;
+
+	&__heading {
+		display: flex;
+		align-items: center;
+		padding-bottom: 1rem;
+		border-bottom: 1px solid $color-primary-light;
+
+		h3 {
+			margin-right: auto;
+		}
+	}
+
+	&__data {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		margin: 1rem 0;
+
+		&--detail {
+			display: flex;
+			align-items: center;
+			padding: 1rem;
+			margin-right: 1rem;
+
+			span {
+				color: white;
+				background-color: rgb(47, 187, 187);
+				padding: .5rem;
+				margin-right: .5rem;
+				border-radius: .5rem;
+			}
+		}
+
+		&--expand {
+			padding: 1rem;
+			color: white;
+			background-color: $color-grey-dark-2;
+			margin-left: auto;
+		}
+	}
+
+	&__description {
+	}
+}
+.record-btn {
+	margin-right: 1rem;
+}
+/* #################### Registration/Login Page ####################  */
+.admin-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+.admin-form {
+	display: flex;
+	flex-direction: column;
+	width: 33%;
+	padding: 2rem;
+	background-color: $color-white;
+	border-radius: 1rem;
+	box-shadow: $shadow-dark;
+}
+
+/* #################### MODAL FORM ####################  */
+
+.form {
+	display: flex;
+	flex-direction: column;
+	padding: 2rem;
+
+	&-title {
+		text-transform: uppercase;
+		text-align: center;
+		margin-bottom: 2rem;
+		padding-bottom: 1rem;
+		border-bottom: 2px solid gray;
+	}
+
+	&-label {
+		margin-bottom: .5rem;
+	}
+
+	&-field {
+		height: 3rem;
+		margin-bottom: 1.5rem;
+	}
+	&-textarea {
+		height: 12rem;
+		margin-bottom: 1.5rem;
+	}
+
+	&-error {
+		color: red;
+	}
+}
+
+.results-form {
+	&__field--diabeled {
+		border: none;
+		color: white;
+		background-color: transparent;
+	}
+
+	&__field--active {
+	}
+}
+
+/* #################### BUTTONS ####################  */
+
+.button {
+	padding: .6rem 1.2rem;
+	outline: none;
+	font-size: 1.6rem;
+	cursor: pointer;
+	border: 1px solid gray;
+	border-radius: .5rem;
+	text-transform: capitalize;
+	text-decoration: none;
+}
+
+.btn-primary {
+	color: $color-white;
+	background-color: $color-primary-light;
+
+	&:hover {
+		background-color: $color-primary;
+	}
+}
+
+.btn-primary-clear {
+	color: $color-primary-light;
+	background-color: transparent;
+	border: 1px solid $color-primary-light;
+
+	&:hover {
+		color: $color-primary;
+		border: 1px solid $color-primary;
+	}
+}
+
+.btn-secondary {
+	color: $color-white;
+	background-color: $color-secondary;
+
+	&:hover {
+		background-color: $color-secondary-dark;
+	}
+}
+
+.btn-tertiary {
+	color: $color-primary-light;
+	background-color: $color-grey-dark-3;
+}
+
+/* #################### MODAL ####################  */
+.modal {
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, .5);
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	pointer-events: none;
+	opacity: 0;
+	transition: 250ms opacity ease-in;
+
+	&__container {
+		background-color: white;
+		width: 50%;
+		box-shadow: $shadow-dark;
+		border-radius: 1rem;
+
+		&--close {
+			display: flex;
+			justify-content: flex-end;
+			margin: 1rem 2rem -2rem;
+		}
+	}
+
+	&__buttons {
+		display: flex;
+		justify-content: flex-end;
+		margin-top: 1rem;
+		gap: .5rem;
+	}
+
+	&-visible {
+		opacity: 1;
+		pointer-events: auto;
+		z-index: 10;
+	}
+}

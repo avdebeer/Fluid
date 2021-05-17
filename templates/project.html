@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<div class="project">
+    <form action="/project" method="POST" class="form">
+        <h3 class="form-title">Project Info</h3>
+        {{form.hidden_tag()}}
+
+        {% for field in form if field.widget.input_type != 'hidden' %}
+        {{field.label(class_='form-label')}}
+        {{field(class_='form-field')}}
+        
+        {% for error in field.errors %}
+            {{error(class_='form-error')}}
+        {% endfor %}
+        {% endfor %}
+        <button class="btn-form">create</button>
+    </form>
+</div>
+
+{% endblock %} 

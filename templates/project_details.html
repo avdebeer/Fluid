@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="project-title">
+    <div>
+        <h1>{{project.name}} - ({{project.cip_id}})</h1>
+        <p id="project-id">{{project.id}}</p>
+    </div>
+</div>
+<div class="project-content">
+    <div id="menu" class="project-content__menu">
+        <a  class="project-content__menu--link" data-section='General'>General</a>
+        <a  class="project-content__menu--link" data-section='RFIs' >RFIs</a>
+        <a  class="project-content__menu--link" data-section='Submittals' >Submittals</a>
+        <a  class="project-content__menu--link" data-section='Issues'>Issues</a>
+        <a  class="project-content__menu--link" data-section='Change-Orders'>Change Orders</a>
+        <a  class="project-content__menu--link" data-section='Inspections'>Inspections</a>
+        <a  class="project-content__menu--link" data-section='Meetings'>Meetings</a>
+    </div>
+    <div id="content" class="project-content__data">
+        <div id="section-header" class="section-header">
+            <h2 id="section-title"></h2>
+            <button id="modal-open" class="button btn-primary is-hidden" data-btn="create">New Record</button>
+        </div>
+        <div id="section-data">
+            
+            <!-- INSPECTION SECTION -->
+            <div id="Inspections" class="is-hidden">
+                {% for record in project.inspection_reports %}
+                <div id="inspection-{{record.id}}" class="record">
+                    <div class="record__heading">
+                        <h3 id="inspection-title-{{record.id}}">{{record.title}}</h3>
+                        <button class="button btn-primary record-btn" data-btn="edit" data-id="{{record.id}}">Edit</button>
+                        <button class="button btn-primary" data-btn="delete" data-id="{{record.id}}">Delete</button>
+                    </div>
+                    <div class="record__data">
+                        <div class="record__data--detail">
+                            <span>Date</span> 
+                            <p id="inspection-date-{{record.id}}" >{{record.date}}</p>
+                        </div>
+                        <div class="record__data--detail">
+                            <span>Inspector</span> 
+                            <p id="inspection-inspector-{{record.id}}" >{{record.inspector}}</p>
+                        </div>
+                        <div class="record__data--detail">
+                            <span>Status</span> 
+                            <p id="inspection-status-{{record.id}}" >{{record.status}}</p>
+                        </div>
+                    </div>
+                    <p id="inspection-description-{{record.id}}" class="record__description">{{record.description}}</p>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+         <div id="modal" class="modal">
+            <div class="modal__container">
+                <div id="modal-form" class="form">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+</div>
+{% endblock %}
