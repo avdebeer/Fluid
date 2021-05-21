@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, redirect, flash, url_for, session, jsonify
 from flask_login import UserMixin, LoginManager, login_user, login_required, logout_user, current_user
 from flask_debugtoolbar import DebugToolbarExtension
-from models import db, connect_db, User, Project, ChangeOrder, RFI, Issue, ActionItem, InspectionReport
+from models import db, connect_db, User, Project,RFI, Submittal, ChangeOrder, InspectionReport
 from forms import ProjectForm, RegisterForm, LoginForm
 
 
@@ -38,6 +38,7 @@ def home():
 # *******************************************************
 
 @app.route('/project', methods=['GET', 'POST'])
+@login_required
 def project():
     '''text'''
 
@@ -71,58 +72,228 @@ def manage_project(project_id):
         project = project 
         )
 
-
-
-# ********************* INSPECTION ROUTES ***************
+# ********************* RFI ROUTES ***************
 # *******************************************************
+@app.route('/project/rfi', methods = ['POST'])
+@login_required
+def create_rfi_record():
+
+    data = request.json
+    project_id = int(data['projectID'])
+
+    new_rfi = RFI(
+        project_id = project_id,
+        number = data['number'],
+        title = data['title'],
+        description = data['description'],
+        author = data['author'],
+        company = data['company'],
+        due_date = data['date'],
+        status = data['status'],
+        )
+
+    db.session.add(new_rfi)
+    db.session.commit()
+    return jsonify(new_rfi.serialize())
 
 
 
-@app.route('/project/inspection', methods = ['PATCH','POST'])
-def create_report():
+@app.route('/project/rfi', methods = ['PATCH'])
+@login_required
+def update_rfi_record():
 
     data = request.json
 
-    project_id = int(data['projectID'])
-    date = data['date'],
-    title = data['title'],
-    description = data['description'],
-    inspector = data['inspector'],
-    status = data['status'],
+    record_id = int(data['id'])
+    record = RFI.query.get_or_404(record_id)
+    record.number = data['number'],
+    record.title = data['title'],
+    record.description = data['description'],
+    record.author = data['author'],
+    record.company = data['company'],
+    record.due_date = data['date'],
+    record.status = data['status'],
 
-    if request.method == 'POST':
-        new_inspection_report = InspectionReport(
-            project_id = project_id,
-            date = date,
-            title = title,
-            description = description,
-            inspector = inspector,
-            status = status
-            )
-
-        db.session.add(new_inspection_report)
-        db.session.commit()
-        return jsonify(new_inspection_report.serialize())
-
-    elif request.method == 'PATCH':
-        record_id = int(data['id'])
-        record = InspectionReport.query.get_or_404(record_id)
-        record.date = date
-        record.title = title
-        record.description = description
-        record.inspector = inspector
-        record.status = status
-        
-        db.session.commit()
-        return jsonify("Updated record succesfully.")
+    db.session.commit()
+    return jsonify("Updated record succesfully.")
 
 
 
-@app.route('/project/inspection/<int:report_id>', methods = ['DELETE'])
-def delete_report(report_id):
+@app.route('/project/rfi/<int:record_id>', methods = ['DELETE'])
+@login_required
+def delete_rfi_record(record_id):
     '''Deletes an inspection report'''
 
-    record = InspectionReport.query.get_or_404(report_id)
+    record = RFI.query.get_or_404(record_id)
+    db.session.delete(record)
+    db.session.commit()
+
+    return jsonify({'message': 'Deleted'})
+
+# ********************* SUBMITTAL ROUTES ***************
+# *******************************************************
+@app.route('/project/submittal', methods = ['POST'])
+@login_required
+def create_submittal_record():
+
+    data = request.json
+    project_id = int(data['projectID'])
+
+    new_submittal = Submittal(
+        number = data['number'],
+        title = data['title'],
+        description = data['description'],
+        author = data['author'],
+        company = data['company'],
+        due_date = data['due_date'],
+        status = data['status'],
+        project_id = project_id,
+
+        )
+
+    db.session.add(new_submittal)
+    db.session.commit()
+    return jsonify(new_submittal.serialize())
+
+
+
+@app.route('/project/submittal', methods = ['PATCH'])
+@login_required
+def update_submittal_record():
+
+    data = request.json
+
+    record_id = int(data['id'])
+    record = Submittal.query.get_or_404(record_id)
+    record.number = data['number'],
+    record.title = data['title'],
+    record.description = data['description'],
+    record.author = data['author'],
+    record.company = data['company'],
+    record.due_date = data['due_date'],
+    record.status = data['status'],
+
+    db.session.commit()
+    return jsonify("Updated record succesfully.")
+
+
+
+@app.route('/project/submittal/<int:record_id>', methods = ['DELETE'])
+@login_required
+def delete_submittal_record(record_id):
+    '''Deletes an inspection report'''
+
+    record = Submittal.query.get_or_404(record_id)
+    db.session.delete(record)
+    db.session.commit()
+
+    return jsonify({'message': 'Deleted'})
+
+
+# ********************* CHANGE ORDER ROUTES ***************
+# *******************************************************
+@app.route('/project/change_order', methods = ['POST'])
+@login_required
+def create_change_order_record():
+
+    data = request.json
+    project_id = int(data['projectID'])
+
+    new_change_order = ChangeOrder(
+        number = data['number'],
+        title = data['title'],
+        description = data['description'],
+        author = data['author'],
+        company = data['company'],
+        status = data['status'],
+        project_id = project_id,
+
+        )
+
+    db.session.add(new_change_order)
+    db.session.commit()
+    return jsonify(new_change_order.serialize())
+
+
+
+@app.route('/project/change_order', methods = ['PATCH'])
+@login_required
+def update_change_order_record():
+
+    data = request.json
+
+    record_id = int(data['id'])
+    record = ChangeOrder.query.get_or_404(record_id)
+    record.number = data['number'],
+    record.title = data['title'],
+    record.description = data['description'],
+    record.author = data['author'],
+    record.company = data['company'],
+    record.status = data['status'],
+
+    db.session.commit()
+    return jsonify("Updated record succesfully.")
+
+
+
+@app.route('/project/change_order/<int:record_id>', methods = ['DELETE'])
+@login_required
+def delete_change_order_record(record_id):
+    '''Deletes an inspection report'''
+
+    record = ChangeOrder.query.get_or_404(record_id)
+    db.session.delete(record)
+    db.session.commit()
+
+    return jsonify({'message': 'Deleted'})
+
+# ********************* INSPECTION ROUTES ***************
+# *******************************************************
+@app.route('/project/inspection', methods = ['POST'])
+@login_required
+def create_inspection_record():
+
+    data = request.json
+    project_id = int(data['projectID'])
+
+    new_inspection_report = InspectionReport(
+        project_id = project_id,
+        date = data['date'],
+        title = data['title'],
+        description = data['description'],
+        inspector = data['inspector'],
+        )
+
+    db.session.add(new_inspection_report)
+    db.session.commit()
+    return jsonify(new_inspection_report.serialize())
+
+
+
+@app.route('/project/inspection', methods = ['PATCH'])
+@login_required
+def update_inspection_record():
+
+    data = request.json
+
+    record_id = int(data['id'])
+    record = InspectionReport.query.get_or_404(record_id)
+    record.date = data['date']
+    record.title = data['title']
+    record.description = data['description']
+    record.inspector = data['inspector']
+        
+    db.session.commit()
+    return jsonify("Updated record succesfully.")
+
+
+
+@app.route('/project/inspection/<int:record_id>', methods = ['DELETE'])
+@login_required
+def delete_inspection_record(record_id):
+    '''Deletes an inspection report'''
+
+    record = InspectionReport.query.get_or_404(record_id)
     db.session.delete(record)
     db.session.commit()
 

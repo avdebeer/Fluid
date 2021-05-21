@@ -2,6 +2,7 @@ from enum import unique
 from flask_sqlalchemy import SQLAlchemy 
 from flask_bcrypt import Bcrypt
 from flask_login import UserMixin
+from datetime import datetime
 
 bcrypt = Bcrypt()
 
@@ -67,77 +68,115 @@ class Project(db.Model):
     owner = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 
-    change_orders = db.relationship('ChangeOrder', cascade = 'all, delete')
     rfis = db.relationship('RFI', cascade = 'all, delete')
-    issues = db.relationship('Issue', cascade = 'all, delete')
-    action_items = db.relationship('ActionItem', cascade = 'all, delete')
+    submittals = db.relationship('Submittal', cascade = 'all, delete')
+    change_orders = db.relationship('ChangeOrder', cascade = 'all, delete')
     inspection_reports = db.relationship('InspectionReport', cascade = 'all, delete')
     
-
-
-class ChangeOrder(db.Model):
-    __tablename__ = 'change_orders'
-
-    id = db.Column(db.Integer, primary_key = True, autoincrement = True)   
-    number = db.Column(db.Integer, nullable = True)
-    title = db.Column (db.Text, nullable = False)
-    description = db.Column (db.Text, nullable = True)
-    creator = db.Column (db.Text, nullable = True)
-    status = db.Column (db.Text, nullable = False)
-    project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
-
-
 
 class RFI(db.Model):
     __tablename__ = 'rfis'
 
     id = db.Column(db.Integer, primary_key = True, autoincrement = True)   
-    number = db.Column(db.Integer, nullable = True)
+    number = db.Column(db.Float, nullable = False)
     title = db.Column (db.Text, nullable = False)
     description = db.Column (db.Text, nullable = True)
-    creator = db.Column (db.Text, nullable = True)
-    status = db.Column (db.Text, nullable = False)
+    author = db.Column (db.String(30), nullable = False)
+    company = db.Column (db.String(30), nullable = False)
+    due_date = db.Column(db.Date, nullable = False)
+    status = db.Column (db.String(30), nullable = False)
+    created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    updated = db.Column(db.DateTime, onupdate=datetime.utcnow)
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
 
+    def serialize(self):
+        
+        return {
+            'id': self.id,
+            'number': self.number,
+            'title': self.title,
+            'description': self.description,
+            'author': self.author,
+            'company': self.company,
+            'due_date': self.due_date,
+            'status': self.status,
+            'created': self.created,
+            'updated': self.updated,
+            'project_id': self.project_id,
+        }
 
 
-class Issue(db.Model):
-    __tablename__ = 'issues'
+class Submittal(db.Model):
+    __tablename__ = 'submittals'
 
     id = db.Column(db.Integer, primary_key = True, autoincrement = True)   
-    number = db.Column(db.Integer, nullable = True)
+    number = db.Column(db.Float, nullable = False)
     title = db.Column (db.Text, nullable = False)
     description = db.Column (db.Text, nullable = True)
-    creator = db.Column (db.Text, nullable = True)
-    status = db.Column (db.Text, nullable = False)
+    author = db.Column (db.String(30), nullable = False)
+    company = db.Column (db.String(30), nullable = False)
+    due_date = db.Column(db.Date, nullable = False)
+    status = db.Column (db.String(30), nullable = False)
+    created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    updated = db.Column(db.DateTime, onupdate=datetime.utcnow)
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
 
+    def serialize(self):
+        
+        return {
+            'id': self.id,
+            'number': self.number,
+            'title': self.title,
+            'description': self.description,
+            'author': self.author,
+            'company': self.company,
+            'due_date': self.due_date,
+            'status': self.status,
+            'created': self.created,
+            'updated': self.updated,
+            'project_id': self.project_id,
+        }
 
-
-class ActionItem(db.Model):
-    __tablename__ = 'action_items'
+class ChangeOrder(db.Model):
+    __tablename__ = 'change_orders'
 
     id = db.Column(db.Integer, primary_key = True, autoincrement = True)   
-    number = db.Column(db.Integer, nullable = True)
+    number = db.Column(db.Float, nullable = False)
     title = db.Column (db.Text, nullable = False)
     description = db.Column (db.Text, nullable = True)
-    assignor = db.Column (db.Text, nullable = True)
-    assignee = db.Column (db.Text, nullable = True)
-    due_date = db.Column (db.DateTime, nullable = True)
-    status = db.Column (db.Text, nullable = False)
+    author = db.Column (db.String(30), nullable = False)
+    company = db.Column (db.String(30), nullable = False)
+    status = db.Column (db.String(30), nullable = False)
+    created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    updated = db.Column(db.DateTime, onupdate=datetime.utcnow)
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
 
+    def serialize(self):
+        
+        return {
+            'id': self.id,
+            'number': self.number,
+            'title': self.title,
+            'description': self.description,
+            'author': self.author,
+            'company': self.company,
+            'status': self.status,
+            'created': self.created,
+            'updated': self.updated,
+            'project_id': self.project_id,
+        }
 
 
 class InspectionReport(db.Model):
     __tablename__ = 'inspection_reports'
 
     id = db.Column(db.Integer, primary_key = True, autoincrement = True)   
-    date = db.Column(db.Text, nullable = True)
+    date = db.Column(db.Date, nullable = True)
     title = db.Column (db.Text, nullable = False)
     description = db.Column (db.Text, nullable = True)
-    inspector = db.Column (db.Text, nullable = False)
-    status = db.Column (db.Text, nullable = False)
+    inspector = db.Column (db.String(30), nullable = False)
+    created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    updated = db.Column(db.DateTime, onupdate=datetime.utcnow)
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
 
     def serialize(self):
@@ -148,7 +187,7 @@ class InspectionReport(db.Model):
                 'title': self.title,
                 'description': self.description,
                 'inspector': self.inspector,
-                'status': self.status,
+                'created': self.created,
+                'updated': self.updated,
                 'project_id': self.project_id,
             }
-

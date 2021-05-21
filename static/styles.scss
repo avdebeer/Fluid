@@ -1,15 +1,24 @@
+// #60E3D5
+// #0567AB
+// #0B1320
+
 $color-white: #fff;
 $color-black: #000;
+$color-dark: #0b1320;
+$color-light: #fef9e6;
 
-$color-primary: #eb2f64;
-$color-primary-light: #ff3366;
-$color-primary-dark: #ba265d;
+$color-primary-0: #199fb1;
+$color-primary-1: #a5d1e1;
+$color-primary-2: #0d5c75;
+$color-primary-3: #394d5f;
 
-$color-secondary: #55c57a;
-$color-secondary-light: #7ed56f;
-$color-secondary-dark: #28b485;
+$color-secondary-1: #a5d1e1;
+$color-secondary-2: #199fb1;
+$color-secondary-3: #0d5c75;
 
-$color-tertiary-primary: #00c2c2;
+$color-tertiary-1: #eb2f64;
+$color-tertiary-2: #ff3366;
+$color-tertiary-3: #ba265d;
 
 $color-grey-light-1: #faf9f9;
 $color-grey-light-2: #f4f2f2;
@@ -21,8 +30,13 @@ $color-grey-dark-2: #777;
 $color-grey-dark-3: #333;
 
 $shadow-dark: 0 2rem 6rem rgba(0, 0, 0, .3);
-$shadow-light: 0 2rem 5rem rgba(0, 0, 0, .06);
+$shadow-light-2: 0 2rem 5rem rgba(0, 0, 0, .06);
+$shadow-light-G1: 0 0 0 2px rgba(26, 115, 232, .4);
+$shadow-light-1: 0 1px 6px 0 rgba(32, 33, 36, .28);
 $line: 2px solid $color-grey-light-3;
+$line2: 2px solid $color-grey-light-3;
+$line3: 2px solid $color-grey-light-3;
+$line4: 2px solid $color-grey-light-3;
 
 *,
 *::before,
@@ -37,21 +51,23 @@ html {
 }
 
 body {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 400;
 	font-size: 16px;
 	height: 100vh;
-	background-color: $color-grey-light-1;
+	background-color: $color-white;
 }
 
 .navbar {
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
-	background-color: $color-grey-light-2;
+	background-color: $color-grey-light-1;
 	position: relative;
 	// border-bottom: 1px solid $color-primary-light;
 
 	&__logo {
-		color: $color-primary;
+		color: $color-primary-0;
 		font-size: 3rem;
 		font-weight: 300;
 		text-decoration: none;
@@ -65,24 +81,19 @@ body {
 		align-self: stretch;
 		text-transform: uppercase;
 		text-decoration: none;
-		color: $color-black;
-		background-color: $color-grey-light-3;
+		color: $color-primary-0;
+		background-color: $color-grey-light-2;
 		padding: 1.5rem;
 		&:not(:last-of-type) {
 		}
 		&:hover {
-			color: white;
-			background-color: $color-primary-light;
+			color: $color-white;
+			background-color: $color-primary-0;
 		}
 		&:focus {
 			color: white;
-			background-color: $color-primary;
 		}
 	}
-}
-
-.is-hidden {
-	display: none;
 }
 
 /* #################### User Dashboard ####################  */
@@ -128,7 +139,7 @@ body {
 	display: flex;
 	align-items: center;
 	color: $color-black;
-	background-color: $color-tertiary-primary;
+	background-color: $color-primary-0;
 	padding: 1rem;
 	border-radius: 5px;
 
@@ -144,103 +155,159 @@ body {
 /* #################### Project Dashboard ####################  */
 
 .project-title {
+	font-weight: 700;
+	text-transform: uppercase;
 	text-align: center;
 	margin: 2rem;
 	padding-bottom: 1rem;
 	border-bottom: $line;
+	color: $color-primary-2;
 
 	#project-id {
 		display: none;
 	}
 }
 
-.project-content {
+.side-nav {
 	display: flex;
-	margin: 2rem;
+	flex-direction: column;
+	flex: 1 0 20%;
+	text-transform: uppercase;
+	color: $color-white;
+	background-color: $color-primary-3;
+	border-radius: 1rem;
+	position: relative;
 
-	&__menu {
-		display: flex;
-		flex-direction: column;
-		flex: 0 0 20rem;
-		margin-right: 2rem;
-		background-color: $color-grey-light-4;
+	button {
+		margin: auto 2rem 2rem;
+	}
 
-		&--link {
-			text-decoration: none;
-			padding: 2rem;
-			color: $color-black;
+	&__link {
+		text-decoration: none;
+		padding: 2rem 4rem;
 
-			&:hover {
-				color: $color-white;
-				background-color: $color-primary;
-			}
+		&:hover {
+			color: $color-primary-2;
+			background-color: $color-white;
+		}
+
+		i {
+			margin-right: 2rem;
 		}
 	}
 
-	&__data {
-		display: flex;
-		flex: 1 1;
-		flex-direction: column;
+	&__link::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 3px;
+		background-color: $color-secondary-2;
+		transform: scaleY(0);
+		transition: transform .2s, width .4s cubic-bezier(0, 0, 0, 1) .2s, background-color .1s; //the transform origin is by default middle
+		transform-origin: bottom;
+	}
+
+	&__link:hover::before,
+	&__link--active::before {
+		transform: scaleY(1);
+		width: 100%;
+	}
+	&__link:active::before {
+		background-color: var(--color-primary-light);
 	}
 }
 
-.section-header {
+.project-dashboard {
 	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 1.5rem;
+	margin: 2rem;
+	height: 80vh;
+
+	&__data {
+		display: flex;
+		flex: 1 0 40%;
+		flex-direction: column;
+		margin: 0 2rem;
+		padding: 1.5rem;
+		border-radius: 1rem;
+		border: 1px solid #394d5f;
+	}
+
+	&__details {
+		display: flex;
+		flex: 1 1 40%;
+		border-radius: 1rem;
+		background-color: $color-grey-light-2;
+	}
+}
+
+.section-data {
+	padding-right: 2rem;
+	overflow-y: auto;
+	section:nth-child(even) {
+		background-color: $color-grey-light-1;
+	}
 }
 
 .record {
-	background-color: $color-grey-light-3;
-	padding: 1.5rem;
+	padding: 1rem;
 	border-radius: 1rem;
 	margin-bottom: 2rem;
-	box-shadow: $shadow-dark;
+	border: 1px solid $color-primary-3;
+	box-shadow: $shadow-light-1;
 
 	&__heading {
 		display: flex;
 		align-items: center;
-		padding-bottom: 1rem;
-		border-bottom: 1px solid $color-primary-light;
+		padding-bottom: .5rem;
+		border-bottom: 1px solid $color-primary-3;
+		margin-bottom: .5rem;
 
-		h3 {
+		h4 {
+			font-weight: 500;
 			margin-right: auto;
 		}
 	}
 
-	&__data {
+	&__summary {
+		font-size: 1rem;
 		display: flex;
 		justify-content: flex-start;
+		flex-wrap: wrap;
 		align-items: center;
-		margin: 1rem 0;
 
-		&--detail {
+		&--data {
 			display: flex;
 			align-items: center;
-			padding: 1rem;
 			margin-right: 1rem;
 
 			span {
-				color: white;
-				background-color: rgb(47, 187, 187);
-				padding: .5rem;
+				text-transform: uppercase;
+				color: $color-black;
+				background-color: $color-primary-1;
+				padding: .5rem 2rem;
 				margin-right: .5rem;
-				border-radius: .5rem;
+				border-radius: 2rem;
 			}
 		}
 
-		&--expand {
-			padding: 1rem;
-			color: white;
-			background-color: $color-grey-dark-2;
+		button {
 			margin-left: auto;
 		}
 	}
 
-	&__description {
+	&__details {
+		margin-top: 1rem;
+		// display: none;
+		h5 {
+			font-weight: 500;
+			color: $color-primary-3;
+			margin-bottom: 1rem;
+		}
 	}
 }
+
 .record-btn {
 	margin-right: 1rem;
 }
@@ -265,33 +332,34 @@ body {
 /* #################### MODAL FORM ####################  */
 
 .form {
+	font-family: 'Robot', sans-serif;
 	display: flex;
 	flex-direction: column;
 	padding: 2rem;
 
-	&-title {
-		text-transform: uppercase;
+	&__title {
 		text-align: center;
 		margin-bottom: 2rem;
 		padding-bottom: 1rem;
 		border-bottom: 2px solid gray;
 	}
 
-	&-label {
+	&__group {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 1.5rem;
+	}
+
+	&__label {
+		font-weight: 300;
 		margin-bottom: .5rem;
 	}
 
-	&-field {
+	&__field {
 		height: 3rem;
-		margin-bottom: 1.5rem;
 	}
-	&-textarea {
+	&__textarea {
 		height: 12rem;
-		margin-bottom: 1.5rem;
-	}
-
-	&-error {
-		color: red;
 	}
 }
 
@@ -309,48 +377,71 @@ body {
 /* #################### BUTTONS ####################  */
 
 .button {
+	font-family: 'Roboto', sans-serif;
 	padding: .6rem 1.2rem;
 	outline: none;
-	font-size: 1.6rem;
+	font-size: 1.5rem;
 	cursor: pointer;
-	border: 1px solid gray;
 	border-radius: .5rem;
-	text-transform: capitalize;
+	text-transform: uppercase;
 	text-decoration: none;
 }
 
 .btn-primary {
 	color: $color-white;
-	background-color: $color-primary-light;
+	background-color: $color-primary-3;
 
 	&:hover {
-		background-color: $color-primary;
 	}
 }
 
 .btn-primary-clear {
-	color: $color-primary-light;
+	color: $color-primary-3;
 	background-color: transparent;
-	border: 1px solid $color-primary-light;
+	border: 1px solid $color-primary-3;
 
 	&:hover {
-		color: $color-primary;
-		border: 1px solid $color-primary;
 	}
 }
 
 .btn-secondary {
 	color: $color-white;
-	background-color: $color-secondary;
+	background-color: $color-secondary-2;
 
 	&:hover {
-		background-color: $color-secondary-dark;
+		background-color: $color-secondary-3;
 	}
 }
 
 .btn-tertiary {
-	color: $color-primary-light;
+	color: $color-secondary-2;
 	background-color: $color-grey-dark-3;
+}
+
+.icon {
+	padding: .6rem 1.2rem;
+	cursor: pointer;
+	background-color: transparent;
+	border: none;
+	i {
+	}
+}
+
+.icon-delete {
+	color: #ff0000;
+
+	:hover {
+	}
+}
+
+.icon-edit {
+	color: $color-primary-3;
+}
+
+.icon-info {
+	color: $color-secondary-2;
+	border: 1px solid $color-secondary-2;
+	border-radius: .5rem;
 }
 
 /* #################### MODAL ####################  */
@@ -370,7 +461,7 @@ body {
 
 	&__container {
 		background-color: white;
-		width: 50%;
+		width: 33%;
 		box-shadow: $shadow-dark;
 		border-radius: 1rem;
 
@@ -393,4 +484,13 @@ body {
 		pointer-events: auto;
 		z-index: 10;
 	}
+}
+
+.is-hidden {
+	display: none;
+}
+
+.is-active {
+	color: $color-primary-2;
+	background-color: $color-white;
 }

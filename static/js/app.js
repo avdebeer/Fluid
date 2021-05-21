@@ -1,54 +1,37 @@
 // DO NOT DELETE CONTROLS THE EVENT HANDELER DYNAMICALLY
-let section = 'General';
-$('#section-title').text(`${section}`);
+let section = 'general';
+let sectionTitle = 'FIX ME SOON';
 
 // ********** Navigation **********
 $('#menu').on('click', 'a', (e) => {
-	let sectionName = e.target.getAttribute('data-section');
-	section = sectionName;
+	let menuItem = e.target.getAttribute('id');
+	section = e.target.getAttribute('data-section');
+	console.log(section);
 	hideSections();
+	projectMenu();
 
-	if (section === 'General') {
+	if (section === 'general') {
 		$('#modal-open').addClass('is-hidden');
 	}
 	else {
 		$('#modal-open').removeClass('is-hidden');
 	}
 
-	$('#section-title').text(`${section}`);
 	$(`#${section}`).removeClass('is-hidden');
+	$(`#${menuItem}`).addClass('is-active');
 });
-
-const newForm = {
-	Inspections : newInspectionForm
-};
-
-const editForm = {
-	Inspections : editInspectionForm
-};
-
-const createRecord = {
-	Inspections : createInspectionRecord
-};
-
-const updateRecord = {
-	Inspections : updateInspectionRecord
-};
-
-const deleteRecord = {
-	Inspections : deleteInspectionRecord
-};
 
 // Loads modal with form for new record
 $('#modal-open').on('click', () => {
-	newForm[`${section}`]();
+	newRecordForm();
 	$('#modal').toggleClass('modal-visible');
 });
 
 // Loads modal with form for editing existing record
-$('#section-data').on('click', 'button[data-btn="edit"]', function(e) {
-	recordId = e.target.getAttribute('data-id');
-	editForm[`${section}`](recordId);
+$('#content').on('click', 'button[data-btn="edit"]', function(e) {
+	recordId = e.target.parentElement.getAttribute('data-id');
+	console.log(recordId);
+	editRecordForm(recordId);
 	$('#modal').toggleClass('modal-visible');
 });
 
@@ -61,19 +44,19 @@ $('#modal').on('click', 'button[data-btn="close"]', function(e) {
 // Submits form and creates new record
 $('#modal').on('click', 'button[data-btn="submit"]', (e) => {
 	e.preventDefault();
-	createRecord[`${section}`]();
+	createRecord();
 	closeModal();
 });
 
 // Submits form and updates existing record
 $('#modal').on('click', 'button[data-btn="update"]', (e) => {
 	e.preventDefault();
-	updateRecord[`${section}`]();
+	updateRecord();
 	closeModal();
 });
 
 // Deletes selected record
-$('#section-data').on('click', 'button[data-btn="delete"]', function(e) {
-	recordId = e.target.getAttribute('data-id');
-	deleteRecord[`${section}`](recordId);
+$('#content').on('click', 'button[data-btn="delete"]', function(e) {
+	recordId = e.target.parentElement.getAttribute('data-id');
+	deleteRecord(recordId);
 });

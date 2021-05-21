@@ -1,67 +1,96 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
 <div class="project-title">
-    <div>
-        <h1>{{project.name}} - ({{project.cip_id}})</h1>
-        <p id="project-id">{{project.id}}</p>
-    </div>
+    <h1>{{project.name}} - ({{project.cip_id}})</h1>
+    <p id="project-id">{{project.id}}</p>
 </div>
-<div class="project-content">
-    <div id="menu" class="project-content__menu">
-        <a  class="project-content__menu--link" data-section='General'>General</a>
-        <a  class="project-content__menu--link" data-section='RFIs' >RFIs</a>
-        <a  class="project-content__menu--link" data-section='Submittals' >Submittals</a>
-        <a  class="project-content__menu--link" data-section='Issues'>Issues</a>
-        <a  class="project-content__menu--link" data-section='Change-Orders'>Change Orders</a>
-        <a  class="project-content__menu--link" data-section='Inspections'>Inspections</a>
-        <a  class="project-content__menu--link" data-section='Meetings'>Meetings</a>
-    </div>
-    <div id="content" class="project-content__data">
-        <div id="section-header" class="section-header">
-            <h2 id="section-title"></h2>
-            <button id="modal-open" class="button btn-primary is-hidden" data-btn="create">New Record</button>
-        </div>
-        <div id="section-data">
-            
-            <!-- INSPECTION SECTION -->
-            <div id="Inspections" class="is-hidden">
-                {% for record in project.inspection_reports %}
-                <div id="inspection-{{record.id}}" class="record">
-                    <div class="record__heading">
-                        <h3 id="inspection-title-{{record.id}}">{{record.title}}</h3>
-                        <button class="button btn-primary record-btn" data-btn="edit" data-id="{{record.id}}">Edit</button>
-                        <button class="button btn-primary" data-btn="delete" data-id="{{record.id}}">Delete</button>
-                    </div>
-                    <div class="record__data">
-                        <div class="record__data--detail">
-                            <span>Date</span> 
-                            <p id="inspection-date-{{record.id}}" >{{record.date}}</p>
-                        </div>
-                        <div class="record__data--detail">
-                            <span>Inspector</span> 
-                            <p id="inspection-inspector-{{record.id}}" >{{record.inspector}}</p>
-                        </div>
-                        <div class="record__data--detail">
-                            <span>Status</span> 
-                            <p id="inspection-status-{{record.id}}" >{{record.status}}</p>
-                        </div>
-                    </div>
-                    <p id="inspection-description-{{record.id}}" class="record__description">{{record.description}}</p>
+<div class="project-dashboard">
+    <nav id="menu" class="side-nav">
+        <a id="menu-item-1"  class="side-nav__link"  data-section='general'><i class="fas fa-home"></i>General</a>
+        <a id="menu-item-2"  class="side-nav__link"  data-section='rfi' ><i class="fas fa-question"></i>RFIs</a>
+        <a id="menu-item-3"  class="side-nav__link"  data-section='submittal' ><i class="fas fa-file-alt"></i>Submittals</a>
+        <a id="menu-item-4"  class="side-nav__link"  data-section='change_order'><i class="fas fa-comment-dollar"></i>Change Orders</a>
+        <a id="menu-item-5"  class="side-nav__link"  data-section='inspection'><i class="fas fa-shoe-prints"></i>Inspections</a>
+        <button id="modal-open" class="button btn-secondary is-hidden" data-btn="create">New Record</button>
+    </nav>
+    <div id="content" class="project-dashboard__data">
+       
+        <!-- RFI SECTION     -->
+        <div id="rfi" class="section-data is-hidden">
+            {% for record in project.rfis %}
+            <div id="rfi-{{record.id}}" class="record">
+                <div class="record__heading">
+                    <h4 id="rfi-number-{{record.id}}">{{record.number}}</h4>
+                    <h4 id="rfi-title-{{record.id}}">{{record.title}}</h4>
+                    <button class="icon icon-delete" data-btn="delete" data-id="{{record.id}}"><i class="fas fa-trash-alt"></i></button>
+                    <button class="icon icon-edit" data-btn="edit" data-id="{{record.id}}"><i class="fas fa-pen"></i></button>
                 </div>
-                {% endfor %}
-            </div>
-
-        </div>
-         <div id="modal" class="modal">
-            <div class="modal__container">
-                <div id="modal-form" class="form">
+                <div class="record__summary">
+                    <div class="record__summary--data">
+                        <span>Author</span> 
+                        <p id="rfi-author-{{record.id}}" >{{record.author}}</p>
+                    </div>
+                    <div class="record__summary--data">
+                        <span>Company</span> 
+                        <p id="rfi-company-{{record.id}}" >{{record.company}}</p>
+                    </div>
+                    <div class="record__summary--data">
+                        <span>Due Date</span> 
+                        <p id="rfi-date-{{record.id}}" >{{record.due_date}}</p>
+                    </div>
+                    <div class="record__summary--data">
+                        <span>Status</span> 
+                        <p id="rfi-status-{{record.id}}" >{{record.status}}</p>
+                    </div>
+                    <button class="icon icon-info"><i class="fas fa-caret-down"></i></button>
+                </div>
+                <div class="record__details">
+                    <h5>DESCRIPTION:</h5>
+                    <p id="rfi-description-{{record.id}}">{{record.description}}</p>
                 </div>
             </div>
+            {% endfor %}
+        </div>
+
+        <!-- INSPECTION SECTION -->
+        <div id="inspection" class="section-data is-hidden">
+            {% for record in project.inspection_reports %}
+            <div id="inspection-{{record.id}}" class="record">
+                <div class="record__heading">
+                    <h4 id="inspection-title-{{record.id}}">{{record.title}}</h4>
+                    <button class="icon icon-delete" data-btn="delete" data-id="{{record.id}}"><i class="fas fa-trash-alt"></i></button>
+                    <button class="icon icon-edit" data-btn="edit" data-id="{{record.id}}"><i class="fas fa-pen"></i></button>
+                </div>
+                <div class="record__summary">
+                    <div class="record__summary--data">
+                        <span>Date</span> 
+                        <p id="inspection-date-{{record.id}}" >{{record.date}}</p>
+                    </div>
+                    <div class="record__summary--data">
+                        <span>Inspector</span> 
+                        <p id="inspection-inspector-{{record.id}}" >{{record.inspector}}</p>
+                    </div>
+                    <button class="icon icon-info"><i class="fas fa-caret-down"></i></button>
+                </div>
+                <div class="record__details">
+                    <h5>DESCRIPTION:</h5>
+                    <p id="inspection-description-{{record.id}}">{{record.description}}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+    <div id="details" class="project-dashboard__details">
+
+    </div>
+     <div id="modal" class="modal">
+        <div class="modal__container">
+            <div id="modal-form" class="form">
+            </div>
         </div>
     </div>
-    
-
 </div>
 {% endblock %}
+
