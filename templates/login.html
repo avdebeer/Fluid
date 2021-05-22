@@ -5,17 +5,19 @@
 {% block content %}
 <div class="admin-container">
     <form action="/login" method="POST" class="admin-form">
-    <h3 class="form-title">Login</h3>
+        <h3 class="form__title">Login</h3>
         {{form.hidden_tag()}}
         {% for field in form if field.widget.input_type != 'hidden' %}
-        {{field.label(class_='form-label')}}
-        {{field(class_='form-field')}}
-        
+       <div class="form__group">
+            {{field.label(class_='form__label')}}
+            {{field(class_='form__field autocomplete="off"')}}
+       </div>
         {% for error in field.errors %}
-            {{error(class_='form-error')}}
+            {{error(class_='form__error')}}
         {% endfor %}
         {% endfor %}
         <button class="button btn-primary">login</button>
+
     </form>
 </div>
 

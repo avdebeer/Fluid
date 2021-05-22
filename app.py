@@ -68,7 +68,7 @@ def manage_project(project_id):
     session['project_id'] = project_id
 
     return render_template(
-        'project_details.html', 
+        'project_dashboard.html', 
         project = project 
         )
 
@@ -320,7 +320,7 @@ def register():
 
         return redirect('/dashboard')
 
-    return render_template('register.html', form=form)
+    return render_template('register.html', form = form)
 
 
 
@@ -355,13 +355,9 @@ def logout():
 def dashboard():
     projects = current_user.projects
 
-
-
-    return render_template('dashboard.html', projects = projects)
+    return render_template('user_dashboard.html', projects = projects)
 # *********************  ROUTES *********************
 # *******************************************************
-@app.route('/testing')
-def testing():
-    return render_template('testing.html')
+
 
 

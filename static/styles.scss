@@ -142,6 +142,7 @@ body {
 	background-color: $color-primary-0;
 	padding: 1rem;
 	border-radius: 5px;
+	margin-bottom: 2rem;
 
 	&__data {
 		flex: 1 0;
@@ -168,54 +169,72 @@ body {
 	}
 }
 
-.side-nav {
+.sidebar {
+	background-color: $color-primary-3;
+
+	flex: 0 0 18%;
 	display: flex;
 	flex-direction: column;
-	flex: 1 0 20%;
-	text-transform: uppercase;
-	color: $color-white;
-	background-color: $color-primary-3;
-	border-radius: 1rem;
-	position: relative;
+	justify-content: space-between;
+}
 
-	button {
-		margin: auto 2rem 2rem;
-	}
+.side-nav {
+	font-size: 1.4rem;
+	list-style: none;
+	margin-top: 3.5rem;
 
-	&__link {
-		text-decoration: none;
-		padding: 2rem 4rem;
+	&__item {
+		position: relative;
 
-		&:hover {
-			color: $color-primary-2;
-			background-color: $color-white;
-		}
-
-		i {
-			margin-right: 2rem;
+		&:not(:last-child) {
+			margin-bottom: .5rem;
 		}
 	}
 
-	&__link::before {
+	&__item::before {
 		content: '';
 		position: absolute;
 		top: 0;
 		left: 0;
 		height: 100%;
 		width: 3px;
-		background-color: $color-secondary-2;
+		background-color: $color-primary-0;
 		transform: scaleY(0);
 		transition: transform .2s, width .4s cubic-bezier(0, 0, 0, 1) .2s, background-color .1s; //the transform origin is by default middle
 		transform-origin: bottom;
 	}
 
-	&__link:hover::before,
-	&__link--active::before {
+	&__item:hover::before,
+	&__item--active::before {
 		transform: scaleY(1);
 		width: 100%;
 	}
-	&__link:active::before {
-		background-color: var(--color-primary-light);
+	&__item:active::before {
+		background-color: $color-primary-0;
+	}
+	&__link:link,
+	&__link:visited {
+		color: $color-grey-light-1;
+		text-decoration: none;
+		text-transform: uppercase;
+		display: block;
+		padding: 1.5rem 3rem;
+		position: relative;
+		z-index: 10; //z index only works if we have a postion specified
+
+		display: flex;
+		align-items: center;
+	}
+
+	&__icon {
+		width: 1.75rem;
+		height: 1.75rem;
+		margin-right: 2rem;
+		fill: currentColor;
+	}
+
+	button {
+		margin: auto 2rem 2rem;
 	}
 }
 
@@ -311,7 +330,8 @@ body {
 .record-btn {
 	margin-right: 1rem;
 }
-/* #################### Registration/Login Page ####################  */
+//////////////////////////////////////////////////////////////
+//LOGIN AND REGISTER
 .admin-container {
 	display: flex;
 	justify-content: center;
@@ -322,15 +342,15 @@ body {
 .admin-form {
 	display: flex;
 	flex-direction: column;
-	width: 33%;
+	width: 25%;
 	padding: 2rem;
 	background-color: $color-white;
 	border-radius: 1rem;
 	box-shadow: $shadow-dark;
 }
 
-/* #################### MODAL FORM ####################  */
-
+//////////////////////////////////////////////////////////////
+//MODAL FORM
 .form {
 	font-family: 'Robot', sans-serif;
 	display: flex;
@@ -360,17 +380,6 @@ body {
 	}
 	&__textarea {
 		height: 12rem;
-	}
-}
-
-.results-form {
-	&__field--diabeled {
-		border: none;
-		color: white;
-		background-color: transparent;
-	}
-
-	&__field--active {
 	}
 }
 

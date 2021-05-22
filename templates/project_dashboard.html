@@ -6,14 +6,63 @@
     <p id="project-id">{{project.id}}</p>
 </div>
 <div class="project-dashboard">
-    <nav id="menu" class="side-nav">
+    <nav class="sidebar">
+        <ul class="side-nav">
+            <li class="side-nav__item">
+                <a href="" class="side-nav__link">
+                    <svg class="side-nav__icon">
+                        <use xlink:href="/static/img/sprite.svg#icon-home"></use>
+                        <span>Home</span>
+                    </svg>
+                </a>
+            </li>
+            <li class="side-nav__item">
+                <a href="" class="side-nav__link">
+                    <svg class="side-nav__icon">
+                        <use xlink:href="/static/img/sprite.svg#icon-help"></use>
+                        <span>RFIS</span>
+                    </svg>
+                </a>
+            </li>
+            <li class="side-nav__item">
+                <a href="" class="side-nav__link">
+                    <svg class="side-nav__icon">
+                        <use xlink:href="/static/img/sprite.svg#icon-new-message"></use>
+                        <span>Submittals</span>
+                    </svg>
+                </a>
+            </li>
+            <li class="side-nav__item">
+                <a href="" class="side-nav__link">
+                    <svg class="side-nav__icon">
+                        <use xlink:href="/static/img/sprite.svg#icon-credit"></use>
+                        <span>Change Orders</span>
+                    </svg>
+                </a>
+            </li>
+            <li class="side-nav__item">
+                <a id="menu-item-5" href="" class="side-nav__link" data-section='inspection'>
+                    <svg class="side-nav__icon">
+                        <use xlink:href="/static/img/sprite.svg#icon-man"></use>
+                        <span>Inspections</span>
+                    </svg>
+                </a>
+            </li>
+         
+        </ul>
+    </nav>
+  
+  
+  
+  
+    <!-- <nav id="menu" class="side-nav">
         <a id="menu-item-1"  class="side-nav__link"  data-section='general'><i class="fas fa-home"></i>General</a>
         <a id="menu-item-2"  class="side-nav__link"  data-section='rfi' ><i class="fas fa-question"></i>RFIs</a>
         <a id="menu-item-3"  class="side-nav__link"  data-section='submittal' ><i class="fas fa-file-alt"></i>Submittals</a>
         <a id="menu-item-4"  class="side-nav__link"  data-section='change_order'><i class="fas fa-comment-dollar"></i>Change Orders</a>
         <a id="menu-item-5"  class="side-nav__link"  data-section='inspection'><i class="fas fa-shoe-prints"></i>Inspections</a>
         <button id="modal-open" class="button btn-secondary is-hidden" data-btn="create">New Record</button>
-    </nav>
+    </nav> -->
     <div id="content" class="project-dashboard__data">
        
         <!-- RFI SECTION     -->
@@ -94,3 +143,8 @@
 </div>
 {% endblock %}
 
+{% block scripts %}
+ <script src="/static/js/functions.js" defer></script>
+<script src="/static/js/app.js" defer></script>
+{% endblock %}
+ 

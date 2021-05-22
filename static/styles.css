@@ -132,6 +132,7 @@ body {
   background-color: #199fb1;
   padding: 1rem;
   border-radius: 5px;
+  margin-bottom: 2rem;
 }
 
 .user-project-info__data {
@@ -161,7 +162,11 @@ body {
   display: none;
 }
 
-.side-nav {
+.sidebar {
+  background-color: #394d5f;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 18%;
+          flex: 0 0 18%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -169,35 +174,26 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-flex: 1;
-      -ms-flex: 1 0 20%;
-          flex: 1 0 20%;
-  text-transform: uppercase;
-  color: #fff;
-  background-color: #394d5f;
-  border-radius: 1rem;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.side-nav {
+  font-size: 1.4rem;
+  list-style: none;
+  margin-top: 3.5rem;
+}
+
+.side-nav__item {
   position: relative;
 }
 
-.side-nav button {
-  margin: auto 2rem 2rem;
+.side-nav__item:not(:last-child) {
+  margin-bottom: .5rem;
 }
 
-.side-nav__link {
-  text-decoration: none;
-  padding: 2rem 4rem;
-}
-
-.side-nav__link:hover {
-  color: #0d5c75;
-  background-color: #fff;
-}
-
-.side-nav__link i {
-  margin-right: 2rem;
-}
-
-.side-nav__link::before {
+.side-nav__item::before {
   content: '';
   position: absolute;
   top: 0;
@@ -215,14 +211,41 @@ body {
           transform-origin: bottom;
 }
 
-.side-nav__link:hover::before, .side-nav__link--active::before {
+.side-nav__item:hover::before, .side-nav__item--active::before {
   -webkit-transform: scaleY(1);
           transform: scaleY(1);
   width: 100%;
 }
 
-.side-nav__link:active::before {
-  background-color: var(--color-primary-light);
+.side-nav__item:active::before {
+  background-color: #199fb1;
+}
+
+.side-nav__link:link, .side-nav__link:visited {
+  color: #faf9f9;
+  text-decoration: none;
+  text-transform: uppercase;
+  display: block;
+  padding: 1.5rem 3rem;
+  position: relative;
+  z-index: 10;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.side-nav__icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-right: 2rem;
+  fill: currentColor;
+}
+
+.side-nav button {
+  margin: auto 2rem 2rem;
 }
 
 .project-dashboard {
@@ -348,7 +371,6 @@ body {
   margin-right: 1rem;
 }
 
-/* #################### Registration/Login Page ####################  */
 .admin-container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -370,7 +392,7 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  width: 33%;
+  width: 25%;
   padding: 2rem;
   background-color: #fff;
   border-radius: 1rem;
@@ -378,7 +400,6 @@ body {
           box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.3);
 }
 
-/* #################### MODAL FORM ####################  */
 .form {
   font-family: 'Robot', sans-serif;
   display: -webkit-box;
@@ -420,12 +441,6 @@ body {
 
 .form__textarea {
   height: 12rem;
-}
-
-.results-form__field--diabeled {
-  border: none;
-  color: white;
-  background-color: transparent;
 }
 
 /* #################### BUTTONS ####################  */

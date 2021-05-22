@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<div class="user-dashboard">
+    <div class="user-profile">
+        <H1>{{current_user.first_name}} {{current_user.last_name}}</H1>
+    </div>
+    <div class="user-projects">
+        <div id="testing123" class="user-projects__area">
+            <div class="user-projects__area--title">
+                <h2>Owner Projects</h2>
+                <button id="new-project-btn" class=" button btn-secondary">create</button>
+            </div>
+            {% for project in projects %}
+                <div class="user-project-info">
+                    <div class="user-project-info__data">
+                        <h3>{{project.name}}</h3>
+                        <h5>Construction Budget: ${{project.budget}}</h5>
+                    </div>
+                    <div class="user-project-info__buttons">
+                        <a class="button btn-primary" href="/project/{{project.id}}">Manage</a>
+                        <a id="{{project.id}}" class="button btn-primary" data-action="edit">Edit</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="user-projects__area">
+            <h2>Member Projects</h2>
+        </div>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal__container">
+            <div id="modal-form" class="form">
+            </div>
+        </div>
+    </div>
+   
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/user_dashboard.js" defer></script>
+{% endblock %}
+
+      

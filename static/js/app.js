@@ -30,7 +30,6 @@ $('#modal-open').on('click', () => {
 // Loads modal with form for editing existing record
 $('#content').on('click', 'button[data-btn="edit"]', function(e) {
 	recordId = e.target.parentElement.getAttribute('data-id');
-	console.log(recordId);
 	editRecordForm(recordId);
 	$('#modal').toggleClass('modal-visible');
 });
