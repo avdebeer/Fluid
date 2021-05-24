@@ -5,7 +5,7 @@
 {% block content %}
 <div class="user-dashboard">
     <div class="user-profile">
-        <H1>{{current_user.first_name}} {{current_user.last_name}}</H1>
+        <H1>{{current_user.full_name}}</H1>
     </div>
     <div class="user-projects">
         <div id="testing123" class="user-projects__area">
@@ -22,6 +22,23 @@
                     <div class="user-project-info__buttons">
                         <a class="button btn-primary" href="/project/{{project.id}}">Manage</a>
                         <a id="{{project.id}}" class="button btn-primary" data-action="edit">Edit</a>
+                        <a id="{{project.id}}" class="button btn-primary" data-action="delete">Delete</a>
+
+                         <a href="" class="side-nav__link">
+                            <svg class="side-nav__icon">
+                                <use xlink:href="/static/img/sprite.svg#icon-rocket"></use>
+                            </svg>
+                        </a>
+                         <a href="" class="side-nav__link">
+                            <svg class="side-nav__icon">
+                                <use xlink:href="/static/img/sprite.svg#icon-open-book"></use>
+                            </svg>
+                        </a>
+                         <a href="" class="side-nav__link">
+                            <svg class="side-nav__icon">
+                                <use xlink:href="/static/img/sprite.svg#icon-address"></use>
+                            </svg>
+                        </a>
                     </div>
                 </div>
             {% endfor %}

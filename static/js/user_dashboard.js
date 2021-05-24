@@ -28,7 +28,23 @@ $('#new-project-btn').on('click', (e) => {
 	);
 });
 
-$('#testing123').on('click', 'a[data-action="edit"]', (e) => {
-	const id = e.target.id;
-	console.log(id);
+async function createNewProject() {
+	const cip_id = $('#project_id').val();
+	const name = $('#project_name').val();
+	const budget = $('#project_budget').val();
+	const description = $('#project_description').val();
+
+	const response = await axios.post('/project', {
+		cip_id,
+		name,
+		budget,
+		description
+	});
+
+	closeModal();
+}
+
+$('#modal-form').on('click', 'button', (e) => {
+	e.preventDefault();
+	createNewProject();
 });

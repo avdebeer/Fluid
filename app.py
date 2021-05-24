@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, redirect, flash, url_for, ses
 from flask_login import UserMixin, LoginManager, login_user, login_required, logout_user, current_user
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, User, Project,RFI, Submittal, ChangeOrder, InspectionReport
-from forms import ProjectForm, RegisterForm, LoginForm
+from forms import RegisterForm, LoginForm
 
 
 app = Flask(__name__)
@@ -24,7 +24,7 @@ debug = DebugToolbarExtension(app)
 
 connect_db(app)
 
-# db.drop_all() #DROPS ALL TABLES
+db.drop_all() #DROPS ALL TABLES
 db.create_all() #CREATES ALL THE TABLES
 
 
@@ -41,24 +41,19 @@ def home():
 @login_required
 def project():
     '''text'''
+    data = request.json
 
-    form = ProjectForm()
+    new_project = Project(
+        cip_id = data['cip_id'], 
+        name = data['name'], 
+        budget = data['budget'],
+        description = data['description'], 
+        owner = current_user.id 
+        )
 
-    if form.validate_on_submit():
-        cip_id = form.cip_id.data
-        name = form.name.data
-        description = form.description.data
-        owner = current_user.id
-        budget = form.budget.data
-        
-        new_project = Project(cip_id = cip_id, name = name, description = description, owner = owner, budget = budget)
-        db.session.add(new_project)
-        db.session.commit()
-        return redirect('/dashboard')
-
-    else:
-        return render_template('project.html', form = form)
-
+    db.session.add(new_project)
+    db.session.commit()
+    return redirect('/dashboard')
 
 
 @app.route('/project/<project_id>')
@@ -74,6 +69,15 @@ def manage_project(project_id):
 
 # ********************* RFI ROUTES ***************
 # *******************************************************
+@app.route('/project/rfi/<int:id>')
+@login_required
+def get_rfi_record(id):
+    
+    record = RFI.query.get_or_404(id)
+    return jsonify(record.serialize())
+
+
+
 @app.route('/project/rfi', methods = ['POST'])
 @login_required
 def create_rfi_record():
@@ -82,15 +86,21 @@ def create_rfi_record():
     project_id = int(data['projectID'])
 
     new_rfi = RFI(
-        project_id = project_id,
-        number = data['number'],
         title = data['title'],
-        description = data['description'],
-        author = data['author'],
-        company = data['company'],
-        due_date = data['date'],
+        number = data['number'],
+        spec_section = data['spec_section'],
+        drawing_number = data['drawing_number'],
+        submittal_person = data['submittal_person'],
+        submittal_date = data['submittal_date'],
+        submittal_company = data['submittal_company'],
+        responsible_person = data['responsible_person'],
+        due_date = data['due_date'],
+        responsible_company = data['responsible_company'],
         status = data['status'],
-        )
+        description = data['description'],
+        project_id = project_id,
+        author = current_user.full_name
+    )
 
     db.session.add(new_rfi)
     db.session.commit()
@@ -106,13 +116,19 @@ def update_rfi_record():
 
     record_id = int(data['id'])
     record = RFI.query.get_or_404(record_id)
-    record.number = data['number'],
+
     record.title = data['title'],
-    record.description = data['description'],
-    record.author = data['author'],
-    record.company = data['company'],
-    record.due_date = data['date'],
+    record.number = data['number'],
+    record.spec_section = data['spec_section'],
+    record.drawing_number = data['drawing_number'],
+    record.submittal_person = data['submittal_person'],
+    record.submittal_date = data['submittal_date'],
+    record.submittal_company = data['submittal_company'],
+    record.responsible_person = data['responsible_person'],
+    record.due_date = data['due_date'],
+    record.responsible_company = data['responsible_company'],
     record.status = data['status'],
+    record.description = data['description'],
 
     db.session.commit()
     return jsonify("Updated record succesfully.")
@@ -249,6 +265,14 @@ def delete_change_order_record(record_id):
 
 # ********************* INSPECTION ROUTES ***************
 # *******************************************************
+@app.route('/project/inspection/<int:id>')
+@login_required
+def get_inspection_record(id):
+    
+    record = InspectionReport.query.get_or_404(id)
+    return jsonify(record.serialize())
+
+
 @app.route('/project/inspection', methods = ['POST'])
 @login_required
 def create_inspection_record():
@@ -256,16 +280,21 @@ def create_inspection_record():
     data = request.json
     project_id = int(data['projectID'])
 
+    author = current_user.first_name + " " + current_user.last_name,
+
     new_inspection_report = InspectionReport(
-        project_id = project_id,
-        date = data['date'],
         title = data['title'],
-        description = data['description'],
+        date = data['date'],
         inspector = data['inspector'],
+        description = data['description'],
+        author = author,
+        project_id = project_id,
+
         )
 
     db.session.add(new_inspection_report)
     db.session.commit()
+
     return jsonify(new_inspection_report.serialize())
 
 
@@ -278,10 +307,10 @@ def update_inspection_record():
 
     record_id = int(data['id'])
     record = InspectionReport.query.get_or_404(record_id)
-    record.date = data['date']
     record.title = data['title']
-    record.description = data['description']
     record.inspector = data['inspector']
+    record.date = data['date']
+    record.description = data['description']
         
     db.session.commit()
     return jsonify("Updated record succesfully.")
@@ -310,11 +339,12 @@ def register():
     if form.validate_on_submit():
         first_name = request.form['first_name']
         last_name = request.form['last_name']
+        full_name = first_name + " " + last_name
+        company = request.form['company']
         email = request.form['email']
-        username = request.form['username']
         password = request.form['password']
         
-        new_user = User.register(first_name, last_name, email, username, password)
+        new_user = User.register(first_name, last_name, full_name, company, email, password)
         db.session.add(new_user)
         db.session.commit()
 
@@ -330,10 +360,10 @@ def login():
     form = LoginForm()
 
     if form.validate_on_submit():
-        username = request.form['username']
+        email = request.form['email']
         password = request.form['password']
         
-        user = User.authenticate(username, password)
+        user = User.authenticate(email, password)
         if user:
             login_user(user)
             flash('Logged in successfully.')
@@ -360,4 +390,6 @@ def dashboard():
 # *******************************************************
 
 
-
+@app.route('/test')
+def test():
+    return render_template('working.html')

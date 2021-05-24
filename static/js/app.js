@@ -1,61 +1,60 @@
 // DO NOT DELETE CONTROLS THE EVENT HANDELER DYNAMICALLY
-let section = 'general';
-let sectionTitle = 'FIX ME SOON';
+let activeSection = 'general';
 
 // ********** Navigation **********
-$('#menu').on('click', 'a', (e) => {
-	let menuItem = e.target.getAttribute('id');
-	section = e.target.getAttribute('data-section');
-	console.log(section);
+$('.side-nav').on('click', (e) => {
+	e.preventDefault();
+	let menuItem = e.target.closest('li').getAttribute('id');
+	activeSection = e.target.closest('li').getAttribute('data-section');
 	hideSections();
 	projectMenu();
 
-	if (section === 'general') {
+	if (activeSection === 'general') {
 		$('#modal-open').addClass('is-hidden');
 	}
 	else {
 		$('#modal-open').removeClass('is-hidden');
 	}
 
-	$(`#${section}`).removeClass('is-hidden');
-	$(`#${menuItem}`).addClass('is-active');
+	$(`#${activeSection}`).removeClass('is-hidden');
+	$(`#${menuItem}`).addClass('side-nav__item--active');
 });
 
 // Loads modal with form for new record
 $('#modal-open').on('click', () => {
-	newRecordForm();
+	newRecordForm[activeSection]();
 	$('#modal').toggleClass('modal-visible');
 });
 
 // Loads modal with form for editing existing record
-$('#content').on('click', 'button[data-btn="edit"]', function(e) {
-	recordId = e.target.parentElement.getAttribute('data-id');
-	editRecordForm(recordId);
+$('#content').on('click', 'a[data-action="edit"]', function(e) {
+	recordId = e.target.closest('a').getAttribute('data-id');
+	editRecordForm[activeSection](recordId);
 	$('#modal').toggleClass('modal-visible');
 });
 
 // Exits the modal and removes loaded form
-$('#modal').on('click', 'button[data-btn="close"]', function(e) {
+$('#modal').on('click', 'button[data-action="close"]', function(e) {
 	e.preventDefault();
 	closeModal();
 });
 
 // Submits form and creates new record
-$('#modal').on('click', 'button[data-btn="submit"]', (e) => {
+$('#modal').on('click', 'button[data-action="submit"]', (e) => {
 	e.preventDefault();
-	createRecord();
+	createRecord[activeSection]();
 	closeModal();
 });
 
 // Submits form and updates existing record
-$('#modal').on('click', 'button[data-btn="update"]', (e) => {
+$('#modal').on('click', 'button[data-action="update"]', (e) => {
 	e.preventDefault();
-	updateRecord();
+	updateRecord[activeSection]();
 	closeModal();
 });
 
 // Deletes selected record
-$('#content').on('click', 'button[data-btn="delete"]', function(e) {
-	recordId = e.target.parentElement.getAttribute('data-id');
+$('#content').on('click', 'a[data-action="delete"]', function(e) {
+	recordId = e.target.closest('a').getAttribute('data-id');
 	deleteRecord(recordId);
 });

@@ -21,33 +21,31 @@ class User(UserMixin, db.Model):
     id = db.Column (db.Integer, primary_key = True, autoincrement = True)
     first_name = db.Column(db.String(30), nullable = False)
     last_name = db.Column(db.String(30), nullable = False)
-    email = db.Column(db.Text, nullable = False)
-    username = db.Column(db.String(20), nullable = False, unique = True)
+    company = db.Column(db.String(30), nullable = False)
+    email = db.Column(db.Text, nullable = False, unique = True)
     password = db.Column(db.Text, nullable = False)
+    full_name = db.Column(db.String(50), nullable = True)
 
     projects = db.relationship('Project', cascade = 'all, delete' )
 
-  
-
     @classmethod
-    def register(cls, first_name, last_name, email, username, password):
+    def register(cls, first_name, last_name, full_name, company, email, password):
         """Register user w/hashed password & return user."""
 
         hashed = bcrypt.generate_password_hash(password)
         hashed_utf8 = hashed.decode("utf8")
 
         # return instance of user w/username and hashed pwd
-        return cls( first_name=first_name, last_name=last_name, email=email, username=username, password=hashed_utf8)
-
+        return cls( first_name=first_name, last_name=last_name, full_name=full_name, company=company, email=email, password=hashed_utf8)
   
     @classmethod
-    def authenticate(cls, username, password):
+    def authenticate(cls, email, password):
         """Validate that user exists & password is correct.
 
         Return user if valid; else return False.
         """
 
-        user = User.query.filter_by(username=username).first()
+        user = User.query.filter_by(email=email).first()
 
         if user and bcrypt.check_password_hash(user.password, password):
             return user
@@ -77,14 +75,21 @@ class Project(db.Model):
 class RFI(db.Model):
     __tablename__ = 'rfis'
 
-    id = db.Column(db.Integer, primary_key = True, autoincrement = True)   
-    number = db.Column(db.Float, nullable = False)
+    id = db.Column(db.Integer, primary_key = True, autoincrement = True)
     title = db.Column (db.Text, nullable = False)
-    description = db.Column (db.Text, nullable = True)
-    author = db.Column (db.String(30), nullable = False)
-    company = db.Column (db.String(30), nullable = False)
+    number = db.Column(db.Float, nullable = False)
+    spec_section = db.Column (db.String(50), nullable = True)
+    drawing_number = db.Column (db.String(50), nullable = True)
+    submittal_person = db.Column (db.String(50), nullable = False)
+    submittal_company = db.Column (db.String(50), nullable = False)
+    submittal_date = db.Column(db.Date, nullable = False)
+    responsible_person = db.Column (db.String(50), nullable = True)
+    responsible_company = db.Column (db.String(50), nullable = True)
     due_date = db.Column(db.Date, nullable = False)
     status = db.Column (db.String(30), nullable = False)
+    description = db.Column (db.Text, nullable = True)
+   
+    author = db.Column (db.String(50), nullable = False)
     created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated = db.Column(db.DateTime, onupdate=datetime.utcnow)
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
@@ -92,14 +97,21 @@ class RFI(db.Model):
     def serialize(self):
         
         return {
+
             'id': self.id,
-            'number': self.number,
             'title': self.title,
-            'description': self.description,
-            'author': self.author,
-            'company': self.company,
+            'number': self.number,
+            'spec_section': self.spec_section,
+            'drawing_number': self.drawing_number,
+            'submittal_person': self.submittal_person,
+            'submittal_company': self.submittal_company,
+            'submittal_date': self.submittal_date,
+            'responsible_person': self.responsible_person,
+            'responsible_company': self.responsible_company,
             'due_date': self.due_date,
             'status': self.status,
+            'description': self.description,
+            'author': self.author,
             'created': self.created,
             'updated': self.updated,
             'project_id': self.project_id,
@@ -175,8 +187,11 @@ class InspectionReport(db.Model):
     title = db.Column (db.Text, nullable = False)
     description = db.Column (db.Text, nullable = True)
     inspector = db.Column (db.String(30), nullable = False)
+    author = db.Column (db.String(50), nullable = False)
     created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated = db.Column(db.DateTime, onupdate=datetime.utcnow)
+    attachment = db.column(db.LargeBinary)
+
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
 
     def serialize(self):
@@ -188,6 +203,7 @@ class InspectionReport(db.Model):
                 'description': self.description,
                 'inspector': self.inspector,
                 'created': self.created,
+                'author': self.author,
                 'updated': self.updated,
                 'project_id': self.project_id,
             }
