@@ -121,14 +121,21 @@ class RFI(db.Model):
 class Submittal(db.Model):
     __tablename__ = 'submittals'
 
-    id = db.Column(db.Integer, primary_key = True, autoincrement = True)   
-    number = db.Column(db.Float, nullable = False)
+    id = db.Column(db.Integer, primary_key = True, autoincrement = True)
     title = db.Column (db.Text, nullable = False)
-    description = db.Column (db.Text, nullable = True)
-    author = db.Column (db.String(30), nullable = False)
-    company = db.Column (db.String(30), nullable = False)
+    number = db.Column(db.Float, nullable = False)
+    spec_section = db.Column (db.String(50), nullable = True)
+    type = db.Column (db.String(50), nullable = True)
+    submittal_person = db.Column (db.String(50), nullable = False)
+    submittal_date = db.Column(db.Date, nullable = False)
+    submittal_company = db.Column (db.String(50), nullable = False)
+    responsible_person = db.Column (db.String(50), nullable = True)
     due_date = db.Column(db.Date, nullable = False)
+    responsible_company = db.Column (db.String(50), nullable = True)
     status = db.Column (db.String(30), nullable = False)
+    description = db.Column (db.Text, nullable = True)
+   
+    author = db.Column (db.String(50), nullable = False)
     created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated = db.Column(db.DateTime, onupdate=datetime.utcnow)
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
@@ -136,14 +143,21 @@ class Submittal(db.Model):
     def serialize(self):
         
         return {
+
             'id': self.id,
-            'number': self.number,
             'title': self.title,
+            'number': self.number,
+            'spec_section': self.spec_section,
+            'type': self.type,
+            'submittal_person': self.submittal_person,
+            'submittal_date': self.submittal_date,
+            'submittal_company': self.submittal_company,
+            'responsible_person': self.responsible_person,
+            'due_date': self.due_date,
+            'responsible_company': self.responsible_company,
+            'status': self.status,
             'description': self.description,
             'author': self.author,
-            'company': self.company,
-            'due_date': self.due_date,
-            'status': self.status,
             'created': self.created,
             'updated': self.updated,
             'project_id': self.project_id,

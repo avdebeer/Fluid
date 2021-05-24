@@ -24,7 +24,7 @@ debug = DebugToolbarExtension(app)
 
 connect_db(app)
 
-db.drop_all() #DROPS ALL TABLES
+# db.drop_all() #DROPS ALL TABLES
 db.create_all() #CREATES ALL THE TABLES
 
 
@@ -148,6 +148,15 @@ def delete_rfi_record(record_id):
 
 # ********************* SUBMITTAL ROUTES ***************
 # *******************************************************
+@app.route('/project/submittal/<int:id>')
+@login_required
+def get_submittal_record(id):
+    
+    record = Submittal.query.get_or_404(id)
+    return jsonify(record.serialize())
+
+
+
 @app.route('/project/submittal', methods = ['POST'])
 @login_required
 def create_submittal_record():
@@ -156,16 +165,21 @@ def create_submittal_record():
     project_id = int(data['projectID'])
 
     new_submittal = Submittal(
-        number = data['number'],
         title = data['title'],
-        description = data['description'],
-        author = data['author'],
-        company = data['company'],
+        number = data['number'],
+        spec_section = data['spec_section'],
+        type = data['type'],
+        submittal_person = data['submittal_person'],
+        submittal_date = data['submittal_date'],
+        submittal_company = data['submittal_company'],
+        responsible_person = data['responsible_person'],
         due_date = data['due_date'],
+        responsible_company = data['responsible_company'],
         status = data['status'],
+        description = data['description'],
         project_id = project_id,
-
-        )
+        author = current_user.full_name
+    )
 
     db.session.add(new_submittal)
     db.session.commit()
@@ -181,13 +195,19 @@ def update_submittal_record():
 
     record_id = int(data['id'])
     record = Submittal.query.get_or_404(record_id)
-    record.number = data['number'],
+
     record.title = data['title'],
-    record.description = data['description'],
-    record.author = data['author'],
-    record.company = data['company'],
+    record.number = data['number'],
+    record.spec_section = data['spec_section'],
+    record.type = data['type'],
+    record.submittal_person = data['submittal_person'],
+    record.submittal_date = data['submittal_date'],
+    record.submittal_company = data['submittal_company'],
+    record.responsible_person = data['responsible_person'],
     record.due_date = data['due_date'],
+    record.responsible_company = data['responsible_company'],
     record.status = data['status'],
+    record.description = data['description'],
 
     db.session.commit()
     return jsonify("Updated record succesfully.")

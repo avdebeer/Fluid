@@ -26,9 +26,7 @@ $color-grey-light-2: #f4f2f2;
 $color-grey-light-3: #f0eeee;
 $color-grey-light-4: #ccc;
 
-$color-grey-dark-1: #999;
-$color-grey-dark-2: #777;
-$color-grey-dark-3: #333;
+$color-grey-dark-1: #708090;
 
 $shadow-dark: 0 2rem 6rem rgba(0, 0, 0, .3);
 $shadow-light-2: 0 2rem 5rem rgba(0, 0, 0, .06);
@@ -57,6 +55,12 @@ body {
 	font-size: 16px;
 	height: 100vh;
 	background-color: $color-white;
+}
+
+.login {
+	background-image: linear-gradient(to right bottom, rgba($color-primary-0, 0.80), rgba($color-primary-3, .8)),
+		url(https://images.unsplash.com/photo-1507099985932-87a4520ed1d5?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZHVjdGl2aXR5fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60);
+	background-size: cover;
 }
 
 .navbar {
@@ -97,8 +101,8 @@ body {
 	}
 }
 
-/* #################### User Dashboard ####################  */
-
+//////////////////////////////////////////////////////////////
+//USER DASHBOARD
 .user-dashboard {
 	display: flex;
 	flex-direction: column;
@@ -119,7 +123,7 @@ body {
 		margin: 0 2rem;
 		padding: 2rem;
 		border-radius: 1rem;
-		background-color: $color-grey-light-1;
+		background-color: $color-white;
 		box-shadow: $shadow-dark;
 
 		&--title {
@@ -127,7 +131,7 @@ body {
 			align-items: center;
 			margin-bottom: 2rem;
 			padding-bottom: 1rem;
-			border-bottom: 1px solid $color-grey-light-3;
+			border-bottom: $line2;
 
 			h2 {
 				margin-right: auto;
@@ -136,39 +140,26 @@ body {
 	}
 }
 
-.user-project-info {
+.project-details {
 	display: flex;
 	align-items: center;
-	color: $color-black;
-	background-color: $color-primary-0;
+	background-color: $color-primary-3;
 	padding: 1rem;
 	border-radius: 5px;
 	margin-bottom: 2rem;
 
-	&__data {
-		flex: 1 0;
-	}
+	&__title {
+		text-decoration: none;
+		color: $color-white;
+		margin-right: auto;
+		flex: 1 1;
 
-	&__buttons {
-		flex: 0 0;
-	}
-}
-
-/* #################### Project Dashboard ####################  */
-
-.project-title {
-	font-weight: 700;
-	text-transform: uppercase;
-	text-align: center;
-	margin: 2rem;
-	padding-bottom: 1rem;
-	border-bottom: $line;
-	color: $color-primary-2;
-
-	#project-id {
-		display: none;
+		&:hover {
+			color: #60e3d5;
+		}
 	}
 }
+
 //////////////////////////////////////////////////////////////
 //SIDE BAR & NAV
 .sidebar {
@@ -237,6 +228,21 @@ body {
 
 	button {
 		margin: auto 2rem 2rem;
+	}
+}
+//////////////////////////////////////////////////////////////
+//PROJECT DASHBOARD
+.project-title {
+	font-weight: 700;
+	text-transform: uppercase;
+	text-align: center;
+	margin: 2rem;
+	padding-bottom: 1rem;
+	border-bottom: $line;
+	color: $color-primary-2;
+
+	#project-id {
+		display: none;
 	}
 }
 
@@ -329,6 +335,10 @@ body {
 
 	&-edit {
 		fill: $color-primary-0;
+	}
+
+	&-edit2 {
+		fill: yellow;
 	}
 
 	&-delete {
@@ -463,7 +473,7 @@ body {
 
 .btn-tertiary {
 	color: $color-secondary-2;
-	background-color: $color-grey-dark-3;
+	background-color: $color-grey-dark-1;
 }
 
 /* #################### MODAL ####################  */

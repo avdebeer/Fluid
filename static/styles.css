@@ -19,6 +19,12 @@ body {
   background-color: #fff;
 }
 
+.login {
+  background-image: -webkit-gradient(linear, left top, right bottom, from(rgba(25, 159, 177, 0.8)), to(rgba(57, 77, 95, 0.8))), url(https://images.unsplash.com/photo-1507099985932-87a4520ed1d5?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZHVjdGl2aXR5fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60);
+  background-image: linear-gradient(to right bottom, rgba(25, 159, 177, 0.8), rgba(57, 77, 95, 0.8)), url(https://images.unsplash.com/photo-1507099985932-87a4520ed1d5?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZHVjdGl2aXR5fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60);
+  background-size: cover;
+}
+
 .navbar {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -67,7 +73,6 @@ body {
   color: white;
 }
 
-/* #################### User Dashboard ####################  */
 .user-dashboard {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -100,7 +105,7 @@ body {
   margin: 0 2rem;
   padding: 2rem;
   border-radius: 1rem;
-  background-color: #faf9f9;
+  background-color: #fff;
   -webkit-box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.3);
           box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.3);
 }
@@ -114,52 +119,37 @@ body {
           align-items: center;
   margin-bottom: 2rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid #f0eeee;
+  border-bottom: 1px solid #ccc;
 }
 
 .user-projects__area--title h2 {
   margin-right: auto;
 }
 
-.user-project-info {
+.project-details {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  color: #000;
-  background-color: #199fb1;
+  background-color: #394d5f;
   padding: 1rem;
   border-radius: 5px;
   margin-bottom: 2rem;
 }
 
-.user-project-info__data {
+.project-details__title {
+  text-decoration: none;
+  color: #fff;
+  margin-right: auto;
   -webkit-box-flex: 1;
-      -ms-flex: 1 0;
-          flex: 1 0;
+      -ms-flex: 1 1;
+          flex: 1 1;
 }
 
-.user-project-info__buttons {
-  -webkit-box-flex: 0;
-      -ms-flex: 0 0;
-          flex: 0 0;
-}
-
-/* #################### Project Dashboard ####################  */
-.project-title {
-  font-weight: 700;
-  text-transform: uppercase;
-  text-align: center;
-  margin: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid #f0eeee;
-  color: #0d5c75;
-}
-
-.project-title #project-id {
-  display: none;
+.project-details__title:hover {
+  color: #60e3d5;
 }
 
 .sidebar {
@@ -246,6 +236,20 @@ body {
 
 .side-nav button {
   margin: auto 2rem 2rem;
+}
+
+.project-title {
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f0eeee;
+  color: #0d5c75;
+}
+
+.project-title #project-id {
+  display: none;
 }
 
 .project-dashboard {
@@ -366,6 +370,10 @@ body {
 
 .icon-edit {
   fill: #199fb1;
+}
+
+.icon-edit2 {
+  fill: yellow;
 }
 
 .icon-delete {
@@ -519,7 +527,7 @@ body {
 
 .btn-tertiary {
   color: pink;
-  background-color: #333;
+  background-color: #708090;
 }
 
 /* #################### MODAL ####################  */

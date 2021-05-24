@@ -2,6 +2,7 @@
 function hideSections() {
 	$('#general').addClass('is-hidden');
 	$('#rfi').addClass('is-hidden');
+	$('#submittal').addClass('is-hidden');
 	$('#inspection').addClass('is-hidden');
 }
 
@@ -403,7 +404,7 @@ async function createRFIRecord() {
 				</div>
 				<div class="record__summary--data">
 					<span>Assigned:</span> 
-					<p id="rfi-responsible_person-${record.id}" >${record.responsible_person}</p>
+					<p id="rfi-responsible_company-${record.id}" >${record.responsible_company}</p>
 				</div>
 				<div class="record__summary--data">
 					<span>Due Date:</span> 
@@ -451,37 +452,36 @@ async function editRFIRecord() {
 
 	$(`#rfi-title-${id}`).text(title);
 	$(`#rfi-number-${id}`).text(number);
-	$(`#rfi-responsible_person-${id}`).text(responsible_person);
+	$(`#rfi-responsible_company-${id}`).text(responsible_company);
 	$(`#rfi-due_date-${id}`).text(due_date);
 	$(`#rfi-status-${id}`).text(status);
 }
 
 //////////////////////////////////////////////////////
-//SUBMITTAL FUNCTIONS NOTE THAT THESE ARE GOING TO BE VERY SIMILAR TO THE RFI FUNCTIONS
+//SUBMITTAL FUNCTIONS
 function newSubmittalForm() {
 	$('#modal-form').append(
-		`<h3 class="form__title">RFI</h3>
+		`<h3 class="form__title">Submittals</h3>
 
-		<div class="form__row">
-			<div class="form__group form__item">
-				<label for="title" class="form__label">Title</label>
-				<input id="title" type="text" class="form__field" autocomplete="off">
-			</div>
-			<div class="form__group form__item--15">
-				<label for="number" class="form__label">No.</label>
-				<input id="number" type="text" class="form__field" autocomplete="off">
-			</div>
+			<div class="form__group">
+			<label for="title" class="form__label">Title</label>
+			<input id="title" type="text" class="form__field" autocomplete="off">
 		</div>
 
 		<div class="form__row">
-			<div class="form__group form__item--50">
+			<div class="form__group form__item--25">
+				<label for="number" class="form__label">No.</label>
+				<input id="number" type="text" class="form__field" autocomplete="off">
+			</div>
+
+				<div class="form__group form__item--25">
 				<label for="spec-section" class="form__label">Spec Section</label>
 				<input id="spec-section" type="text" class="form__field" autocomplete="off">
 			</div>
 
-			<div class="form__group form__item">
-				<label for="drawing-number" class="form__label">Drawing No.</label>
-				<input id="drawing-number" type="text" class="form__field" autocomplete="off">
+				<div class="form__group form__item">
+				<label for="type" class="form__label">Type</label>
+				<input id="type" type="text" class="form__field" autocomplete="off">
 			</div>
 		</div>
 		
@@ -538,33 +538,33 @@ function newSubmittalForm() {
 }
 
 async function editSubmittalForm(id) {
-	const response = await axios.get(`/project/rfi/${id}`);
+	const response = await axios.get(`/project/submittal/${id}`);
 	const record = response.data;
 
 	$('#modal-form').append(
-		`<h3 class="form__title">RFI</h3>
+		`<h3 class="form__title">Submittals</h3>
 		<input id="id" type="hidden" value="${record.id}">
 
-		<div class="form__row">
-			<div class="form__group form__item">
-				<label for="title" class="form__label">Title</label>
-				<input id="title" type="text" class="form__field" autocomplete="off" value="${record.title}">
-			</div>
-			<div class="form__group form__item--15">
-				<label for="number" class="form__label">No.</label>
-				<input id="number" type="text" class="form__field" autocomplete="off" value="${record.number}">
-			</div>
+
+		<div class="form__group">
+			<label for="title" class="form__label">Title</label>
+			<input id="title" type="text" class="form__field" autocomplete="off" value="${record.title}">
 		</div>
 
 		<div class="form__row">
-			<div class="form__group form__item--50">
+			<div class="form__group form__item--25">
+				<label for="number" class="form__label">No.</label>
+				<input id="number" type="text" class="form__field" autocomplete="off" value="${record.number}">
+			</div>
+
+				<div class="form__group form__item--25">
 				<label for="spec-section" class="form__label">Spec Section</label>
 				<input id="spec-section" type="text" class="form__field" autocomplete="off" value="${record.spec_section}">
 			</div>
 
-			<div class="form__group form__item">
-				<label for="drawing-number" class="form__label">Drawing No.</label>
-				<input id="drawing-number" type="text" class="form__field" autocomplete="off" value="${record.drawing_number}">
+				<div class="form__group form__item">
+				<label for="type" class="form__label">Type</label>
+				<input id="type" type="text" class="form__field" autocomplete="off" value="${record.type}">
 			</div>
 		</div>
 		
@@ -624,7 +624,7 @@ async function createSubmittalRecord() {
 	const title = $('#title').val();
 	const number = $('#number').val();
 	const spec_section = $('#spec-section').val();
-	const drawing_number = $('#drawing-number').val();
+	const type = $('#type').val();
 	const submittal_person = $('#submittal-person').val();
 	const submittal_date = $('#submittal-date').val();
 	const submittal_company = $('#submittal-company').val();
@@ -635,11 +635,11 @@ async function createSubmittalRecord() {
 	const description = $('#description').val();
 	const projectID = $('#project-id').text();
 
-	const response = await axios.post('/project/rfi', {
+	const response = await axios.post('/project/submittal', {
 		title,
 		number,
 		spec_section,
-		drawing_number,
+		type,
 		submittal_person,
 		submittal_date,
 		submittal_company,
@@ -653,10 +653,10 @@ async function createSubmittalRecord() {
 
 	const record = response.data;
 
-	$('#rfi').append(
-		`<div id="rfi-${record.id}" class="record">
+	$('#submittal').append(
+		`<div id="submittal-${record.id}" class="record">
 			<div class="record__heading">
-				<h4 id="rfi-title-${record.id}">${record.title}</h4>
+				<h4 id="submittal-title-${record.id}">${record.title}</h4>
 				<a data-action="delete" data-id="${record.id}">
 					<svg class="icon icon-delete">
 						<use xlink:href="/static/img/sprite.svg#icon-trash"></use>
@@ -671,19 +671,23 @@ async function createSubmittalRecord() {
 			<div class="record__summary">
 				<div class="record__summary--data">
 					<span>#</span> 
-					<p id="rfi-number-${record.id}" >${record.number}</p>
+					<p id="submittal-number-${record.id}" >${record.number}</p>
+				</div>
+				<div class="record__summary--data">
+					<span>Type:</span> 
+					<p id="submittal-type-${record.id}" >${record.type}</p>
 				</div>
 				<div class="record__summary--data">
 					<span>Assigned:</span> 
-					<p id="rfi-responsible_person-${record.id}" >${record.responsible_person}</p>
+					<p id="submittal-responsible_company-${record.id}" >${record.responsible_company}</p>
 				</div>
 				<div class="record__summary--data">
 					<span>Due Date:</span> 
-					<p id="rfi-due_date-${record.id}" >${record.due_date}</p>
+					<p id="submittal-due_date-${record.id}" >${record.due_date}</p>
 				</div>
 				<div class="record__summary--data">
 					<span>Status:</span> 
-					<p id="rfi-status-${record.id}" >${record.status}</p>
+					<p id="submittal-status-${record.id}" >${record.status}</p>
 				</div>
 			</div>
 		</div>`
@@ -694,7 +698,7 @@ async function editSubmittalRecord() {
 	const title = $('#title').val();
 	const number = $('#number').val();
 	const spec_section = $('#spec-section').val();
-	const drawing_number = $('#drawing-number').val();
+	const type = $('#type').val();
 	const submittal_person = $('#submittal-person').val();
 	const submittal_date = $('#submittal-date').val();
 	const submittal_company = $('#submittal-company').val();
@@ -705,11 +709,11 @@ async function editSubmittalRecord() {
 	const description = $('#description').val();
 	const id = $('#id').val();
 
-	const response = await axios.patch('/project/rfi', {
+	const response = await axios.patch('/project/submittal', {
 		title,
 		number,
 		spec_section,
-		drawing_number,
+		type,
 		submittal_person,
 		submittal_date,
 		submittal_company,
@@ -721,9 +725,10 @@ async function editSubmittalRecord() {
 		id
 	});
 
-	$(`#rfi-title-${id}`).text(title);
-	$(`#rfi-number-${id}`).text(number);
-	$(`#rfi-responsible_person-${id}`).text(responsible_person);
-	$(`#rfi-due_date-${id}`).text(due_date);
-	$(`#rfi-status-${id}`).text(status);
+	$(`#submittal-title-${id}`).text(title);
+	$(`#submittal-number-${id}`).text(number);
+	$(`#submittal-type-${id}`).text(type);
+	$(`#submittal-responsible_company-${id}`).text(responsible_company);
+	$(`#submittal-due_date-${id}`).text(due_date);
+	$(`#submittal-status-${id}`).text(status);
 }

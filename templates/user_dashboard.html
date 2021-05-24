@@ -10,41 +10,29 @@
     <div class="user-projects">
         <div id="testing123" class="user-projects__area">
             <div class="user-projects__area--title">
-                <h2>Owner Projects</h2>
+                <h2>Project Owner</h2>
                 <button id="new-project-btn" class=" button btn-secondary">create</button>
             </div>
-            {% for project in projects %}
-                <div class="user-project-info">
-                    <div class="user-project-info__data">
-                        <h3>{{project.name}}</h3>
-                        <h5>Construction Budget: ${{project.budget}}</h5>
-                    </div>
-                    <div class="user-project-info__buttons">
-                        <a class="button btn-primary" href="/project/{{project.id}}">Manage</a>
-                        <a id="{{project.id}}" class="button btn-primary" data-action="edit">Edit</a>
-                        <a id="{{project.id}}" class="button btn-primary" data-action="delete">Delete</a>
 
-                         <a href="" class="side-nav__link">
-                            <svg class="side-nav__icon">
-                                <use xlink:href="/static/img/sprite.svg#icon-rocket"></use>
-                            </svg>
-                        </a>
-                         <a href="" class="side-nav__link">
-                            <svg class="side-nav__icon">
-                                <use xlink:href="/static/img/sprite.svg#icon-open-book"></use>
-                            </svg>
-                        </a>
-                         <a href="" class="side-nav__link">
-                            <svg class="side-nav__icon">
-                                <use xlink:href="/static/img/sprite.svg#icon-address"></use>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
+            {% for project in projects %}
+            <div class="project-details">
+                <a class="project-details__title" href="/project/{{project.id}}">{{project.name}}</a>
+                <a data-action="delete" data-id="{{project.id}}">
+                    <svg class="icon icon-delete">
+                        <use xlink:href="/static/img/sprite.svg#icon-trash"></use>
+                    </svg>
+                </a>
+                <a data-action="edit" data-id="{{project.id}}">
+                    <svg class="icon icon-edit">
+                        <use xlink:href="/static/img/sprite.svg#icon-pencil"></use>
+                    </svg>
+                </a>
+            </div>
             {% endfor %}
+
         </div>
         <div class="user-projects__area">
-            <h2>Member Projects</h2>
+            <h2>Project Member</h2>
         </div>
     </div>
 
