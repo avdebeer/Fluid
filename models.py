@@ -59,10 +59,15 @@ class Project(db.Model):
     __tablename__ = 'projects'
 
     id = db.Column (db.Integer, primary_key = True, autoincrement = True)
-    cip_id = db.Column (db.Text, unique = True)
     name = db.Column (db.Text, nullable = False)
-    description = db.Column (db.Text, nullable = True)
+    cip_id = db.Column (db.Text, unique = True)
     budget = db.Column(db.Integer, nullable = True)
+    street = db.Column (db.Text, nullable = True)
+    city = db.Column (db.Text, nullable = False)
+    zip_code = db.Column(db.Integer, nullable = False)
+    description = db.Column (db.Text, nullable = True)
+
+    
     owner = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 
@@ -70,6 +75,20 @@ class Project(db.Model):
     submittals = db.relationship('Submittal', cascade = 'all, delete')
     change_orders = db.relationship('ChangeOrder', cascade = 'all, delete')
     inspection_reports = db.relationship('InspectionReport', cascade = 'all, delete')
+
+    def serialize(self):
+        
+        return {
+            'id': self.id,
+            'name': self.name,
+            'cip_id': self.cip_id,
+            'budget': self.budget,
+            'street': self.street,
+            'city': self.city,
+            'zip_code': self.zip_code,
+            'description': self.description,
+            'owner': self.owner,
+        }
     
 
 class RFI(db.Model):
@@ -166,13 +185,20 @@ class Submittal(db.Model):
 class ChangeOrder(db.Model):
     __tablename__ = 'change_orders'
 
-    id = db.Column(db.Integer, primary_key = True, autoincrement = True)   
-    number = db.Column(db.Float, nullable = False)
+    id = db.Column(db.Integer, primary_key = True, autoincrement = True)
     title = db.Column (db.Text, nullable = False)
-    description = db.Column (db.Text, nullable = True)
-    author = db.Column (db.String(30), nullable = False)
-    company = db.Column (db.String(30), nullable = False)
+    number = db.Column(db.Float, nullable = False)
+    submittal_person = db.Column (db.String(50), nullable = False)
+    submittal_date = db.Column(db.Date, nullable = False)
+    submittal_company = db.Column (db.String(50), nullable = False)
+    responsible_person = db.Column (db.String(50), nullable = True)
+    responsible_company = db.Column (db.String(50), nullable = True)
+    type = db.Column (db.String(50), nullable = True)
+    cost = db.Column(db.Float, nullable = True)
     status = db.Column (db.String(30), nullable = False)
+    description = db.Column (db.Text, nullable = True)
+   
+    author = db.Column (db.String(50), nullable = False)
     created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated = db.Column(db.DateTime, onupdate=datetime.utcnow)
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
@@ -180,13 +206,20 @@ class ChangeOrder(db.Model):
     def serialize(self):
         
         return {
+
             'id': self.id,
-            'number': self.number,
             'title': self.title,
+            'number': self.number,
+            'submittal_person': self.submittal_person,
+            'submittal_date': self.submittal_date,
+            'submittal_company': self.submittal_company,
+            'responsible_person': self.responsible_person,
+            'responsible_company': self.responsible_company,
+            'type': self.type,
+            'cost': self.cost,
+            'status': self.status,
             'description': self.description,
             'author': self.author,
-            'company': self.company,
-            'status': self.status,
             'created': self.created,
             'updated': self.updated,
             'project_id': self.project_id,

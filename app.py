@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template, redirect, flash, url_for, session, jsonify
+import requests
 from flask_login import UserMixin, LoginManager, login_user, login_required, logout_user, current_user
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, User, Project,RFI, Submittal, ChangeOrder, InspectionReport
@@ -36,36 +37,84 @@ def home():
 
 # ********************* PROJECT ROUTES ******************
 # *******************************************************
+@app.route('/project/<project_id>')
+@login_required
+def manage_project(project_id):
+    project = Project.query.get_or_404(project_id)
+    session['project_id'] = project_id
+    APIKey = '6798297896f344a985a174057212605'
 
-@app.route('/project', methods=['GET', 'POST'])
+    response = requests.get(f'http://api.weatherapi.com/v1/current.json?key={APIKey}&q={project.zip_code}')
+    weather = response.json()
+
+    return render_template(
+        'project_dashboard.html', 
+        project = project,
+        weather = weather 
+        )
+
+
+@app.route('/project/edit/<project_id>')
+@login_required
+def get_project(project_id):
+    project = Project.query.get_or_404(project_id)
+    return jsonify(project.serialize())
+
+
+@app.route('/project', methods=['POST'])
 @login_required
 def project():
     '''text'''
     data = request.json
 
     new_project = Project(
-        cip_id = data['cip_id'], 
         name = data['name'], 
+        cip_id = data['cip_id'], 
         budget = data['budget'],
+        street = data['street'],
+        city = data['city'],
+        zip_code = data['zip_code'],
         description = data['description'], 
         owner = current_user.id 
         )
 
     db.session.add(new_project)
     db.session.commit()
-    return redirect('/dashboard')
 
+    return jsonify(new_project.serialize())
 
-@app.route('/project/<project_id>')
+@app.route('/project', methods=['PATCH'])
 @login_required
-def manage_project(project_id):
-    project = Project.query.get_or_404(project_id)
-    session['project_id'] = project_id
+def update_project():
+    '''text'''
+    data = request.json
+    project_id = int(data['id'])
 
-    return render_template(
-        'project_dashboard.html', 
-        project = project 
-        )
+    project = Project.query.get_or_404(project_id)
+
+    project.name = data['name'], 
+    project.cip_id = data['cip_id'], 
+    project.budget = data['budget'],
+    project.street = data['street'],
+    project.city = data['city'],
+    project.zip_code = data['zip_code'],
+    project.description = data['description'], 
+    db.session.commit()
+
+    return 'confirm'
+
+
+
+
+@app.route('/project/<project_id>', methods=['DELETE'])
+@login_required
+def delete_project(project_id):
+
+    project = Project.query.get_or_404(project_id)
+    db.session.delete(project)
+    db.session.commit()
+
+    return jsonify({'message': 'Project Deleted'})
 
 # ********************* RFI ROUTES ***************
 # *******************************************************
@@ -228,53 +277,73 @@ def delete_submittal_record(record_id):
 
 # ********************* CHANGE ORDER ROUTES ***************
 # *******************************************************
-@app.route('/project/change_order', methods = ['POST'])
+@app.route('/project/changeorder/<int:id>')
 @login_required
-def create_change_order_record():
+def get_changeorder_record(id):
+    
+    record = ChangeOrder.query.get_or_404(id)
+    return jsonify(record.serialize())
+
+
+
+@app.route('/project/changeorder', methods = ['POST'])
+@login_required
+def create_changeorder_record():
 
     data = request.json
     project_id = int(data['projectID'])
 
-    new_change_order = ChangeOrder(
-        number = data['number'],
+    new_changeorder = ChangeOrder(
         title = data['title'],
-        description = data['description'],
-        author = data['author'],
-        company = data['company'],
+        number = data['number'],
+        submittal_person = data['submittal_person'],
+        submittal_date = data['submittal_date'],
+        submittal_company = data['submittal_company'],
+        responsible_person = data['responsible_person'],
+        responsible_company = data['responsible_company'],
+        type = data['type'],
+        cost = data['cost'],
         status = data['status'],
+        description = data['description'],
         project_id = project_id,
+        author = current_user.full_name
+    )
 
-        )
-
-    db.session.add(new_change_order)
+    db.session.add(new_changeorder)
     db.session.commit()
-    return jsonify(new_change_order.serialize())
+    return jsonify(new_changeorder.serialize())
 
 
 
-@app.route('/project/change_order', methods = ['PATCH'])
+@app.route('/project/changeorder', methods = ['PATCH'])
 @login_required
-def update_change_order_record():
+def update_changeorder_record():
 
     data = request.json
 
     record_id = int(data['id'])
     record = ChangeOrder.query.get_or_404(record_id)
-    record.number = data['number'],
+
     record.title = data['title'],
-    record.description = data['description'],
-    record.author = data['author'],
-    record.company = data['company'],
+    record.number = data['number'],
+    record.submittal_person = data['submittal_person'],
+    record.submittal_date = data['submittal_date'],
+    record.submittal_company = data['submittal_company'],
+    record.responsible_person = data['responsible_person'],
+    record.responsible_company = data['responsible_company'],
+    record.type = data['type'],
+    record.cost = data['type'],
     record.status = data['status'],
+    record.description = data['description'],
 
     db.session.commit()
     return jsonify("Updated record succesfully.")
 
 
 
-@app.route('/project/change_order/<int:record_id>', methods = ['DELETE'])
+@app.route('/project/changeorder/<int:record_id>', methods = ['DELETE'])
 @login_required
-def delete_change_order_record(record_id):
+def delete_changeorder_record(record_id):
     '''Deletes an inspection report'''
 
     record = ChangeOrder.query.get_or_404(record_id)

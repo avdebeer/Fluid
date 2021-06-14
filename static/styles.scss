@@ -230,8 +230,55 @@ body {
 		margin: auto 2rem 2rem;
 	}
 }
+
+.weather {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: black;
+	margin-bottom: 3.5rem;
+}
 //////////////////////////////////////////////////////////////
 //PROJECT DASHBOARD
+
+.project-summary {
+	display: flex;
+	flex-direction: column;
+
+	&__heading {
+		color: $color-primary-2;
+		text-transform: uppercase;
+		font-weight: 300;
+		margin-bottom: 1rem;
+		border-bottom: $line;
+	}
+
+	&__description {
+		display: flex;
+		margin-bottom: 2rem;
+
+		&--text {
+			flex: 1 1 70%;
+			margin-right: 2rem;
+		}
+
+		&--weather {
+		}
+	}
+
+	&__test {
+		flex: 0 0 30%;
+	}
+}
+
+.project-weather {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	flex: 0 0 30%;
+	background-color: pink;
+}
+
 .project-title {
 	font-weight: 700;
 	text-transform: uppercase;
@@ -329,24 +376,6 @@ body {
 	}
 }
 
-.icon {
-	width: 1.75rem;
-	height: 1.75rem;
-
-	&-edit {
-		fill: $color-primary-0;
-	}
-
-	&-edit2 {
-		fill: yellow;
-	}
-
-	&-delete {
-		fill: red;
-		margin-right: 1.5rem;
-	}
-}
-
 .record-btn {
 	margin-right: 1rem;
 }
@@ -432,8 +461,8 @@ body {
 	}
 }
 
-/* #################### BUTTONS ####################  */
-
+//////////////////////////////////////////////////////////////
+//BUTTONS
 .button {
 	font-family: 'Roboto', sans-serif;
 	padding: .6rem 1.2rem;
@@ -476,7 +505,36 @@ body {
 	background-color: $color-grey-dark-1;
 }
 
+//////////////////////////////////////////////////////////////
+//ICONS
+.icon {
+	width: 1.75rem;
+	height: 1.75rem;
+
+	&-edit {
+		fill: $color-primary-0;
+	}
+
+	&-delete {
+		fill: red;
+		margin-right: 1.5rem;
+	}
+
+	&-exit {
+		fill: $color-black;
+		background-color: $color-grey-light-2;
+
+		&:hover {
+			width: 2rem;
+			height: 2rem;
+			fill: red;
+			scale: 1.1;
+		}
+	}
+}
 /* #################### MODAL ####################  */
+//////////////////////////////////////////////////////////////
+//MODAL
 .modal {
 	width: 100%;
 	height: 100%;

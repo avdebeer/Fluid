@@ -7,16 +7,16 @@
     <div class="user-profile">
         <H1>{{current_user.full_name}}</H1>
     </div>
-    <div class="user-projects">
-        <div id="testing123" class="user-projects__area">
+    <div id="projects-list" class="user-projects">
+        <div id="project-owner" class="user-projects__area">
             <div class="user-projects__area--title">
                 <h2>Project Owner</h2>
                 <button id="new-project-btn" class=" button btn-secondary">create</button>
             </div>
 
             {% for project in projects %}
-            <div class="project-details">
-                <a class="project-details__title" href="/project/{{project.id}}">{{project.name}}</a>
+            <div id="{{project.id}}" class="project-details">
+                <a id="{{project.id}}-title" class="project-details__title" href="/project/{{project.id}}">{{project.name}}</a>
                 <a data-action="delete" data-id="{{project.id}}">
                     <svg class="icon icon-delete">
                         <use xlink:href="/static/img/sprite.svg#icon-trash"></use>
@@ -31,8 +31,10 @@
             {% endfor %}
 
         </div>
-        <div class="user-projects__area">
-            <h2>Project Member</h2>
+        <div id="project-member" class="user-projects__area">
+            <div class="user-projects__area--title">
+                <h2>Project Member</h2>
+            </div>
         </div>
     </div>
 

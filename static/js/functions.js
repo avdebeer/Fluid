@@ -3,6 +3,7 @@ function hideSections() {
 	$('#general').addClass('is-hidden');
 	$('#rfi').addClass('is-hidden');
 	$('#submittal').addClass('is-hidden');
+	$('#changeorder').addClass('is-hidden');
 	$('#inspection').addClass('is-hidden');
 }
 
@@ -21,27 +22,31 @@ function closeModal() {
 //////////////////////////////////////////////////////
 //FUNCTION OBJECTS
 const newRecordForm = {
-	inspection : newInspectionForm,
-	rfi        : newRFIForm,
-	submittal  : newSubmittalForm
+	inspection   : newInspectionForm,
+	rfi          : newRFIForm,
+	submittal    : newSubmittalForm,
+	change_order : newChangeOrderForm
 };
 
 const editRecordForm = {
-	inspection : editInspectionForm,
-	rfi        : editRFIForm,
-	submittal  : editSubmittalForm
+	inspection   : editInspectionForm,
+	rfi          : editRFIForm,
+	submittal    : editSubmittalForm,
+	change_order : editChangeOrderForm
 };
 
 const createRecord = {
-	inspection : createInspectionRecord,
-	rfi        : createRFIRecord,
-	submittal  : createSubmittalRecord
+	inspection   : createInspectionRecord,
+	rfi          : createRFIRecord,
+	submittal    : createSubmittalRecord,
+	change_order : createChangeOrderRecord
 };
 
 const updateRecord = {
-	inspection : editInspectionRecord,
-	rfi        : editRFIRecord,
-	submittal  : editSubmittalRecord
+	inspection   : editInspectionRecord,
+	rfi          : editRFIRecord,
+	submittal    : editSubmittalRecord,
+	change_order : editChangeOrderRecord
 };
 
 //////////////////////////////////////////////////////
@@ -730,5 +735,262 @@ async function editSubmittalRecord() {
 	$(`#submittal-type-${id}`).text(type);
 	$(`#submittal-responsible_company-${id}`).text(responsible_company);
 	$(`#submittal-due_date-${id}`).text(due_date);
+	$(`#submittal-status-${id}`).text(status);
+}
+//////////////////////////////////////////////////////
+//CHANGE ORDER FUNCTIONS
+function newChangeOrderForm() {
+	$('#modal-form').append(
+		`<h3 class="form__title">Change Order</h3>
+
+		<div class="form__row">
+			<div class="form__group form__item--75">
+				<label for="title" class="form__label">Title</label>
+				<input id="title" type="text" class="form__field" autocomplete="off">
+			</div>
+
+			<div class="form__group form__item--25">
+				<label for="number" class="form__label">No.</label>
+				<input id="number" type="text" class="form__field" autocomplete="off">
+			</div>
+		</div>
+		
+		<div class="form__row">
+			<div class="form__group form__item--75">
+				<label for="submittal-person" class="form__label">Submitted By</label>
+				<input id="submittal-person" type="text" class="form__field" autocomplete="off">
+			</div>
+
+			<div class="form__group form__item">
+				<label for="submittal-date" class="form__label">Submittal Date</label>
+				<input id="submittal-date" type="date" class="form__field" autocomplete="off">
+			</div>
+		</div>
+		
+		<div class="form__group">
+			<label for="submittal-company" class="form__label">Company</label>
+			<input id="submittal-company" type="text" class="form__field" autocomplete="off">
+		</div>
+
+		<div class="form__row">
+			<div class="form__group form__item--50">
+				<label for="responsible-person" class="form__label">Assigned To</label>
+				<input id="responsible-person" type="text" class="form__field" autocomplete="off">
+			</div>
+
+			<div class="form__group form__item--50">
+				<label for="responsible-company" class="form__label">Company</label>
+				<input id="responsible-company" type="text" class="form__field" autocomplete="off">
+			</div>
+		</div> 
+		
+		<div class="form__row">
+			<div class="form__group form__item">
+				<label for="type" class="form__label">Type</label>
+				<input id="type" type="text" class="form__field" autocomplete="off">
+			</div>
+
+			<div class="form__group form__item">
+				<label for="cost" class="form__label">Cost</label>
+				<input id="cost" type="text" class="form__field" autocomplete="off">
+			</div>
+
+			<div class="form__group form__item">
+				<label for="status" class="form__label">Status</label>
+				<input id="status" type="text" class="form__field" autocomplete="off">
+			</div>
+		</div>
+
+		<div class="form__group">
+			<label for="description" class="form__label">Description</label>
+			<textarea id="description" class="form__textarea" cols="30" rows="10"></textarea>
+		</div>
+		
+		<div class="modal__buttons">
+			<button class="button btn-primary" data-action="close">Cancel</button>
+			<button class="button btn-secondary" data-action="submit">Submit</button>
+		</div>`
+	);
+}
+
+async function editChangeOrderForm(id) {
+	const response = await axios.get(`/project/changeorder/${id}`);
+	const record = response.data;
+
+	$('#modal-form').append(
+		`<h3 class="form__title">Change Order</h3>
+		<input id="id" type="hidden" value="${record.id}">
+
+		<div class="form__row">
+			<div class="form__group form__item--75">
+				<label for="title" class="form__label">Title</label>
+				<input id="title" type="text" class="form__field" autocomplete="off" value="${record.title}">
+			</div>
+
+			<div class="form__group form__item--25">
+				<label for="number" class="form__label">No.</label>
+				<input id="number" type="text" class="form__field" autocomplete="off" value="${record.number}">
+			</div>
+		</div>
+		
+		<div class="form__row">
+			<div class="form__group form__item--75">
+				<label for="submittal-person" class="form__label">Submitted By</label>
+				<input id="submittal-person" type="text" class="form__field" autocomplete="off" value="${record.submittal_person}">
+			</div>
+
+			<div class="form__group form__item">
+				<label for="submittal-date" class="form__label">Submittal Date</label>
+				<input id="submittal-date" type="date" class="form__field" autocomplete="off" value="${record.submittal_date}">
+			</div>
+		</div>
+		
+		<div class="form__group">
+			<label for="submittal-company" class="form__label">Company</label>
+			<input id="submittal-company" type="text" class="form__field" autocomplete="off" value="${record.submittal_company}">
+		</div>
+
+		<div class="form__row">
+			<div class="form__group form__item--50">
+				<label for="responsible-person" class="form__label">Assigned To</label>
+				<input id="responsible-person" type="text" class="form__field" autocomplete="off" value="${record.responsible_person}">
+			</div>
+
+			<div class="form__group form__item--50">
+				<label for="responsible-company" class="form__label">Company</label>
+				<input id="responsible-company" type="text" class="form__field" autocomplete="off" value="${record.responsible_company}">
+			</div>
+		</div> 
+		
+		<div class="form__row">
+			<div class="form__group form__item">
+				<label for="type" class="form__label">Type</label>
+				<input id="type" type="text" class="form__field" autocomplete="off" value="${record.type}">
+			</div>
+
+			<div class="form__group form__item">
+				<label for="cost" class="form__label">Cost</label>
+				<input id="cost" type="text" class="form__field" autocomplete="off" value="${record.cost}">
+			</div>
+
+			<div class="form__group form__item">
+				<label for="status" class="form__label">Status</label>
+				<input id="status" type="text" class="form__field" autocomplete="off" value="${record.status}">
+			</div>
+		</div>
+
+		<div class="form__group">
+			<label for="description" class="form__label">Description</label>
+			<textarea id="description" class="form__textarea" cols="30" rows="10">${record.description}</textarea>
+		</div>
+		
+		<div class="modal__buttons">
+			<button class="button btn-primary" data-action="close">Cancel</button>
+			<button class="button btn-secondary" data-action="update">Update</button>
+		</div>`
+	);
+}
+
+async function createChangeOrderRecord() {
+	const title = $('#title').val();
+	const number = $('#number').val();
+	const submittal_person = $('#submittal-person').val();
+	const submittal_date = $('#submittal-date').val();
+	const submittal_company = $('#submittal-company').val();
+	const responsible_person = $('#responsible-person').val();
+	const responsible_company = $('#responsible-company').val();
+	const type = $('#type').val();
+	const cost = $('#cost').val();
+	const status = $('#status').val();
+	const description = $('#description').val();
+	const projectID = $('#project-id').text();
+
+	const response = await axios.post('/project/changeorder', {
+		title,
+		number,
+		submittal_person,
+		submittal_date,
+		submittal_company,
+		responsible_person,
+		responsible_company,
+		type,
+		cost,
+		status,
+		description,
+		projectID
+	});
+
+	const record = response.data;
+
+	$('#submittal').append(
+		`<div id="submittal-${record.id}" class="record">
+			<div class="record__heading">
+				<h4 id="submittal-title-${record.id}">${record.title}</h4>
+				<a data-action="delete" data-id="${record.id}">
+					<svg class="icon icon-delete">
+						<use xlink:href="/static/img/sprite.svg#icon-trash"></use>
+					</svg>
+				</a>
+				<a data-action="edit" data-id="${record.id}">
+					<svg class="icon icon-edit">
+						<use xlink:href="/static/img/sprite.svg#icon-pencil"></use>
+					</svg>
+				</a>
+			</div>
+			<div class="record__summary">
+				<div class="record__summary--data">
+					<span>#</span> 
+					<p id="submittal-number-${record.id}" >${record.number}</p>
+				</div>
+				<div class="record__summary--data">
+					<span>Type:</span> 
+					<p id="submittal-type-${record.id}" >${record.type}</p>
+				</div>
+				<div class="record__summary--data">
+					<span>Assigned:</span> 
+					<p id="submittal-responsible_company-${record.id}" >${record.responsible_company}</p>
+				</div>
+				<div class="record__summary--data">
+					<span>Status:</span> 
+					<p id="submittal-status-${record.id}" >${record.status}</p>
+				</div>
+			</div>
+		</div>`
+	);
+}
+
+async function editChangeOrderRecord() {
+	const title = $('#title').val();
+	const number = $('#number').val();
+	const submittal_person = $('#submittal-person').val();
+	const submittal_date = $('#submittal-date').val();
+	const submittal_company = $('#submittal-company').val();
+	const responsible_person = $('#responsible-person').val();
+	const responsible_company = $('#responsible-company').val();
+	const type = $('#type').val();
+	const cost = $('#cost').val();
+	const status = $('#status').val();
+	const description = $('#description').val();
+	const id = $('#id').val();
+
+	const response = await axios.patch('/project/changeorder', {
+		title,
+		number,
+		submittal_person,
+		submittal_date,
+		submittal_company,
+		responsible_person,
+		responsible_company,
+		type,
+		cost,
+		status,
+		description,
+		id
+	});
+
+	$(`#submittal-title-${id}`).text(title);
+	$(`#submittal-number-${id}`).text(number);
+	$(`#submittal-type-${id}`).text(type);
+	$(`#submittal-responsible_company-${id}`).text(responsible_company);
 	$(`#submittal-status-${id}`).text(status);
 }

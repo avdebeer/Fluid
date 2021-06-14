@@ -238,6 +238,76 @@ body {
   margin: auto 2rem 2rem;
 }
 
+.weather {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: black;
+  margin-bottom: 3.5rem;
+}
+
+.project-summary {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.project-summary__heading {
+  color: #0d5c75;
+  text-transform: uppercase;
+  font-weight: 300;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #f0eeee;
+}
+
+.project-summary__description {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 2rem;
+}
+
+.project-summary__description--text {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 70%;
+          flex: 1 1 70%;
+  margin-right: 2rem;
+}
+
+.project-summary__test {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 30%;
+          flex: 0 0 30%;
+}
+
+.project-weather {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 30%;
+          flex: 0 0 30%;
+  background-color: pink;
+}
+
 .project-title {
   font-weight: 700;
   text-transform: uppercase;
@@ -363,24 +433,6 @@ body {
   margin-right: .5rem;
 }
 
-.icon {
-  width: 1.75rem;
-  height: 1.75rem;
-}
-
-.icon-edit {
-  fill: #199fb1;
-}
-
-.icon-edit2 {
-  fill: yellow;
-}
-
-.icon-delete {
-  fill: red;
-  margin-right: 1.5rem;
-}
-
 .record-btn {
   margin-right: 1rem;
 }
@@ -493,7 +545,6 @@ body {
   height: 12rem;
 }
 
-/* #################### BUTTONS ####################  */
 .button {
   font-family: 'Roboto', sans-serif;
   padding: .6rem 1.2rem;
@@ -528,6 +579,32 @@ body {
 .btn-tertiary {
   color: pink;
   background-color: #708090;
+}
+
+.icon {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.icon-edit {
+  fill: #199fb1;
+}
+
+.icon-delete {
+  fill: red;
+  margin-right: 1.5rem;
+}
+
+.icon-exit {
+  fill: #000;
+  background-color: #f4f2f2;
+}
+
+.icon-exit:hover {
+  width: 2rem;
+  height: 2rem;
+  fill: red;
+  scale: 1.1;
 }
 
 /* #################### MODAL ####################  */

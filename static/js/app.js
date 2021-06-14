@@ -11,9 +11,11 @@ $('.side-nav').on('click', (e) => {
 
 	if (activeSection === 'general') {
 		$('#modal-open').addClass('is-hidden');
+		$('#details').addClass('is-hidden');
 	}
 	else {
 		$('#modal-open').removeClass('is-hidden');
+		$('#details').removeClass('is-hidden');
 	}
 
 	$(`#${activeSection}`).removeClass('is-hidden');

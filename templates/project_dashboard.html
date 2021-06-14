@@ -8,7 +8,7 @@
 <div class="project-dashboard">
     <nav class="sidebar">
         <ul class="side-nav">
-            <li class="side-nav__item" id="menu-item-1" data-section='general'>
+            <li class="side-nav__item side-nav__item--active" id="menu-item-1" data-section='general'>
                 <a href="" class="side-nav__link">
                     <svg class="side-nav__icon">
                         <use xlink:href="/static/img/sprite.svg#icon-home"></use>
@@ -35,7 +35,7 @@
             <li class="side-nav__item" id="menu-item-4" data-section='change_order'>
                 <a href="" class="side-nav__link">
                     <svg class="side-nav__icon">
-                        <use xlink:href="/static/img/sprite.svg#icon-credit"></use>
+                        <use xlink:href="/static/img/sprite.svg#icon-chat"></use>
                         <span>Change Orders</span>
                     </svg>
                 </a>
@@ -51,23 +51,35 @@
         </ul>
         <button id="modal-open" class="button btn-secondary is-hidden" data-btn="create">New Record</button>
     </nav>
+
     <div id="content" class="project-dashboard__data">
 
         <!-- GENERAL SECTION -->
-        <div id="general" class="section-data">
-            <div class="div">
-                <h1>Project Address</h1>
-                <h1>Project Conditions</h1>
+        <div id="general" class="general-section">
+            <div class="project-summary">
+                <h2 class="project-summary__heading">Project Description</h2>
+                <div class="project-summary__description">
+                    <div class="project-summary__description--text">
+                        <p>{{project.description}}</p>
+                    </div>
+                    <div class="weather">
+                        <img src="{{weather.current.condition.icon}}" alt="">
+                        <h4>{{weather.current.condition.text}}</h4>
+                        <h4>{{weather.location.name}}</h4>
+                        <h4>Temp: {{weather.current.temp_f}}&#176 F</h4>
+                        <h4>{{weather.current.wind_mph}} mph - {{weather.current.wind_dir}}</h4>
+                        <h4>{{weather.current.humidity}}% Humidity</h4>
+                        <h4>{{weather.current.feelslike_f}}&#176 F</h4>
+                    </div>
+                 
+                </div>
+                <h2 class="project-summary__heading">Project Team</h2>
+                <h2 class="project-summary__heading">Project Overview</h2>
             </div>
-            <div class="div">
-                <h1>Project Team</h1>
-                <h1>Project Overview</h1>
-                <h1>Open Items</h1>
-            </div>
-          
+            
         </div>
        
-        <!-- RFI SECTION     -->
+        <!-- RFI SECTION -->
         <div id="rfi" class="section-data is-hidden">
             {% for record in project.rfis %}
             <div id="rfi-{{record.id}}" class="record">
@@ -106,7 +118,7 @@
             {% endfor %}
         </div>
 
-        <!-- SUBMITTAL SECTION     -->
+        <!-- SUBMITTAL SECTION -->
         <div id="submittal" class="section-data is-hidden">
             {% for record in project.submittals %}
             <div id="submittal-{{record.id}}" class="record">
@@ -149,6 +161,45 @@
             {% endfor %}
         </div>
 
+        <!-- CHANGE ORDER SECTION -->
+        <div id="changeorder" class="section-data is-hidden">
+            {% for record in project.change_orders %}
+            <div id="changeorder-{{record.id}}" class="record">
+                <div class="record__heading">
+                    <h4 id="changeorder-title-{{record.id}}">{{record.title}}</h4>
+                    <a data-action="delete" data-id="{{record.id}}">
+                        <svg class="icon icon-delete">
+                            <use xlink:href="/static/img/sprite.svg#icon-trash"></use>
+                        </svg>
+                    </a>
+                    <a data-action="edit" data-id="{{record.id}}">
+                        <svg class="icon icon-edit">
+                            <use xlink:href="/static/img/sprite.svg#icon-pencil"></use>
+                        </svg>
+                    </a>
+                </div>
+                <div class="record__summary">
+                    <div class="record__summary--data">
+                        <span>#</span> 
+                        <p id="changeorder-number-{{record.id}}" >{{record.number}}</p>
+                    </div>
+                    <div class="record__summary--data">
+                        <span>Type:</span> 
+                        <p id="changeorder-type-{{record.id}}" >{{record.type}}</p>
+                    </div>
+                    <div class="record__summary--data">
+                        <span>Assigned:</span> 
+                        <p id="changeorder-responsible_company-{{record.id}}" >{{record.responsible_company}}</p>
+                    </div>
+                    <div class="record__summary--data">
+                        <span>Status:</span> 
+                        <p id="changeorder-status-{{record.id}}" >{{record.status}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
         <!-- INSPECTION SECTION -->
         <div id="inspection" class="section-data is-hidden">
             {% for record in project.inspection_reports %}
@@ -181,11 +232,18 @@
         </div>
 
     </div>
-    <div id="details" class="project-dashboard__details">
+
+    <div id="details" class="project-dashboard__details is-hidden">
 
     </div>
+
      <div id="modal" class="modal">
         <div class="modal__container">
+            <div class="modal__container--close">
+                <svg class="icon icon-exit">
+                    <use xlink:href="/static/img/sprite.svg#icon-cross"></use>
+                </svg>
+            </div>
             <div id="modal-form" class="form">
             </div>
         </div>
