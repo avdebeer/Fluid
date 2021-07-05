@@ -8,10 +8,9 @@ $color-dark: #0b1320;
 $color-light: #fef9e6;
 
 $color-primary-0: #199fb1;
-$color-primary-1: #a5d1e1;
-$color-primary-2: #0d5c75;
+$color-primary-1: #0d5c75;
+$color-primary-2: #074b5f;
 $color-primary-3: #394d5f;
-$color-primary-4: #0567ab;
 
 $color-secondary-1: purple;
 $color-secondary-2: pink;
@@ -32,8 +31,9 @@ $shadow-dark: 0 2rem 6rem rgba(0, 0, 0, .3);
 $shadow-light-2: 0 2rem 5rem rgba(0, 0, 0, .06);
 $shadow-light-G1: 0 0 0 2px rgba(26, 115, 232, .4);
 $shadow-light-1: 0 1px 6px 0 rgba(32, 33, 36, .28);
+$shadow-light-selected: 0 1px 6px 0 $color-tertiary-1;
 $line: 2px solid $color-grey-light-3;
-$line2: 1px solid $color-grey-light-4;
+$line2: 2px solid $color-grey-light-3;
 $line3: 2px solid $color-grey-light-3;
 $line4: 2px solid $color-grey-light-3;
 
@@ -47,6 +47,7 @@ $line4: 2px solid $color-grey-light-3;
 
 html {
 	font-size: 62.5%;
+	box-sizing: border-box;
 }
 
 body {
@@ -100,18 +101,12 @@ body {
 		}
 	}
 }
-
 //////////////////////////////////////////////////////////////
 //USER DASHBOARD
 .user-dashboard {
 	display: flex;
 	flex-direction: column;
 	height: 100vh;
-}
-
-.user-profile {
-	margin: 2rem 2rem;
-	border-bottom: $line;
 }
 
 .user-projects {
@@ -143,19 +138,20 @@ body {
 .project-details {
 	display: flex;
 	align-items: center;
-	background-color: $color-primary-3;
 	padding: 1rem;
+	border: 1px solid $color-primary-1;
 	border-radius: 5px;
 	margin-bottom: 2rem;
 
 	&__title {
+		font-weight: 500;
 		text-decoration: none;
-		color: $color-white;
+		color: $color-primary-1;
 		margin-right: auto;
 		flex: 1 1;
 
 		&:hover {
-			color: #60e3d5;
+			color: $color-primary-0;
 		}
 	}
 }
@@ -164,11 +160,11 @@ body {
 //SIDE BAR & NAV
 .sidebar {
 	background-color: $color-primary-3;
-
 	flex: 0 0 18%;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	box-shadow: $shadow-light-1;
 }
 
 .side-nav {
@@ -231,62 +227,18 @@ body {
 	}
 }
 
-.weather {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	color: black;
-	margin-bottom: 3.5rem;
-}
 //////////////////////////////////////////////////////////////
 //PROJECT DASHBOARD
-
-.project-summary {
-	display: flex;
-	flex-direction: column;
-
-	&__heading {
-		color: $color-primary-2;
-		text-transform: uppercase;
-		font-weight: 300;
-		margin-bottom: 1rem;
-		border-bottom: $line;
-	}
-
-	&__description {
-		display: flex;
-		margin-bottom: 2rem;
-
-		&--text {
-			flex: 1 1 70%;
-			margin-right: 2rem;
-		}
-
-		&--weather {
-		}
-	}
-
-	&__test {
-		flex: 0 0 30%;
-	}
-}
-
-.project-weather {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	flex: 0 0 30%;
-	background-color: pink;
-}
 
 .project-title {
 	font-weight: 700;
 	text-transform: uppercase;
 	text-align: center;
+	letter-spacing: .2rem;
 	margin: 2rem;
 	padding-bottom: 1rem;
 	border-bottom: $line;
-	color: $color-primary-2;
+	color: $color-primary-1;
 
 	#project-id {
 		display: none;
@@ -297,31 +249,140 @@ body {
 	display: flex;
 	margin: 2rem;
 	height: 80vh;
+}
 
-	&__data {
-		display: flex;
-		flex: 1 0 40%;
-		flex-direction: column;
-		margin: 0 2rem;
-		padding: 1.5rem;
-		border-radius: 1rem;
-		border: 1px solid #394d5f;
+.general {
+	display: flex;
+	flex-direction: column;
+
+	&__section {
+		margin-bottom: 2rem;
 	}
 
-	&__details {
+	&__multisection {
 		display: flex;
-		flex: 1 1 40%;
-		border-radius: 1rem;
-		background-color: $color-grey-light-2;
+		margin-bottom: 2rem;
+	}
+
+	&__heading {
+		color: $color-primary-1;
+		text-transform: uppercase;
+		letter-spacing: .2rem;
+		font-weight: 400;
+		margin-bottom: 1rem;
+		border-bottom: $line;
+	}
+
+	&__weather {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-right: 3rem;
+		padding: 2rem;
+
+		&--description {
+			margin-bottom: 2rem;
+		}
 	}
 }
 
-.section-data {
-	padding-right: 2rem;
-	overflow-y: auto;
-	section:nth-child(even) {
-		background-color: $color-grey-light-1;
+.section {
+	display: flex;
+	flex-direction: column;
+	flex: 1 0 40%;
+	margin: 0 2rem;
+	padding: 1.5rem;
+	border-radius: 1rem;
+	border: 1px solid #394d5f;
+	box-shadow: $shadow-light-1;
+
+	&__records {
+		display: flex;
+		flex-direction: column;
+		overflow-y: auto;
+		margin-bottom: 2rem;
 	}
+
+	&__new-record {
+		display: flex;
+		justify-content: flex-end;
+		margin-top: auto;
+	}
+}
+
+.details {
+	display: flex;
+	flex-direction: column;
+	padding: 1.5rem;
+	flex: 1 1 40%;
+	border-radius: 1rem;
+	background-color: $color-white;
+	border: 1px solid #394d5f;
+	box-shadow: $shadow-light-1;
+	overflow-y: auto;
+
+	&__title {
+		color: $color-primary-2;
+		font-weight: 500;
+		margin-bottom: 1rem;
+		border-bottom: $line2;
+		text-transform: capitalize;
+	}
+
+	&__metadata {
+		display: flex;
+		justify-content: space-between;
+		font-size: 1.3rem;
+		margin-bottom: 1rem;
+	}
+
+	&__data {
+		font-size: 1.5rem;
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 2rem;
+	}
+
+	&__table {
+		margin-bottom: 1rem;
+
+		tr,
+		td {
+			padding: .3rem;
+			background-color: $color-grey-light-1;
+			border: 1px solid $color-grey-light-4;
+			border-collapse: collapse;
+			font-size: 1.3rem;
+		}
+
+		td:nth-child(1) {
+			width: 20%;
+		}
+	}
+
+	&__subheading {
+		margin-bottom: .3rem;
+	}
+
+	&__field-name {
+		color: $color-primary-1;
+	}
+}
+
+table,
+tr,
+td {
+	border: 1px solid $color-grey-light-4;
+	border-collapse: collapse;
+	font-size: 1.3rem;
+}
+
+.details-message {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 80vh;
+	color: $color-primary-1;
 }
 
 //////////////////////////////////////////////////////////////
@@ -333,16 +394,27 @@ body {
 	border: 1px solid $color-primary-3;
 	box-shadow: $shadow-light-1;
 
+	&:hover {
+		border: 2px solid $color-tertiary-1;
+	}
+
 	&__heading {
 		display: flex;
 		align-items: center;
 		padding-bottom: .5rem;
-		border-bottom: 1px solid $color-primary-3;
+		border-bottom: 1px solid $color-primary-1;
 		margin-bottom: .5rem;
 
 		h4 {
+			color: $color-primary-2;
+			text-transform: capitalize;
 			font-weight: 500;
 			margin-right: auto;
+
+			&:hover {
+				cursor: pointer;
+				color: $color-primary-1;
+			}
 		}
 	}
 
@@ -359,7 +431,7 @@ body {
 
 			&:not(:last-of-type) {
 				padding-right: 1rem;
-				border-right: 1px solid $color-primary-2;
+				border-right: 1px solid $color-primary-1;
 			}
 
 			&:not(:first-of-type) {
@@ -376,9 +448,6 @@ body {
 	}
 }
 
-.record-btn {
-	margin-right: 1rem;
-}
 //////////////////////////////////////////////////////////////
 //LOGIN AND REGISTER
 .admin-container {
@@ -407,6 +476,7 @@ body {
 	padding: 2rem;
 
 	&__title {
+		color: $color-primary-1;
 		text-align: center;
 		margin-bottom: 2rem;
 		padding-bottom: 1rem;
@@ -448,8 +518,9 @@ body {
 	}
 
 	&__label {
+		color: $color-primary-3;
 		font-size: 1.4rem;
-		font-weight: 300;
+		font-weight: 400;
 		margin-bottom: .5rem;
 	}
 
@@ -476,18 +547,25 @@ body {
 
 .btn-primary {
 	color: $color-white;
-	background-color: $color-primary-3;
+	background-color: $color-primary-1;
+	border: 2px solid $color-primary-1;
 
 	&:hover {
+		color: $color-primary-3;
+		background-color: $color-white;
+		border: 2px solid $color-primary-1;
 	}
 }
 
 .btn-primary-clear {
 	color: $color-primary-3;
-	background-color: transparent;
-	border: 1px solid $color-primary-3;
+	background-color: $color-white;
+	border: 2px solid $color-primary-1;
 
 	&:hover {
+		color: $color-white;
+		background-color: $color-primary-1;
+		border: 2px solid $color-primary-1;
 	}
 }
 
@@ -511,13 +589,20 @@ body {
 	width: 1.75rem;
 	height: 1.75rem;
 
+	&:hover {
+		cursor: pointer;
+	}
+
 	&-edit {
-		fill: $color-primary-0;
+		fill: $color-primary-1;
 	}
 
 	&-delete {
-		fill: red;
+		fill: rgb(200, 21, 21);
 		margin-right: 1.5rem;
+
+		&:hover {
+		}
 	}
 
 	&-exit {
@@ -554,12 +639,6 @@ body {
 		width: 33%;
 		box-shadow: $shadow-dark;
 		border-radius: 1rem;
-
-		&--close {
-			display: flex;
-			justify-content: flex-end;
-			margin: 1rem 2rem -2rem;
-		}
 	}
 
 	&__buttons {
@@ -578,4 +657,8 @@ body {
 
 .is-hidden {
 	display: none;
+}
+
+.selected {
+	border: 2px solid $color-tertiary-1;
 }

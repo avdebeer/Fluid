@@ -4,14 +4,13 @@
 
 {% block content %}
 <div class="user-dashboard">
-    <div class="user-profile">
-        <H1>{{current_user.full_name}}</H1>
-    </div>
+
     <div id="projects-list" class="user-projects">
         <div id="project-owner" class="user-projects__area">
+      
             <div class="user-projects__area--title">
                 <h2>Project Owner</h2>
-                <button id="new-project-btn" class=" button btn-secondary">create</button>
+                <button id="new-project-btn" class=" button btn-primary">new project</button>
             </div>
 
             {% for project in projects %}

@@ -49,201 +49,222 @@
                 </a>
             </li>
         </ul>
-        <button id="modal-open" class="button btn-secondary is-hidden" data-btn="create">New Record</button>
     </nav>
 
-    <div id="content" class="project-dashboard__data">
+    <div class="section">
+        <div id="content" class="section__records">
 
-        <!-- GENERAL SECTION -->
-        <div id="general" class="general-section">
-            <div class="project-summary">
-                <h2 class="project-summary__heading">Project Description</h2>
-                <div class="project-summary__description">
-                    <div class="project-summary__description--text">
-                        <p>{{project.description}}</p>
-                    </div>
-                    <div class="weather">
-                        <img src="{{weather.current.condition.icon}}" alt="">
-                        <h4>{{weather.current.condition.text}}</h4>
-                        <h4>{{weather.location.name}}</h4>
-                        <h4>Temp: {{weather.current.temp_f}}&#176 F</h4>
-                        <h4>{{weather.current.wind_mph}} mph - {{weather.current.wind_dir}}</h4>
-                        <h4>{{weather.current.humidity}}% Humidity</h4>
-                        <h4>{{weather.current.feelslike_f}}&#176 F</h4>
-                    </div>
-                 
+            <!-- GENERAL SECTION -->
+            <div id="general" class="general">
+                <div class="general__section">
+                    <h3   h3 class="general__heading">Project Description</h3>
+                    <p>{{project.description}}</p>
                 </div>
-                <h2 class="project-summary__heading">Project Team</h2>
-                <h2 class="project-summary__heading">Project Overview</h2>
+
+                <div class="general__multisection">
+                    <div>
+                        <h3 class="general__heading">Site Conditions</h3>
+                        <div class="general__weather">
+                            <!-- <h4>{{project.address}}</h4> -->
+                            <h4>{{weather.location.name}}, {{weather.location.region}}</h4>
+                            <img src="{{weather.current.condition.icon}}" alt="">
+                            <h4 class="general__weather--description">{{weather.current.condition.text}}</h4>
+                            <table>
+                                <tr>
+                                    <td>Temp:</td>
+                                    <td>{{weather.current.temp_f}}&#176 F</td>
+                                </tr>
+                                <tr>
+                                    <td>Feels Like:</td>
+                                    <td>{{weather.current.feelslike_f}}&#176 F</td>
+                                </tr>
+                                <tr>
+                                    <td>Wind:</td>
+                                    <td>{{weather.current.wind_mph}} mph - {{weather.current.wind_dir}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Humidity:</td>
+                                    <td>{{weather.current.humidity}}%</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="general__heading">Project Team</h3>
+                    </div>
+                </div>
+
+                <div class="general__section">
+                    <h3 class="general__heading">Project Overview</h3>
+                </div>
+
             </div>
-            
-        </div>
-       
-        <!-- RFI SECTION -->
-        <div id="rfi" class="section-data is-hidden">
-            {% for record in project.rfis %}
-            <div id="rfi-{{record.id}}" class="record">
-                <div class="record__heading">
-                    <h4 id="rfi-title-{{record.id}}">{{record.title}}</h4>
-                    <a data-action="delete" data-id="{{record.id}}">
-                        <svg class="icon icon-delete">
-                            <use xlink:href="/static/img/sprite.svg#icon-trash"></use>
-                        </svg>
-                    </a>
-                    <a data-action="edit" data-id="{{record.id}}">
-                        <svg class="icon icon-edit">
-                            <use xlink:href="/static/img/sprite.svg#icon-pencil"></use>
-                        </svg>
-                    </a>
+                
+            <!-- RFI SECTION -->
+            <div id="rfi" class="is-hidden">
+                {% for record in project.rfis %}
+                <div id="rfi-{{record.id}}" class="record">
+                    <div class="record__heading">
+                        <h4 id="rfi-title-{{record.id}}" data-id="{{record.id}}" data-record="details">{{record.title}}</h4>
+                        <a data-action="delete" data-id="{{record.id}}">
+                            <svg class="icon icon-delete">
+                                <use xlink:href="/static/img/sprite.svg#icon-trash"></use>
+                            </svg>
+                        </a>
+                        <a data-action="edit" data-id="{{record.id}}">
+                            <svg class="icon icon-edit">
+                                <use xlink:href="/static/img/sprite.svg#icon-pencil"></use>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="record__summary">
+                        <div class="record__summary--data">
+                            <span>#</span> 
+                            <p id="rfi-number-{{record.id}}" >{{record.number}}</p>
+                        </div>
+                        <div class="record__summary--data">
+                            <span>Assigned:</span> 
+                            <p id="rfi-responsible_company-{{record.id}}" >{{record.responsible_company}}</p>
+                        </div>
+                        <div class="record__summary--data">
+                            <span>Due Date:</span> 
+                            <p id="rfi-due_date-{{record.id}}" >{{record.due_date}}</p>
+                        </div>
+                        <div class="record__summary--data">
+                            <span>Status:</span> 
+                            <p id="rfi-status-{{record.id}}" >{{record.status}}</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="record__summary">
-                    <div class="record__summary--data">
-                        <span>#</span> 
-                        <p id="rfi-number-{{record.id}}" >{{record.number}}</p>
-                    </div>
-                    <div class="record__summary--data">
-                        <span>Assigned:</span> 
-                        <p id="rfi-responsible_company-{{record.id}}" >{{record.responsible_company}}</p>
-                    </div>
-                    <div class="record__summary--data">
-                        <span>Due Date:</span> 
-                        <p id="rfi-due_date-{{record.id}}" >{{record.due_date}}</p>
-                    </div>
-                    <div class="record__summary--data">
-                        <span>Status:</span> 
-                        <p id="rfi-status-{{record.id}}" >{{record.status}}</p>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
+
+            <!-- SUBMITTAL SECTION -->
+            <div id="submittal" class="is-hidden">
+                {% for record in project.submittals %}
+                <div id="submittal-{{record.id}}" class="record">
+                    <div class="record__heading">
+                        <h4 id="submittal-title-{{record.id}}" data-id="{{record.id}}" data-record="details">{{record.title}}</h4>
+                        <a data-action="delete" data-id="{{record.id}}">
+                            <svg class="icon icon-delete">
+                                <use xlink:href="/static/img/sprite.svg#icon-trash"></use>
+                            </svg>
+                        </a>
+                        <a data-action="edit" data-id="{{record.id}}">
+                            <svg class="icon icon-edit">
+                                <use xlink:href="/static/img/sprite.svg#icon-pencil"></use>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="record__summary">
+                        <div class="record__summary--data">
+                            <span>#</span> 
+                            <p id="submittal-number-{{record.id}}" >{{record.number}}</p>
+                        </div>
+                        <div class="record__summary--data">
+                            <span>Type:</span> 
+                            <p id="submittal-type-{{record.id}}" >{{record.type}}</p>
+                        </div>
+                        <div class="record__summary--data">
+                            <span>Assigned:</span> 
+                            <p id="submittal-responsible_company-{{record.id}}" >{{record.responsible_company}}</p>
+                        </div>
+                        <div class="record__summary--data">
+                            <span>Due Date:</span> 
+                            <p id="submittal-due_date-{{record.id}}" >{{record.due_date}}</p>
+                        </div>
+                        <div class="record__summary--data">
+                            <span>Status:</span> 
+                            <p id="submittal-status-{{record.id}}" >{{record.status}}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- CHANGE ORDER SECTION -->
+            <div id="change_order" class="is-hidden">
+                {% for record in project.change_orders %}
+                <div id="change_order-{{record.id}}" class="record">
+                    <div class="record__heading">
+                        <h4 id="change_order-title-{{record.id}}" data-id="{{record.id}}" data-record="details">{{record.title}}</h4>
+                        <a data-action="delete" data-id="{{record.id}}">
+                            <svg class="icon icon-delete">
+                                <use xlink:href="/static/img/sprite.svg#icon-trash"></use>
+                            </svg>
+                        </a>
+                        <a data-action="edit" data-id="{{record.id}}">
+                            <svg class="icon icon-edit">
+                                <use xlink:href="/static/img/sprite.svg#icon-pencil"></use>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="record__summary">
+                        <div class="record__summary--data">
+                            <span>#</span> 
+                            <p id="change_order-number-{{record.id}}" >{{record.number}}</p>
+                        </div>
+                        <div class="record__summary--data">
+                            <span>Type:</span> 
+                            <p id="change_order-type-{{record.id}}" >{{record.type}}</p>
+                        </div>
+                        <div class="record__summary--data">
+                            <span>Assigned:</span> 
+                            <p id="change_order-responsible_company-{{record.id}}" >{{record.responsible_company}}</p>
+                        </div>
+                        <div class="record__summary--data">
+                            <span>Status:</span> 
+                            <p id="change_order-status-{{record.id}}" >{{record.status}}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- INSPECTION SECTION -->
+            <div id="inspection" class="is-hidden">
+                {% for record in project.inspection_reports %}
+                <div id="inspection-{{record.id}}" class="record">
+                    <div class="record__heading">
+                        <h4 id="inspection-title-{{record.id}}" data-id="{{record.id}}" data-record="details">{{record.title}}</h4>
+                        <a data-action="delete" data-id="{{record.id}}">
+                            <svg class="icon icon-delete">
+                                <use xlink:href="/static/img/sprite.svg#icon-trash"></use>
+                            </svg>
+                        </a>
+                        <a data-action="edit" data-id="{{record.id}}">
+                            <svg class="icon icon-edit">
+                                <use xlink:href="/static/img/sprite.svg#icon-pencil"></use>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="record__summary">
+                        <div class="record__summary--data">
+                            <span>Date:</span> 
+                            <p id="inspection-date-{{record.id}}" >{{record.date}}</p>
+                        </div>
+                        <div class="record__summary--data">
+                            <span>Inspector:</span> 
+                            <p id="inspection-inspector-{{record.id}}" >{{record.inspector}}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
         </div>
 
-        <!-- SUBMITTAL SECTION -->
-        <div id="submittal" class="section-data is-hidden">
-            {% for record in project.submittals %}
-            <div id="submittal-{{record.id}}" class="record">
-                <div class="record__heading">
-                    <h4 id="submittal-title-{{record.id}}">{{record.title}}</h4>
-                    <a data-action="delete" data-id="{{record.id}}">
-                        <svg class="icon icon-delete">
-                            <use xlink:href="/static/img/sprite.svg#icon-trash"></use>
-                        </svg>
-                    </a>
-                    <a data-action="edit" data-id="{{record.id}}">
-                        <svg class="icon icon-edit">
-                            <use xlink:href="/static/img/sprite.svg#icon-pencil"></use>
-                        </svg>
-                    </a>
-                </div>
-                <div class="record__summary">
-                    <div class="record__summary--data">
-                        <span>#</span> 
-                        <p id="submittal-number-{{record.id}}" >{{record.number}}</p>
-                    </div>
-                    <div class="record__summary--data">
-                        <span>Type:</span> 
-                        <p id="submittal-type-{{record.id}}" >{{record.type}}</p>
-                    </div>
-                    <div class="record__summary--data">
-                        <span>Assigned:</span> 
-                        <p id="submittal-responsible_company-{{record.id}}" >{{record.responsible_company}}</p>
-                    </div>
-                    <div class="record__summary--data">
-                        <span>Due Date:</span> 
-                        <p id="submittal-due_date-{{record.id}}" >{{record.due_date}}</p>
-                    </div>
-                    <div class="record__summary--data">
-                        <span>Status:</span> 
-                        <p id="submittal-status-{{record.id}}" >{{record.status}}</p>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
+        <div class="section__new-record">
+            <button id="modal-open" class="button btn-primary is-hidden" data-btn="create">New Record</button>
         </div>
-
-        <!-- CHANGE ORDER SECTION -->
-        <div id="changeorder" class="section-data is-hidden">
-            {% for record in project.change_orders %}
-            <div id="changeorder-{{record.id}}" class="record">
-                <div class="record__heading">
-                    <h4 id="changeorder-title-{{record.id}}">{{record.title}}</h4>
-                    <a data-action="delete" data-id="{{record.id}}">
-                        <svg class="icon icon-delete">
-                            <use xlink:href="/static/img/sprite.svg#icon-trash"></use>
-                        </svg>
-                    </a>
-                    <a data-action="edit" data-id="{{record.id}}">
-                        <svg class="icon icon-edit">
-                            <use xlink:href="/static/img/sprite.svg#icon-pencil"></use>
-                        </svg>
-                    </a>
-                </div>
-                <div class="record__summary">
-                    <div class="record__summary--data">
-                        <span>#</span> 
-                        <p id="changeorder-number-{{record.id}}" >{{record.number}}</p>
-                    </div>
-                    <div class="record__summary--data">
-                        <span>Type:</span> 
-                        <p id="changeorder-type-{{record.id}}" >{{record.type}}</p>
-                    </div>
-                    <div class="record__summary--data">
-                        <span>Assigned:</span> 
-                        <p id="changeorder-responsible_company-{{record.id}}" >{{record.responsible_company}}</p>
-                    </div>
-                    <div class="record__summary--data">
-                        <span>Status:</span> 
-                        <p id="changeorder-status-{{record.id}}" >{{record.status}}</p>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-
-        <!-- INSPECTION SECTION -->
-        <div id="inspection" class="section-data is-hidden">
-            {% for record in project.inspection_reports %}
-            <div id="inspection-{{record.id}}" class="record">
-                <div class="record__heading">
-                    <h4 id="inspection-title-{{record.id}}">{{record.title}}</h4>
-                    <a data-action="delete" data-id="{{record.id}}">
-                        <svg class="icon icon-delete">
-                            <use xlink:href="/static/img/sprite.svg#icon-trash"></use>
-                        </svg>
-                    </a>
-                    <a data-action="edit" data-id="{{record.id}}">
-                        <svg class="icon icon-edit">
-                            <use xlink:href="/static/img/sprite.svg#icon-pencil"></use>
-                        </svg>
-                    </a>
-                </div>
-                <div class="record__summary">
-                    <div class="record__summary--data">
-                        <span>Date:</span> 
-                        <p id="inspection-date-{{record.id}}" >{{record.date}}</p>
-                    </div>
-                    <div class="record__summary--data">
-                        <span>Inspector:</span> 
-                        <p id="inspection-inspector-{{record.id}}" >{{record.inspector}}</p>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-
     </div>
 
-    <div id="details" class="project-dashboard__details is-hidden">
-
+    <div id="details" class="details is-hidden">
     </div>
 
      <div id="modal" class="modal">
         <div class="modal__container">
-            <div class="modal__container--close">
-                <svg class="icon icon-exit">
-                    <use xlink:href="/static/img/sprite.svg#icon-cross"></use>
-                </svg>
-            </div>
             <div id="modal-form" class="form">
             </div>
         </div>

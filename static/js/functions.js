@@ -3,8 +3,10 @@ function hideSections() {
 	$('#general').addClass('is-hidden');
 	$('#rfi').addClass('is-hidden');
 	$('#submittal').addClass('is-hidden');
-	$('#changeorder').addClass('is-hidden');
+	$('#change_order').addClass('is-hidden');
 	$('#inspection').addClass('is-hidden');
+	$('#details').empty();
+	$('#details').append('<h3 class="details-message"> Select a record to view additional details.</h3>');
 }
 
 function projectMenu() {
@@ -19,34 +21,63 @@ function closeModal() {
 	$('#modal').toggleClass('modal-visible');
 	setTimeout(() => $('#modal-form').empty(), 500);
 }
+
+function formatDate(Z) {
+	const date = new Date(Z);
+	const year = date.getFullYear();
+	const month = date.getMonth();
+	const day = date.getDate();
+
+	return year + '-' + pad(month + 1) + '-' + pad(day + 1);
+}
+
+function shortDate(Z) {
+	const date = new Date(Z);
+	const year = date.getFullYear();
+	const month = date.getMonth();
+	const day = date.getDate();
+
+	return year + '-' + pad(month + 1) + '-' + pad(day);
+}
+
+function pad(n) {
+	return n < 10 ? '0' + n : n;
+}
 //////////////////////////////////////////////////////
 //FUNCTION OBJECTS
 const newRecordForm = {
-	inspection   : newInspectionForm,
 	rfi          : newRFIForm,
 	submittal    : newSubmittalForm,
-	change_order : newChangeOrderForm
+	change_order : newChangeOrderForm,
+	inspection   : newInspectionForm
 };
 
 const editRecordForm = {
-	inspection   : editInspectionForm,
 	rfi          : editRFIForm,
 	submittal    : editSubmittalForm,
-	change_order : editChangeOrderForm
+	change_order : editChangeOrderForm,
+	inspection   : editInspectionForm
 };
 
 const createRecord = {
-	inspection   : createInspectionRecord,
 	rfi          : createRFIRecord,
 	submittal    : createSubmittalRecord,
-	change_order : createChangeOrderRecord
+	change_order : createChangeOrderRecord,
+	inspection   : createInspectionRecord
 };
 
 const updateRecord = {
-	inspection   : editInspectionRecord,
 	rfi          : editRFIRecord,
 	submittal    : editSubmittalRecord,
-	change_order : editChangeOrderRecord
+	change_order : editChangeOrderRecord,
+	inspection   : editInspectionRecord
+};
+
+const viewRecord = {
+	rfi          : viewRFIRecord,
+	submittal    : viewSubmittalRecord,
+	change_order : viewChangeOrderRecord,
+	inspection   : viewInspectionRecord
 };
 
 //////////////////////////////////////////////////////
@@ -76,8 +107,8 @@ function newInspectionForm() {
 		</div>
 		
 		<div class="modal__buttons">
-			<button class="button btn-primary" data-action="close">Cancel</button>
-			<button class="button btn-secondary" data-action="submit">Submit</button>
+			<button class="button btn-primary-clear" data-action="close">Cancel</button>
+			<button class="button btn-primary-clear" data-action="submit">Submit</button>
 		</div>`
 	);
 }
@@ -85,6 +116,8 @@ function newInspectionForm() {
 async function editInspectionForm(id) {
 	const response = await axios.get(`/project/inspection/${id}`);
 	const record = response.data;
+
+	const inspectionDate = formatDate(record.date);
 
 	$('#modal-form').append(
 		`<h3 class="form__title">Inspection</h3>
@@ -102,7 +135,7 @@ async function editInspectionForm(id) {
 
 		<div class="form__group">
 			<label for="date" class="form__label">Inspection Date</label>
-			<input id="date" type="date" class="form__field" autocomplete="off" value="${record.date}">
+			<input id="date" type="date" class="form__field" autocomplete="off" value="${inspectionDate}">
 		</div>
 
 		<div class="form__group">
@@ -111,8 +144,8 @@ async function editInspectionForm(id) {
 		</div>
 
 		<div class="modal__buttons">
-			<button class="button btn-primary" data-action="close">Cancel</button>
-			<button class="button btn-secondary" data-action="update">Update</button>
+			<button class="button btn-primary-clear" data-action="close">Cancel</button>
+			<button class="button btn-primary-clear" data-action="update">Update</button>
 		</div>`
 	);
 }
@@ -138,7 +171,7 @@ async function createInspectionRecord() {
 		`
 		<div id="inspection-${record.id}" class="record">
 			<div class="record__heading">
-				<h4 id="inspection-title-${record.id}">${record.title}</h4>
+				<h4 id="inspection-title-${record.id}" data-id="${record.id}" data-record="details">${record.title}</h4>
 				<a data-action="delete" data-id="${record.id}}">
 					<svg class="icon icon-delete">
 						<use xlink:href="/static/img/sprite.svg#icon-trash"></use>
@@ -183,6 +216,56 @@ async function editInspectionRecord() {
 	$(`#inspection-title-${id}`).text(`${title}`);
 	$(`#inspection-inspector-${id}`).text(`${inspector}`);
 	$(`#inspection-date-${id}`).text(`${date}`);
+}
+
+async function viewInspectionRecord(id) {
+	const response = await axios.get(`/project/inspection/${id}`);
+	const record = response.data;
+
+	const createdDate = shortDate(record.created);
+	const updatedDate = shortDate(record.updated);
+	const inspectionDate = formatDate(record.date);
+
+	$('#details').empty();
+	$('#details').append(`
+		<h3 class="details__title">${record.title}</h3>
+		<div class="details__metadata">
+			<div>
+				<span class="details__field-name">Record No.:</span> 
+				<span>${record.number}</span>
+			</div>
+			<div>
+				<span class="details__field-name">Created By:</span> 
+				<span>${record.author}</span>
+			</div>
+			<div>
+				<span class="details__field-name">Created:</span> 
+				<span>${createdDate}</span>
+			</div>
+			<div>
+				<span class="details__field-name">Modified:</span> 
+				<span>${updatedDate}</span>
+			</div>
+		</div>
+		
+		<div class="details__data">
+			<h4 class="details__subheading">Details</h4>
+			<table class="details__table">
+				<tr>
+					<td class="details__field-name">Inspector:</td>
+					<td>${record.inspector} </td>
+				</tr>
+				<tr>
+					<td class="details__field-name">Inspection Date:</td>
+					<td>${inspectionDate} </td>
+				</tr>
+			</table>
+			
+			<h4 class="details__subheading">Description</h4>
+    		<p>${record.description}</p>
+		</div>
+		
+	`);
 }
 
 async function deleteRecord(id) {
@@ -265,8 +348,8 @@ function newRFIForm() {
 		</div>
 		
 		<div class="modal__buttons">
-			<button class="button btn-primary" data-action="close">Cancel</button>
-			<button class="button btn-secondary" data-action="submit">Submit</button>
+			<button class="button btn-primary-clear" data-action="close">Cancel</button>
+			<button class="button btn-primary-clear" data-action="submit">Submit</button>
 		</div>`
 	);
 }
@@ -274,6 +357,9 @@ function newRFIForm() {
 async function editRFIForm(id) {
 	const response = await axios.get(`/project/rfi/${id}`);
 	const record = response.data;
+
+	const submittalDate = formatDate(record.submittal_date);
+	const dueDate = formatDate(record.due_date);
 
 	$('#modal-form').append(
 		`<h3 class="form__title">RFI</h3>
@@ -310,7 +396,7 @@ async function editRFIForm(id) {
 
 			<div class="form__group form__item">
 				<label for="submittal-date" class="form__label">Submittal Date</label>
-				<input id="submittal-date" type="date" class="form__field" autocomplete="off" value="${record.submittal_date}">
+				<input id="submittal-date" type="date" class="form__field" autocomplete="off" value="${submittalDate}">
 			</div>
 		</div>
 		
@@ -326,7 +412,7 @@ async function editRFIForm(id) {
 			</div>
 			<div class="form__group form__item">
 				<label for="due_date" class="form__label">Due Date</label>
-				<input id="due_date" type="date" class="form__field" autocomplete="off" value="${record.due_date}">
+				<input id="due_date" type="date" class="form__field" autocomplete="off" value="${dueDate}">
 			</div>
 		</div> 
 		
@@ -348,8 +434,8 @@ async function editRFIForm(id) {
 		</div>
 		
 		<div class="modal__buttons">
-			<button class="button btn-primary" data-action="close">Cancel</button>
-			<button class="button btn-secondary" data-action="update">Update</button>
+			<button class="button btn-primary-clear" data-action="close">Cancel</button>
+			<button class="button btn-primary-clear" data-action="update">Update</button>
 		</div>`
 	);
 }
@@ -390,7 +476,7 @@ async function createRFIRecord() {
 	$('#rfi').append(
 		`<div id="rfi-${record.id}" class="record">
 			<div class="record__heading">
-				<h4 id="rfi-title-${record.id}">${record.title}</h4>
+				<h4 id="rfi-title-${record.id}" data-id="${record.id}" data-record="details">${record.title}</h4>
 				<a data-action="delete" data-id="${record.id}">
 					<svg class="icon icon-delete">
 						<use xlink:href="/static/img/sprite.svg#icon-trash"></use>
@@ -460,6 +546,94 @@ async function editRFIRecord() {
 	$(`#rfi-responsible_company-${id}`).text(responsible_company);
 	$(`#rfi-due_date-${id}`).text(due_date);
 	$(`#rfi-status-${id}`).text(status);
+}
+
+async function viewRFIRecord(id) {
+	const response = await axios.get(`/project/rfi/${id}`);
+	const record = response.data;
+
+	const createdDate = shortDate(record.created);
+	const updatedDate = shortDate(record.updated);
+	const submittalDate = formatDate(record.submittal_date);
+	const dueDate = formatDate(record.due_date);
+
+	$('#details').empty();
+	$('#details').append(`
+		<h3 class="details__title">${record.title}</h3>
+		<div class="details__metadata">
+			<div>
+				<span class="details__field-name">RFI No.:</span> 
+				<span>${record.number}</span>
+			</div>
+			<div>
+				<span class="details__field-name">Created By:</span> 
+				<span>${record.author}</span>
+			</div>
+			<div>
+				<span class="details__field-name">Created:</span> 
+				<span>${createdDate}</span>
+			</div>
+			<div>
+				<span class="details__field-name">Modified:</span> 
+				<span>${updatedDate}</span>
+			</div>
+		</div>
+		
+		<div class="details__data">
+			<h4 class="details__subheading">Submission</h4>
+			<table class="details__table">
+				<tr>
+					<td class="details__field-name">Submitted By:</td>
+					<td>${record.submittal_person}</td>
+				</tr>
+				<tr>
+					<td class="details__field-name">Company:</td>
+					<td>${record.submittal_company}</td>
+				</tr>
+				<tr>
+					<td class="details__field-name">Date:</td>
+					<td>${submittalDate}</td>
+				</tr>
+			</table>
+
+			<h4 class="details__subheading">Assignee</h4>
+			<table class="details__table">
+				<tr>
+					<td class="details__field-name">Assigned To:</td>
+					<td>${record.responsible_person}</td>
+				</tr>
+				<tr>
+					<td class="details__field-name">Company:</td>
+					<td>${record.responsible_company}</td>
+				</tr>
+
+				<tr>
+					<td class="details__field-name">Due Date:</td>
+					<td>${dueDate}</td>
+				</tr>
+			</table>
+
+			<h4 class="details__subheading">Details</h4>
+			<table class="details__table">
+				<tr>
+					<td class="details__field-name">Spec Section:</td>
+					<td>${record.spec_section} </td>
+				</tr>
+				<tr>
+					<td class="details__field-name">Drawing No.:</td>
+					<td>${record.drawing_number} </td>
+				</tr>
+				<tr>
+					<td class="details__field-name">Status:</td>
+					<td>${record.status} </td>
+				</tr>
+			</table>
+			
+			<h4 class="details__subheading">Description</h4>
+    		<p>${record.description}</p>
+		</div>
+		
+	`);
 }
 
 //////////////////////////////////////////////////////
@@ -536,8 +710,8 @@ function newSubmittalForm() {
 		</div>
 		
 		<div class="modal__buttons">
-			<button class="button btn-primary" data-action="close">Cancel</button>
-			<button class="button btn-secondary" data-action="submit">Submit</button>
+			<button class="button btn-primary-clear" data-action="close">Cancel</button>
+			<button class="button btn-primary-clear" data-action="submit">Submit</button>
 		</div>`
 	);
 }
@@ -545,6 +719,8 @@ function newSubmittalForm() {
 async function editSubmittalForm(id) {
 	const response = await axios.get(`/project/submittal/${id}`);
 	const record = response.data;
+	const submittalDate = formatDate(record.submittal_date);
+	const dueDate = formatDate(record.due_date);
 
 	$('#modal-form').append(
 		`<h3 class="form__title">Submittals</h3>
@@ -581,7 +757,7 @@ async function editSubmittalForm(id) {
 
 			<div class="form__group form__item">
 				<label for="submittal-date" class="form__label">Submittal Date</label>
-				<input id="submittal-date" type="date" class="form__field" autocomplete="off" value="${record.submittal_date}">
+				<input id="submittal-date" type="date" class="form__field" autocomplete="off" value="${submittalDate}">
 			</div>
 		</div>
 		
@@ -597,7 +773,7 @@ async function editSubmittalForm(id) {
 			</div>
 			<div class="form__group form__item">
 				<label for="due_date" class="form__label">Due Date</label>
-				<input id="due_date" type="date" class="form__field" autocomplete="off" value="${record.due_date}">
+				<input id="due_date" type="date" class="form__field" autocomplete="off" value="${dueDate}">
 			</div>
 		</div> 
 		
@@ -619,8 +795,8 @@ async function editSubmittalForm(id) {
 		</div>
 		
 		<div class="modal__buttons">
-			<button class="button btn-primary" data-action="close">Cancel</button>
-			<button class="button btn-secondary" data-action="update">Update</button>
+			<button class="button btn-primary-clear" data-action="close">Cancel</button>
+			<button class="button btn-primary-clear" data-action="update">Update</button>
 		</div>`
 	);
 }
@@ -661,7 +837,7 @@ async function createSubmittalRecord() {
 	$('#submittal').append(
 		`<div id="submittal-${record.id}" class="record">
 			<div class="record__heading">
-				<h4 id="submittal-title-${record.id}">${record.title}</h4>
+				<h4 id="submittal-title-${record.id}" data-id="${record.id}" data-record="details">${record.title}</h4>
 				<a data-action="delete" data-id="${record.id}">
 					<svg class="icon icon-delete">
 						<use xlink:href="/static/img/sprite.svg#icon-trash"></use>
@@ -737,6 +913,95 @@ async function editSubmittalRecord() {
 	$(`#submittal-due_date-${id}`).text(due_date);
 	$(`#submittal-status-${id}`).text(status);
 }
+
+async function viewSubmittalRecord(id) {
+	const response = await axios.get(`/project/submittal/${id}`);
+	const record = response.data;
+
+	const createdDate = shortDate(record.created);
+	const updatedDate = shortDate(record.updated);
+	const submittalDate = formatDate(record.submittal_date);
+	const dueDate = formatDate(record.due_date);
+
+	$('#details').empty();
+	$('#details').append(`
+		<h3 class="details__title">${record.title}</h3>
+		<div class="details__metadata">
+			<div>
+				<span class="details__field-name">Submittal No.:</span> 
+				<span>${record.number}</span>
+			</div>
+			<div>
+				<span class="details__field-name">Created By:</span> 
+				<span>${record.author}</span>
+			</div>
+			<div>
+				<span class="details__field-name">Created:</span> 
+				<span>${createdDate}</span>
+			</div>
+			<div>
+				<span class="details__field-name">Modified:</span> 
+				<span>${updatedDate}</span>
+			</div>
+		</div>
+		
+		<div class="details__data">
+			<h4 class="details__subheading">Submission</h4>
+			<table class="details__table">
+				<tr>
+					<td class="details__field-name">Submitted By:</td>
+					<td>${record.submittal_person}</td>
+				</tr>
+				<tr>
+					<td class="details__field-name">Company:</td>
+					<td>${record.submittal_company}</td>
+				</tr>
+				<tr>
+					<td class="details__field-name">Date:</td>
+					<td>${submittalDate}</td>
+				</tr>
+			</table>
+
+			<h4 class="details__subheading">Assignee</h4>
+			<table class="details__table">
+				<tr>
+					<td class="details__field-name">Assigned To:</td>
+					<td>${record.responsible_person}</td>
+				</tr>
+				<tr>
+					<td class="details__field-name">Company:</td>
+					<td>${record.responsible_company}</td>
+				</tr>
+
+				<tr>
+					<td class="details__field-name">Due Date:</td>
+					<td>${dueDate}</td>
+				</tr>
+			</table>
+
+			<h4 class="details__subheading">Details</h4>
+			<table class="details__table">
+				<tr>
+					<td class="details__field-name">Submittal Type:</td>
+					<td>${record.type} </td>
+				</tr>
+				<tr>
+					<td class="details__field-name">Spec Section:</td>
+					<td>${record.spec_section} </td>
+				</tr>
+
+				<tr>
+					<td class="details__field-name">Status:</td>
+					<td>${record.status} </td>
+				</tr>
+			</table>
+			
+			<h4 class="details__subheading">Description</h4>
+    		<p>${record.description}</p>
+		</div>
+		
+	`);
+}
 //////////////////////////////////////////////////////
 //CHANGE ORDER FUNCTIONS
 function newChangeOrderForm() {
@@ -807,15 +1072,16 @@ function newChangeOrderForm() {
 		</div>
 		
 		<div class="modal__buttons">
-			<button class="button btn-primary" data-action="close">Cancel</button>
-			<button class="button btn-secondary" data-action="submit">Submit</button>
+			<button class="button btn-primary-clear" data-action="close">Cancel</button>
+			<button class="button btn-primary-clear" data-action="submit">Submit</button>
 		</div>`
 	);
 }
 
 async function editChangeOrderForm(id) {
-	const response = await axios.get(`/project/changeorder/${id}`);
+	const response = await axios.get(`/project/change_order/${id}`);
 	const record = response.data;
+	const submittalDate = formatDate(record.submittal_date);
 
 	$('#modal-form').append(
 		`<h3 class="form__title">Change Order</h3>
@@ -841,7 +1107,7 @@ async function editChangeOrderForm(id) {
 
 			<div class="form__group form__item">
 				<label for="submittal-date" class="form__label">Submittal Date</label>
-				<input id="submittal-date" type="date" class="form__field" autocomplete="off" value="${record.submittal_date}">
+				<input id="submittal-date" type="date" class="form__field" autocomplete="off" value="${submittalDate}">
 			</div>
 		</div>
 		
@@ -885,8 +1151,8 @@ async function editChangeOrderForm(id) {
 		</div>
 		
 		<div class="modal__buttons">
-			<button class="button btn-primary" data-action="close">Cancel</button>
-			<button class="button btn-secondary" data-action="update">Update</button>
+			<button class="button btn-primary-clear" data-action="close">Cancel</button>
+			<button class="button btn-primary-clear" data-action="update">Update</button>
 		</div>`
 	);
 }
@@ -905,7 +1171,7 @@ async function createChangeOrderRecord() {
 	const description = $('#description').val();
 	const projectID = $('#project-id').text();
 
-	const response = await axios.post('/project/changeorder', {
+	const response = await axios.post('/project/change_order', {
 		title,
 		number,
 		submittal_person,
@@ -922,10 +1188,10 @@ async function createChangeOrderRecord() {
 
 	const record = response.data;
 
-	$('#submittal').append(
-		`<div id="submittal-${record.id}" class="record">
+	$('#change_order').append(
+		`<div id="change_order-${record.id}" class="record">
 			<div class="record__heading">
-				<h4 id="submittal-title-${record.id}">${record.title}</h4>
+				<h4 id="change_order-title-${record.id}" data-id="${record.id}" data-record="details">${record.title}</h4>
 				<a data-action="delete" data-id="${record.id}">
 					<svg class="icon icon-delete">
 						<use xlink:href="/static/img/sprite.svg#icon-trash"></use>
@@ -940,19 +1206,19 @@ async function createChangeOrderRecord() {
 			<div class="record__summary">
 				<div class="record__summary--data">
 					<span>#</span> 
-					<p id="submittal-number-${record.id}" >${record.number}</p>
+					<p id="change_order-number-${record.id}" >${record.number}</p>
 				</div>
 				<div class="record__summary--data">
 					<span>Type:</span> 
-					<p id="submittal-type-${record.id}" >${record.type}</p>
+					<p id="change_order-type-${record.id}" >${record.type}</p>
 				</div>
 				<div class="record__summary--data">
 					<span>Assigned:</span> 
-					<p id="submittal-responsible_company-${record.id}" >${record.responsible_company}</p>
+					<p id="change_order-responsible_company-${record.id}" >${record.responsible_company}</p>
 				</div>
 				<div class="record__summary--data">
 					<span>Status:</span> 
-					<p id="submittal-status-${record.id}" >${record.status}</p>
+					<p id="change_order-status-${record.id}" >${record.status}</p>
 				</div>
 			</div>
 		</div>`
@@ -973,7 +1239,7 @@ async function editChangeOrderRecord() {
 	const description = $('#description').val();
 	const id = $('#id').val();
 
-	const response = await axios.patch('/project/changeorder', {
+	const response = await axios.patch('/project/change_order', {
 		title,
 		number,
 		submittal_person,
@@ -988,9 +1254,92 @@ async function editChangeOrderRecord() {
 		id
 	});
 
-	$(`#submittal-title-${id}`).text(title);
-	$(`#submittal-number-${id}`).text(number);
-	$(`#submittal-type-${id}`).text(type);
-	$(`#submittal-responsible_company-${id}`).text(responsible_company);
-	$(`#submittal-status-${id}`).text(status);
+	$(`#change_order-title-${id}`).text(title);
+	$(`#change_order-number-${id}`).text(number);
+	$(`#change_order-type-${id}`).text(type);
+	$(`#change_order-responsible_company-${id}`).text(responsible_company);
+	$(`#change_order-status-${id}`).text(status);
+}
+
+async function viewChangeOrderRecord(id) {
+	const response = await axios.get(`/project/change_order/${id}`);
+	const record = response.data;
+
+	const createdDate = shortDate(record.created);
+	const updatedDate = shortDate(record.updated);
+	const submittalDate = formatDate(record.submittal_date);
+	const dueDate = formatDate(record.due_date);
+
+	$('#details').empty();
+	$('#details').append(`
+		<h3 class="details__title">${record.title}</h3>
+		<div class="details__metadata">
+			<div>
+				<span class="details__field-name">Change Order No.:</span> 
+				<span>${record.number}</span>
+			</div>
+			<div>
+				<span class="details__field-name">Created By:</span> 
+				<span>${record.author}</span>
+			</div>
+			<div>
+				<span class="details__field-name">Created:</span> 
+				<span>${createdDate}</span>
+			</div>
+			<div>
+				<span class="details__field-name">Modified:</span> 
+				<span>${updatedDate}</span>
+			</div>
+		</div>
+		
+		<div class="details__data">
+			<h4 class="details__subheading">Submission</h4>
+			<table class="details__table">
+				<tr>
+					<td class="details__field-name">Submitted By:</td>
+					<td>${record.submittal_person}</td>
+				</tr>
+				<tr>
+					<td class="details__field-name">Company:</td>
+					<td>${record.submittal_company}</td>
+				</tr>
+				<tr>
+					<td class="details__field-name">Date:</td>
+					<td>${submittalDate}</td>
+				</tr>
+			</table>
+
+			<h4 class="details__subheading">Assignee</h4>
+			<table class="details__table">
+				<tr>
+					<td class="details__field-name">Assigned To:</td>
+					<td>${record.responsible_person}</td>
+				</tr>
+				<tr>
+					<td class="details__field-name">Company:</td>
+					<td>${record.responsible_company}</td>
+				</tr>
+			</table>
+
+			<h4 class="details__subheading">Details</h4>
+			<table class="details__table">
+				<tr>
+					<td class="details__field-name">Type:</td>
+					<td>${record.type} </td>
+				</tr>
+				<tr>
+					<td class="details__field-name">Cost:</td>
+					<td>${record.cost} </td>
+				</tr>
+				<tr>
+					<td class="details__field-name">Status:</td>
+					<td>${record.status} </td>
+				</tr>
+			</table>
+			
+			<h4 class="details__subheading">Description</h4>
+    		<p>${record.description}</p>
+		</div>
+		
+	`);
 }

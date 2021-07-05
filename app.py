@@ -3,7 +3,7 @@ import requests
 from flask_login import UserMixin, LoginManager, login_user, login_required, logout_user, current_user
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, User, Project,RFI, Submittal, ChangeOrder, InspectionReport
-from forms import RegisterForm, LoginForm
+from forms import RegisterForm, LoginForm, EditUserForm
 
 
 app = Flask(__name__)
@@ -277,7 +277,7 @@ def delete_submittal_record(record_id):
 
 # ********************* CHANGE ORDER ROUTES ***************
 # *******************************************************
-@app.route('/project/changeorder/<int:id>')
+@app.route('/project/change_order/<int:id>')
 @login_required
 def get_changeorder_record(id):
     
@@ -286,14 +286,14 @@ def get_changeorder_record(id):
 
 
 
-@app.route('/project/changeorder', methods = ['POST'])
+@app.route('/project/change_order', methods = ['POST'])
 @login_required
 def create_changeorder_record():
 
     data = request.json
     project_id = int(data['projectID'])
 
-    new_changeorder = ChangeOrder(
+    new_change_order = ChangeOrder(
         title = data['title'],
         number = data['number'],
         submittal_person = data['submittal_person'],
@@ -309,13 +309,13 @@ def create_changeorder_record():
         author = current_user.full_name
     )
 
-    db.session.add(new_changeorder)
+    db.session.add(new_change_order)
     db.session.commit()
-    return jsonify(new_changeorder.serialize())
+    return jsonify(new_change_order.serialize())
 
 
 
-@app.route('/project/changeorder', methods = ['PATCH'])
+@app.route('/project/change_order', methods = ['PATCH'])
 @login_required
 def update_changeorder_record():
 
@@ -332,7 +332,7 @@ def update_changeorder_record():
     record.responsible_person = data['responsible_person'],
     record.responsible_company = data['responsible_company'],
     record.type = data['type'],
-    record.cost = data['type'],
+    record.cost = data['cost'],
     record.status = data['status'],
     record.description = data['description'],
 
@@ -341,7 +341,7 @@ def update_changeorder_record():
 
 
 
-@app.route('/project/changeorder/<int:record_id>', methods = ['DELETE'])
+@app.route('/project/change_order/<int:record_id>', methods = ['DELETE'])
 @login_required
 def delete_changeorder_record(record_id):
     '''Deletes an inspection report'''
@@ -460,6 +460,24 @@ def login():
 
     return render_template('login.html', form=form)
 
+
+@app.route('/edit_profile', methods=['Get', ' POST'])
+def update_profile():
+    
+    form = EditUserForm()
+    user = current_user.id
+
+    if form.validate_on_submit():
+        email = current_user.email
+        password = request.form['password']
+        
+        user = User.authenticate(email, password)
+        if user:
+            login_user(user)
+            flash('Logged in successfully.')
+            return redirect('/dashboard')
+
+    return render_template('profile_update.html', form=form, user = user)
 
 
 @app.route('/logout', methods = ['GET', 'POST'])

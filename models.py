@@ -110,7 +110,7 @@ class RFI(db.Model):
    
     author = db.Column (db.String(50), nullable = False)
     created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    updated = db.Column(db.DateTime, onupdate=datetime.utcnow)
+    updated = db.Column(db.DateTime, onupdate=datetime.utcnow, default=datetime.utcnow)
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
 
     def serialize(self):
@@ -233,6 +233,7 @@ class InspectionReport(db.Model):
     date = db.Column(db.Date, nullable = True)
     title = db.Column (db.Text, nullable = False)
     description = db.Column (db.Text, nullable = True)
+    
     inspector = db.Column (db.String(30), nullable = False)
     author = db.Column (db.String(50), nullable = False)
     created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)

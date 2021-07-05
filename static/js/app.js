@@ -19,6 +19,7 @@ $('.side-nav').on('click', (e) => {
 	}
 
 	$(`#${activeSection}`).removeClass('is-hidden');
+	$('.record').removeClass('selected');
 	$(`#${menuItem}`).addClass('side-nav__item--active');
 });
 
@@ -59,4 +60,12 @@ $('#modal').on('click', 'button[data-action="update"]', (e) => {
 $('#content').on('click', 'a[data-action="delete"]', function(e) {
 	recordId = e.target.closest('a').getAttribute('data-id');
 	deleteRecord(recordId);
+});
+
+// Displays full record details
+$('#content').on('click', 'h4[data-record="details"]', function(e) {
+	recordId = e.target.getAttribute('data-id');
+	viewRecord[activeSection](recordId);
+	$('.record').removeClass('selected');
+	$(`#${activeSection}-${recordId}`).addClass('selected');
 });
