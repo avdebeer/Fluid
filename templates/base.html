@@ -16,9 +16,6 @@
             {% if current_user.is_authenticated %}
             <a class="navbar__link" href="/dashboard">
                 {{current_user.first_name}}
-                 <svg class="icon">
-                        <use xlink:href="/static/img/sprite.svg#icon-trash"></use>
-                </svg>
             </a>
             <a class="navbar__link" href="/logout">logout</a>
             {% else %}
