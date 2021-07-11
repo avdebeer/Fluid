@@ -156,7 +156,7 @@ class Submittal(db.Model):
    
     author = db.Column (db.String(50), nullable = False)
     created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    updated = db.Column(db.DateTime, onupdate=datetime.utcnow)
+    updated = db.Column(db.DateTime, onupdate=datetime.utcnow, default=datetime.utcnow)
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
 
     def serialize(self):
@@ -200,7 +200,7 @@ class ChangeOrder(db.Model):
    
     author = db.Column (db.String(50), nullable = False)
     created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    updated = db.Column(db.DateTime, onupdate=datetime.utcnow)
+    updated = db.Column(db.DateTime, onupdate=datetime.utcnow, default=datetime.utcnow)
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
 
     def serialize(self):
@@ -232,13 +232,14 @@ class InspectionReport(db.Model):
     id = db.Column(db.Integer, primary_key = True, autoincrement = True)   
     date = db.Column(db.Date, nullable = True)
     title = db.Column (db.Text, nullable = False)
+    report_number = db.Column(db.Text, nullable = False)
     description = db.Column (db.Text, nullable = True)
     
     inspector = db.Column (db.String(30), nullable = False)
     author = db.Column (db.String(50), nullable = False)
     created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    updated = db.Column(db.DateTime, onupdate=datetime.utcnow)
-    attachment = db.column(db.LargeBinary)
+    updated = db.Column(db.DateTime, onupdate=datetime.utcnow, default=datetime.utcnow)
+    attachment = db.Column(db.LargeBinary)
 
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
 
@@ -248,6 +249,7 @@ class InspectionReport(db.Model):
                 'id': self.id,
                 'date': self.date,
                 'title': self.title,
+                'report_number': self.report_number,
                 'description': self.description,
                 'inspector': self.inspector,
                 'created': self.created,
@@ -255,3 +257,11 @@ class InspectionReport(db.Model):
                 'updated': self.updated,
                 'project_id': self.project_id,
             }
+
+
+class FileContents(db.Model):
+    __tablename__ = 'file_contents'
+
+    id = db.Column(db.Integer, primary_key = True, autoincrement = True)
+    name = db.Column(db.String(300))
+    data = db.Column(db.LargeBinary)

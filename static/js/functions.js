@@ -86,9 +86,15 @@ function newInspectionForm() {
 	$('#modal-form').append(
 		`<h3 class="form__title">Inspection</h3>
 
-		<div class="form__group">
-			<label for="title" class="form__label">Title</label>
-			<input id="title" type="text" class="form__field" autocomplete="off" value="">
+		<div class="form__row">
+			<div class="form__group form__item">
+				<label for="title" class="form__label">Title</label>
+				<input id="title" type="text" class="form__field" autocomplete="off">
+			</div>
+			<div class="form__group form__item--15">
+				<label for="report_number" class="form__label">No.</label>
+				<input id="report_number" type="text" class="form__field" autocomplete="off">
+			</div>
 		</div>
 
 		<div class="form__group">
@@ -104,6 +110,11 @@ function newInspectionForm() {
 		<div class="form__group">
 			<label for="description" class="form__label">Description</label>
 			<textarea id="description" class="form__textarea" cols="30" rows="10"></textarea>
+		</div>
+
+		<div class="form__group">
+			<label for="attachment" class="form__label">Attachment</label>
+			<input id="attachment" type="file">
 		</div>
 		
 		<div class="modal__buttons">
@@ -123,9 +134,15 @@ async function editInspectionForm(id) {
 		`<h3 class="form__title">Inspection</h3>
 		<input id="id" type="hidden" value="${record.id}">
 
-		<div class="form__group">
-			<label for="title" class="form__label">Title</label>
-			<input id="title" type="text" class="form__field" autocomplete="off" value="${record.title}">
+		<div class="form__row">
+			<div class="form__group form__item">
+				<label for="title" class="form__label">Title</label>
+				<input id="title" type="text" class="form__field" autocomplete="off" value="${record.title}">
+			</div>
+			<div class="form__group form__item--15">
+				<label for="report_number" class="form__label">No.</label>
+				<input id="report_number" type="text" class="form__field" autocomplete="off" value="${record.report_number}">
+			</div>
 		</div>
 
 		<div class="form__group">
@@ -152,18 +169,28 @@ async function editInspectionForm(id) {
 
 async function createInspectionRecord() {
 	const title = $('#title').val();
+	const report_number = $('#report_number').val();
 	const inspector = $('#inspector').val();
 	const date = $('#date').val();
 	const description = $('#description').val();
+	const attachment = $('#attachment').val();
 	const projectID = $('#project-id').text();
 
-	const response = await axios.post('/project/inspection', {
-		title,
-		inspector,
-		date,
-		description,
-		projectID
-	});
+	console.log(attachment);
+
+	const response = await axios.post(
+		'/project/inspection',
+		{ headers: { 'Content-Type': 'multipart/form-data' } }, // I KNOW THAT THE DATA HAS TO BE SENT OVER IN A MULTIPART/FORM-DATA METHOD SO NEED TO FIGURE OUT THE CORRECT SYNTAX
+		{
+			title,
+			report_number,
+			inspector,
+			date,
+			description,
+			attachment,
+			projectID
+		}
+	);
 
 	const record = response.data;
 
@@ -200,6 +227,7 @@ async function createInspectionRecord() {
 
 async function editInspectionRecord() {
 	const title = $('#title').val();
+	const report_number = $('#report_number').val();
 	const inspector = $('#inspector').val();
 	const date = $('#date').val();
 	const description = $('#description').val();
@@ -207,6 +235,7 @@ async function editInspectionRecord() {
 
 	const response = await axios.patch('/project/inspection', {
 		title,
+		report_number,
 		inspector,
 		date,
 		description,
@@ -231,8 +260,8 @@ async function viewInspectionRecord(id) {
 		<h3 class="details__title">${record.title}</h3>
 		<div class="details__metadata">
 			<div>
-				<span class="details__field-name">Record No.:</span> 
-				<span>${record.number}</span>
+				<span class="details__field-name">Report No.:</span> 
+				<span>${record.report_number}</span>
 			</div>
 			<div>
 				<span class="details__field-name">Created By:</span> 
@@ -1009,12 +1038,12 @@ function newChangeOrderForm() {
 		`<h3 class="form__title">Change Order</h3>
 
 		<div class="form__row">
-			<div class="form__group form__item--75">
+			<div class="form__group form__item">
 				<label for="title" class="form__label">Title</label>
 				<input id="title" type="text" class="form__field" autocomplete="off">
 			</div>
 
-			<div class="form__group form__item--25">
+			<div class="form__group form__item--15">
 				<label for="number" class="form__label">No.</label>
 				<input id="number" type="text" class="form__field" autocomplete="off">
 			</div>
@@ -1050,17 +1079,17 @@ function newChangeOrderForm() {
 		</div> 
 		
 		<div class="form__row">
-			<div class="form__group form__item">
+			<div class="form__group form__item--25">
 				<label for="type" class="form__label">Type</label>
 				<input id="type" type="text" class="form__field" autocomplete="off">
 			</div>
 
-			<div class="form__group form__item">
+			<div class="form__group form__item--25">
 				<label for="cost" class="form__label">Cost</label>
 				<input id="cost" type="text" class="form__field" autocomplete="off">
 			</div>
 
-			<div class="form__group form__item">
+			<div class="form__group form__item--50">
 				<label for="status" class="form__label">Status</label>
 				<input id="status" type="text" class="form__field" autocomplete="off">
 			</div>
@@ -1088,12 +1117,12 @@ async function editChangeOrderForm(id) {
 		<input id="id" type="hidden" value="${record.id}">
 
 		<div class="form__row">
-			<div class="form__group form__item--75">
+			<div class="form__group form__item">
 				<label for="title" class="form__label">Title</label>
 				<input id="title" type="text" class="form__field" autocomplete="off" value="${record.title}">
 			</div>
 
-			<div class="form__group form__item--25">
+			<div class="form__group form__item--15">
 				<label for="number" class="form__label">No.</label>
 				<input id="number" type="text" class="form__field" autocomplete="off" value="${record.number}">
 			</div>
@@ -1129,17 +1158,17 @@ async function editChangeOrderForm(id) {
 		</div> 
 		
 		<div class="form__row">
-			<div class="form__group form__item">
+			<div class="form__group form__item--25">
 				<label for="type" class="form__label">Type</label>
 				<input id="type" type="text" class="form__field" autocomplete="off" value="${record.type}">
 			</div>
 
-			<div class="form__group form__item">
+			<div class="form__group form__item--25">
 				<label for="cost" class="form__label">Cost</label>
 				<input id="cost" type="text" class="form__field" autocomplete="off" value="${record.cost}">
 			</div>
 
-			<div class="form__group form__item">
+			<div class="form__group form__item--50">
 				<label for="status" class="form__label">Status</label>
 				<input id="status" type="text" class="form__field" autocomplete="off" value="${record.status}">
 			</div>

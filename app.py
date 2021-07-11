@@ -1,9 +1,12 @@
-from flask import Flask, request, render_template, redirect, flash, url_for, session, jsonify
+from flask import Flask, request, send_file, render_template, redirect, flash, url_for, session, jsonify
 import requests
 from flask_login import UserMixin, LoginManager, login_user, login_required, logout_user, current_user
 from flask_debugtoolbar import DebugToolbarExtension
-from models import db, connect_db, User, Project,RFI, Submittal, ChangeOrder, InspectionReport
+from sqlalchemy.sql.operators import as_
+from werkzeug.utils import send_file
+from models import db, connect_db, User, Project,RFI, Submittal, ChangeOrder, InspectionReport, FileContents
 from forms import RegisterForm, LoginForm, EditUserForm
+from io import BytesIO
 
 
 app = Flask(__name__)
@@ -31,7 +34,7 @@ db.create_all() #CREATES ALL THE TABLES
 
 @app.route('/')
 def home():
-    return render_template('base.html')
+    return render_template('home.html')
 
 
 
@@ -368,14 +371,17 @@ def create_inspection_record():
 
     data = request.json
     project_id = int(data['projectID'])
+    file = request.files['attachment']
 
     author = current_user.first_name + " " + current_user.last_name,
 
     new_inspection_report = InspectionReport(
         title = data['title'],
+        report_number = data['report_number'],
         date = data['date'],
         inspector = data['inspector'],
         description = data['description'],
+        attachment = file.read(), #POSSIBLY request.files
         author = author,
         project_id = project_id,
 
@@ -397,6 +403,7 @@ def update_inspection_record():
     record_id = int(data['id'])
     record = InspectionReport.query.get_or_404(record_id)
     record.title = data['title']
+    record.report_number = data['report_number']
     record.inspector = data['inspector']
     record.date = data['date']
     record.description = data['description']
@@ -497,6 +504,21 @@ def dashboard():
 # *******************************************************
 
 
+@app.route('/upload', methods=['POST'])
+def upload():
+    file = request.files['inputFile']
+
+    newFile = FileContents(name=file.filename, data=file.read())
+    db.session.add(newFile)
+    db.session.commit()
+
+    return file.filename
+
+@app.route('/download')
+def download():
+    file = FileContents.query.filter_by(id=1).first()
+    return send_file(BytesIO(file.data), environ=request.environ, download_name='downloadedFile.pdf', as_attachment=True)
+
 @app.route('/test')
 def test():
-    return render_template('working.html')
+    return render_template('test.html')

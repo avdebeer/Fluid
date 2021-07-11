@@ -770,4 +770,14 @@ td {
 .selected {
   border: 2px solid #eb2f64;
 }
+
+.heading {
+  height: 95vh;
+  background-image: url(https://source.unsplash.com/1600x900/?construction);
+  background-size: cover;
+  background-position: center;
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 70vh, 0 95%);
+          clip-path: polygon(0 0, 100% 0, 100% 70vh, 0 95%);
+  padding: 2rem;
+}
 /*# sourceMappingURL=styles.css.map */
