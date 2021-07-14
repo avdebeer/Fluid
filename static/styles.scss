@@ -27,11 +27,10 @@ $color-grey-light-4: #ccc;
 
 $color-grey-dark-1: #708090;
 
-$shadow-dark: 0 2rem 6rem rgba(0, 0, 0, .3);
-$shadow-light-2: 0 2rem 5rem rgba(0, 0, 0, .06);
-$shadow-light-G1: 0 0 0 2px rgba(26, 115, 232, .4);
+$shadow-dark: 0 1rem 3rem rgba(0, 0, 0, .3);
 $shadow-light-1: 0 1px 6px 0 rgba(32, 33, 36, .28);
-$shadow-light-selected: 0 1px 6px 0 $color-tertiary-1;
+$shadow-light-2: 0 2rem 5rem rgba(0, 0, 0, .06);
+
 $line: 2px solid $color-grey-light-3;
 $line2: 2px solid $color-grey-light-3;
 $line3: 2px solid $color-grey-light-3;
@@ -68,9 +67,10 @@ body {
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
-	background-color: $color-grey-light-1;
+	// background-color: $color-grey-light-1;
+	background-color: $color-black;
+
 	position: relative;
-	// border-bottom: 1px solid $color-primary-light;
 
 	&__logo {
 		color: $color-primary-0;
@@ -88,7 +88,8 @@ body {
 		text-transform: uppercase;
 		text-decoration: none;
 		color: $color-primary-0;
-		background-color: $color-grey-light-2;
+		// background-color: $color-grey-light-2;
+		background-color: $color-black;
 		padding: 1.5rem;
 		&:not(:last-of-type) {
 		}
@@ -164,6 +165,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	border-radius: 1rem;
 	box-shadow: $shadow-light-1;
 }
 
@@ -253,24 +255,42 @@ body {
 
 .general {
 	display: flex;
-	flex-direction: column;
 
-	&__section {
-		margin-bottom: 2rem;
+	&__col--1 {
+		width: 75%;
+		margin-right: 3rem;
+		display: flex;
+		flex-direction: column;
 	}
 
-	&__multisection {
+	&__col--2 {
+		width: 25%;
 		display: flex;
+		flex-direction: column;
+	}
+
+	&__card {
+		// padding: 2rem;
 		margin-bottom: 2rem;
+		border: 1px solid $color-primary-2;
+		border-radius: 1rem;
+		box-shadow: $shadow-dark;
 	}
 
 	&__heading {
-		color: $color-primary-1;
+		color: $color-white;
+		background-color: $color-primary-1;
+		padding: 1.5rem;
+		border-top-left-radius: 1rem;
+		border-top-right-radius: 1rem;
 		text-transform: uppercase;
 		letter-spacing: .2rem;
 		font-weight: 400;
-		margin-bottom: 1rem;
-		border-bottom: $line;
+		border-bottom: 3px solid $color-primary-0;
+	}
+
+	&__content {
+		padding: 1.5rem;
 	}
 
 	&__weather {
@@ -291,10 +311,10 @@ body {
 	flex-direction: column;
 	flex: 1 0 40%;
 	margin: 0 2rem;
-	padding: 1.5rem;
+	// padding: 1.5rem;
 	border-radius: 1rem;
-	border: 1px solid #394d5f;
-	box-shadow: $shadow-light-1;
+	// border: 1px solid #394d5f;
+	// box-shadow: $shadow-dark;
 
 	&__records {
 		display: flex;

@@ -56,14 +56,24 @@
 
             <!-- GENERAL SECTION -->
             <div id="general" class="general">
-                <div class="general__section">
-                    <h3   h3 class="general__heading">Project Description</h3>
-                    <p>{{project.description}}</p>
+                <div class="general__col--1">
+                    <div class="general__card">
+                        <h3 h3 class="general__heading">Description</h3>
+                        <div class="general__content">
+                            <p>{{project.description}}</p>
+                        </div>
+                    </div>
+                    <div class="general__card">
+                        <h3 h3 class="general__heading">Overview</h3>
+                        <div class="general__content">
+                            <p>Summary of outstanding items including submittal, RFI's, Change Orders, and inspections.</p>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="general__multisection">
-                    <div>
+                <div class="general__col--2">
+                    <div class="general__card">
                         <h3 class="general__heading">Site Conditions</h3>
+
                         <div class="general__weather">
                             <!-- <h4>{{project.address}}</h4> -->
                             <h4>{{weather.location.name}}, {{weather.location.region}}</h4>
@@ -89,14 +99,15 @@
                             </table>
                         </div>
                     </div>
+                    <div class="general__card">
+                        <h3 h3 class="general__heading">Team</h3>
+                        <div class="general__content">
+                            <p>Jose Oropeza (ABX INC.)</p>
+                            <p>Robert Jhones (ACWD) </p>
+                            <p>Ritesh Patel (DSRSD)</p>
+                        </div>
 
-                    <div>
-                        <h3 class="general__heading">Project Team</h3>
                     </div>
-                </div>
-
-                <div class="general__section">
-                    <h3 class="general__heading">Project Overview</h3>
                 </div>
 
             </div>
