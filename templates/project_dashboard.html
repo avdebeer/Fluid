@@ -19,7 +19,7 @@
             <li class="side-nav__item" id="menu-item-2" data-section='rfi'>
                 <a href="" class="side-nav__link">
                     <svg class="side-nav__icon">
-                        <use xlink:href="/static/img/sprite.svg#icon-help"></use>
+                        <use xlink:href="/static/img/sprite.svg#icon-info"></use>
                         <span>RFIS</span>
                     </svg>
                 </a>
@@ -76,25 +76,30 @@
 
                         <div class="general__weather">
                             <!-- <h4>{{project.address}}</h4> -->
-                            <h4>{{weather.location.name}}, {{weather.location.region}}</h4>
+                           
+                            <h5>
+                                <svg><use xlink:href="/static/img/sprite.svg#icon-location-pin"></use></svg>
+                                {{weather.location.name}}, {{weather.location.region}}
+                            </h5>
                             <img src="{{weather.current.condition.icon}}" alt="">
                             <h4 class="general__weather--description">{{weather.current.condition.text}}</h4>
+
                             <table>
                                 <tr>
                                     <td>Temp:</td>
-                                    <td>{{weather.current.temp_f}}&#176 F</td>
+                                    <td class="general__weather--td">{{weather.current.temp_f}}&#176 F</td>
                                 </tr>
                                 <tr>
                                     <td>Feels Like:</td>
-                                    <td>{{weather.current.feelslike_f}}&#176 F</td>
+                                    <td class="general__weather--td">{{weather.current.feelslike_f}}&#176 F</td>
                                 </tr>
                                 <tr>
                                     <td>Wind:</td>
-                                    <td>{{weather.current.wind_mph}} mph - {{weather.current.wind_dir}}</td>
+                                    <td class="general__weather--td">{{weather.current.wind_mph}} mph - {{weather.current.wind_dir}}</td>
                                 </tr>
                                 <tr>
                                     <td>Humidity:</td>
-                                    <td>{{weather.current.humidity}}%</td>
+                                    <td class="general__weather--td">{{weather.current.humidity}}%</td>
                                 </tr>
                             </table>
                         </div>
@@ -149,6 +154,7 @@
                     </div>
                 </div>
                 {% endfor %}
+
             </div>
 
             <!-- SUBMITTAL SECTION -->
@@ -235,6 +241,10 @@
 
             <!-- INSPECTION SECTION -->
             <div id="inspection" class="is-hidden">
+                {% if project.inspection_reports %}
+                {% else %}
+                    <h3 class="details-message">No existing records.</h3>'
+                {% endif %}
                 {% for record in project.inspection_reports %}
                 <div id="inspection-{{record.id}}" class="record">
                     <div class="record__heading">

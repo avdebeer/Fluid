@@ -27,9 +27,9 @@ $color-grey-light-4: #ccc;
 
 $color-grey-dark-1: #708090;
 
-$shadow-dark: 0 1rem 3rem rgba(0, 0, 0, .3);
-$shadow-light-1: 0 1px 6px 0 rgba(32, 33, 36, .28);
-$shadow-light-2: 0 2rem 5rem rgba(0, 0, 0, .06);
+$shadow-light: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+$shadow-medium: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+$shadow-dark: rgba(0, 0, 0, 0.45) 0px 5px 15px;
 
 $line: 2px solid $color-grey-light-3;
 $line2: 2px solid $color-grey-light-3;
@@ -67,8 +67,7 @@ body {
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
-	// background-color: $color-grey-light-1;
-	background-color: $color-black;
+	background-color: $color-grey-light-3;
 
 	position: relative;
 
@@ -88,8 +87,7 @@ body {
 		text-transform: uppercase;
 		text-decoration: none;
 		color: $color-primary-0;
-		// background-color: $color-grey-light-2;
-		background-color: $color-black;
+		background-color: $color-grey-light-3;
 		padding: 1.5rem;
 		&:not(:last-of-type) {
 		}
@@ -123,6 +121,7 @@ body {
 		box-shadow: $shadow-dark;
 
 		&--title {
+			text-transform: uppercase;
 			display: flex;
 			align-items: center;
 			margin-bottom: 2rem;
@@ -143,6 +142,7 @@ body {
 	border: 1px solid $color-primary-1;
 	border-radius: 5px;
 	margin-bottom: 2rem;
+	box-shadow: $shadow-medium;
 
 	&__title {
 		font-weight: 500;
@@ -166,7 +166,7 @@ body {
 	flex-direction: column;
 	justify-content: space-between;
 	border-radius: 1rem;
-	box-shadow: $shadow-light-1;
+	box-shadow: $shadow-medium;
 }
 
 .side-nav {
@@ -270,16 +270,15 @@ body {
 	}
 
 	&__card {
-		// padding: 2rem;
 		margin-bottom: 2rem;
 		border: 1px solid $color-primary-2;
 		border-radius: 1rem;
-		box-shadow: $shadow-dark;
+		box-shadow: $shadow-medium;
 	}
 
 	&__heading {
-		color: $color-white;
-		background-color: $color-primary-1;
+		color: $color-black;
+		background-color: #eee;
 		padding: 1.5rem;
 		border-top-left-radius: 1rem;
 		border-top-right-radius: 1rem;
@@ -297,11 +296,40 @@ body {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		margin-right: 3rem;
-		padding: 2rem;
+		padding: 2rem 0;
+
+		h5 {
+			display: flex;
+			align-items: center;
+		}
+
+		svg {
+			width: 1.75rem;
+			height: 1.75rem;
+			margin-right: .3rem;
+			fill: $color-primary-1;
+		}
 
 		&--description {
+			text-transform: uppercase;
+			color: $color-primary-1;
 			margin-bottom: 2rem;
+		}
+
+		table,
+		tr,
+		td {
+			padding: .3rem 1rem;
+			color: #0b1320;
+			background-color: $color-grey-light-1;
+			border: 1px solid $color-grey-light-4;
+			border-collapse: collapse;
+			font-size: 1.3rem;
+			font-weight: 500;
+		}
+
+		&--td {
+			text-align: center;
 		}
 	}
 }
@@ -311,10 +339,9 @@ body {
 	flex-direction: column;
 	flex: 1 0 40%;
 	margin: 0 2rem;
-	// padding: 1.5rem;
+	padding: 1.5rem;
 	border-radius: 1rem;
-	// border: 1px solid #394d5f;
-	// box-shadow: $shadow-dark;
+	box-shadow: $shadow-dark;
 
 	&__records {
 		display: flex;
@@ -336,9 +363,7 @@ body {
 	padding: 1.5rem;
 	flex: 1 1 40%;
 	border-radius: 1rem;
-	background-color: $color-white;
-	border: 1px solid #394d5f;
-	box-shadow: $shadow-light-1;
+	box-shadow: $shadow-dark;
 	overflow-y: auto;
 
 	&__title {
@@ -389,14 +414,6 @@ body {
 	}
 }
 
-table,
-tr,
-td {
-	border: 1px solid $color-grey-light-4;
-	border-collapse: collapse;
-	font-size: 1.3rem;
-}
-
 .details-message {
 	display: flex;
 	justify-content: center;
@@ -412,7 +429,7 @@ td {
 	border-radius: 1rem;
 	margin-bottom: 2rem;
 	border: 1px solid $color-primary-3;
-	box-shadow: $shadow-light-1;
+	box-shadow: $shadow-medium;
 
 	&:hover {
 		border: 2px solid $color-tertiary-1;
@@ -560,7 +577,7 @@ td {
 	outline: none;
 	font-size: 1.5rem;
 	cursor: pointer;
-	border-radius: .5rem;
+	border-radius: 100px;
 	text-transform: uppercase;
 	text-decoration: none;
 }

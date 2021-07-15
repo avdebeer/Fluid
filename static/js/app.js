@@ -1,7 +1,7 @@
-// DO NOT DELETE CONTROLS THE EVENT HANDELER DYNAMICALLY
+// CONTROLS THE EVENT HANDELER DYNAMICALLY
 let activeSection = 'general';
 
-// ********** Navigation **********
+// Controls the active side-nav section
 $('.side-nav').on('click', (e) => {
 	e.preventDefault();
 	let menuItem = e.target.closest('li').getAttribute('id');
