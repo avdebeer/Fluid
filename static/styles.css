@@ -691,9 +691,11 @@ body {
   outline: none;
   font-size: 1.5rem;
   cursor: pointer;
-  border-radius: 100px;
+  border-radius: 10rem;
   text-transform: uppercase;
   text-decoration: none;
+  -webkit-transition: all .2s;
+  transition: all .2s;
 }
 
 .btn-primary {
@@ -732,6 +734,20 @@ body {
 .btn-tertiary {
   color: pink;
   background-color: #708090;
+}
+
+.button:hover {
+  -webkit-transform: translateY(-0.3rem);
+          transform: translateY(-0.3rem);
+  -webkit-box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+          box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+}
+
+.button:active {
+  -webkit-transform: translateY(-0.1rem);
+          transform: translateY(-0.1rem);
+  -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
 }
 
 .icon {
@@ -789,7 +805,7 @@ body {
 
 .modal__container {
   background-color: white;
-  width: 33%;
+  width: 40%;
   -webkit-box-shadow: rgba(0, 0, 0, 0.45) 0px 5px 15px;
           box-shadow: rgba(0, 0, 0, 0.45) 0px 5px 15px;
   border-radius: 1rem;
@@ -821,6 +837,12 @@ body {
 }
 
 .heading {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   height: 95vh;
   background-image: url(https://source.unsplash.com/1600x900/?construction);
   background-size: cover;
@@ -828,5 +850,41 @@ body {
   -webkit-clip-path: polygon(0 0, 100% 0, 100% 70vh, 0 95%);
           clip-path: polygon(0 0, 100% 0, 100% 70vh, 0 95%);
   padding: 2rem;
+}
+
+.heading__content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 33%;
+  padding-left: 4rem;
+  color: #fff;
+}
+
+.heading__title {
+  font-size: 4rem;
+  font-weight: 700;
+  letter-spacing: .6rem;
+  font-family: 'Merriweather', serif;
+  margin-bottom: 1rem;
+}
+
+.heading__buttons {
+  width: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.heading p {
+  font-size: 1.75rem;
+  letter-spacing: .1rem;
+  margin-bottom: 1.5rem;
 }
 /*# sourceMappingURL=styles.css.map */
