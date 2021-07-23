@@ -31,9 +31,9 @@ $shadow-light: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
 $shadow-medium: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 $shadow-dark: rgba(0, 0, 0, 0.45) 0px 5px 15px;
 
-$line: 2px solid $color-grey-light-3;
+$line1: 2px solid $color-grey-light-3;
 $line2: 2px solid $color-grey-light-3;
-$line3: 2px solid $color-grey-light-3;
+$line3: 2px solid $color-primary-1;
 $line4: 2px solid $color-grey-light-3;
 
 *,
@@ -239,7 +239,7 @@ body {
 	letter-spacing: .2rem;
 	margin: 2rem;
 	padding-bottom: 1rem;
-	border-bottom: $line;
+	border-bottom: $line1;
 	color: $color-primary-1;
 
 	#project-id {
@@ -571,7 +571,7 @@ body {
 
 //////////////////////////////////////////////////////////////
 //BUTTONS
-.button ` {
+.button {
 	font-family: 'Roboto', sans-serif;
 	padding: .6rem 1.2rem;
 	outline: none;
@@ -711,44 +711,73 @@ body {
 	border: 2px solid $color-tertiary-1;
 }
 
-.heading {
+.landing-page {
 	display: flex;
-	align-items: center;
-	height: 95vh;
-	background-image: url(https://source.unsplash.com/1600x900/?construction);
-	background-size: cover;
-	background-position: center;
-	clip-path: polygon(0 0, 100% 0, 100% 70vh, 0 95%);
-	padding: 2rem;
-
-	&__content {
-		display: flex;
-		flex-direction: column;
-		width: 33%;
-		padding-left: 4rem;
-		color: $color-white;
-	}
-
+	flex-direction: column;
+	height: 100%;
+	width: 50%;
+	padding-top: 2rem;
+	padding-left: 4rem;
 	&__title {
-		font-size: 4rem;
+		color: $color-primary-0;
 		font-weight: 700;
 		letter-spacing: .6rem;
 		font-family: 'Merriweather', serif;
-
-		margin-bottom: 1rem;
-	}
-
-	&__buttons {
-		width: 50%;
-		display: flex;
-		justify-content: space-around;
+		margin: 3rem 0 1rem;
 	}
 
 	p {
-		font-size: 1.75rem;
+		font-family: 'Roboto', sans-serif;
+		font-size: 1.5rem;
 		letter-spacing: .1rem;
 		margin-bottom: 1.5rem;
 	}
+
+	&__button {
+		display: flex;
+		justify-content: flex-end;
+
+		a {
+			margin-right: 2rem;
+		}
+	}
 }
-//   background-image: linear-gradient(to right bottom, rgba(126, 213, 111, 0.8), rgba(40, 180, 133, 0.8)), url(../img/hero.jpg);
-//   background-position: top;
+
+.grid-container {
+	display: grid;
+	height: 93vh;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr 1fr;
+	grid-template-areas: "g1 g1 g1 g1 g2 g2" "g1 g1 g1 g1 g2 g2" "g3 g3 g4 g4 g2 g2" "g3 g3 g5 g5 g5 g5";
+	grid-gap: .5rem;
+}
+.g1 {
+	grid-area: g1;
+	background-size: cover;
+	background-position: center;
+	background-image: url(https://images.unsplash.com/photo-1621606016243-f7b15bd78e76?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Z29sZGVuJTIwZ2F0ZSUyMGJyaWRnZSUyMGNvbnN0cnVjdGlvbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1800&q=60);
+}
+.g2 {
+	grid-area: g2;
+	background-size: cover;
+	background-position: center;
+	background-image: url(https://images.unsplash.com/photo-1536895058696-a69b1c7ba34f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8Y29uc3RydWN0aW9ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=1800&q=60);
+}
+.g3 {
+	grid-area: g3;
+	background-size: cover;
+	background-position: center;
+	background-image: url(https://images.unsplash.com/photo-1575971637203-d6255d9947a9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8ODl8fGNvbnN0cnVjdGlvbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);
+}
+.g4 {
+	grid-area: g4;
+	background-size: cover;
+	background-position: center;
+	background-image: url(https://images.unsplash.com/photo-1523660778745-247ed0bcce31?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTM2fHxjb25zdHJ1Y3Rpb258ZW58MHwwfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1800&q=60);
+}
+.g5 {
+	grid-area: g5;
+	background-size: cover;
+	background-position: top;
+	background-image: url(https://images.unsplash.com/photo-1610551675799-50d4d0fe0252?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Y29uc3RydWN0aW9ufGVufDB8MnwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);
+}
