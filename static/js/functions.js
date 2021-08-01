@@ -85,36 +85,37 @@ const viewRecord = {
 function newInspectionForm() {
 	$('#modal-form').append(
 		`<h3 class="form__title">Inspection</h3>
-
-		<div class="form__row">
-			<div class="form__group form__item">
-				<label for="title" class="form__label">Title</label>
-				<input id="title" type="text" class="form__field" autocomplete="off">
+		<div class="form__main-content">
+			<div class="form__row">
+				<div class="form__group form__item">
+					<label for="title" class="form__label">Title</label>
+					<input id="title" type="text" class="form__field" autocomplete="off">
+				</div>
+				<div class="form__group form__item--15">
+					<label for="report_number" class="form__label">No.</label>
+					<input id="report_number" type="text" class="form__field" autocomplete="off">
+				</div>
 			</div>
-			<div class="form__group form__item--15">
-				<label for="report_number" class="form__label">No.</label>
-				<input id="report_number" type="text" class="form__field" autocomplete="off">
+
+			<div class="form__group">
+				<label for="inspector" class="form__label">Inspector</label>
+				<input id="inspector" type="text" class="form__field" autocomplete="off" value="">
 			</div>
-		</div>
 
-		<div class="form__group">
-			<label for="inspector" class="form__label">Inspector</label>
-			<input id="inspector" type="text" class="form__field" autocomplete="off" value="">
-		</div>
+			<div class="form__group">
+				<label for="date" class="form__label">Inspection Date</label>
+				<input id="date" type="date" class="form__field" value="">
+			</div>
 
-		<div class="form__group">
-			<label for="date" class="form__label">Inspection Date</label>
-			<input id="date" type="date" class="form__field" autocomplete="off" value="">
-		</div>
+			<div class="form__group">
+				<label for="description" class="form__label">Description</label>
+				<textarea id="description" class="form__textarea" cols="30" rows="10"></textarea>
+			</div>
 
-		<div class="form__group">
-			<label for="description" class="form__label">Description</label>
-			<textarea id="description" class="form__textarea" cols="30" rows="10"></textarea>
-		</div>
-
-		<div class="form__group">
-			<label for="attachment" class="form__label">Attachment</label>
-			<input id="attachment" type="file">
+			<div class="form__group">
+				<label for="attachment" class="form__label">Attachment</label>
+				<input id="attachment" type="file">
+			</div>
 		</div>
 		
 		<div class="modal__buttons">
@@ -133,31 +134,40 @@ async function editInspectionForm(id) {
 	$('#modal-form').append(
 		`<h3 class="form__title">Inspection</h3>
 		<input id="id" type="hidden" value="${record.id}">
-
-		<div class="form__row">
-			<div class="form__group form__item">
-				<label for="title" class="form__label">Title</label>
-				<input id="title" type="text" class="form__field" autocomplete="off" value="${record.title}">
+		<div class="form__main-content">
+			<div class="form__row">
+				<div class="form__group form__item">
+					<label for="title" class="form__label">Title</label>
+					<input id="title" type="text" class="form__field" autocomplete="off" value="${record.title}">
+				</div>
+				<div class="form__group form__item--15">
+					<label for="report_number" class="form__label">No.</label>
+					<input id="report_number" type="text" class="form__field" autocomplete="off" value="${record.report_number}">
+				</div>
 			</div>
-			<div class="form__group form__item--15">
-				<label for="report_number" class="form__label">No.</label>
-				<input id="report_number" type="text" class="form__field" autocomplete="off" value="${record.report_number}">
+
+			<div class="form__group">
+				<label for="inspector" class="form__label">Inspector</label>
+				<input id="inspector" type="text" class="form__field" autocomplete="off" value="${record.inspector}">
 			</div>
-		</div>
 
-		<div class="form__group">
-			<label for="inspector" class="form__label">Inspector</label>
-			<input id="inspector" type="text" class="form__field" autocomplete="off" value="${record.inspector}">
-		</div>
+			<div class="form__group">
+				<label for="date" class="form__label">Inspection Date</label>
+				<input id="date" type="date" class="form__field" autocomplete="off" value="${inspectionDate}">
+			</div>
 
-		<div class="form__group">
-			<label for="date" class="form__label">Inspection Date</label>
-			<input id="date" type="date" class="form__field" autocomplete="off" value="${inspectionDate}">
-		</div>
+			<div class="form__group">
+				<label for="description" class="form__label">Description</label>
+				<textarea id="description" class="form__textarea" cols="30" rows="10">${record.description}</textarea>
+			</div>
 
-		<div class="form__group">
-			<label for="description" class="form__label">Description</label>
-			<textarea id="description" class="form__textarea" cols="30" rows="10">${record.description}</textarea>
+			<div class="form__group">
+				<label for="attachment" class="form__label">Attachment</label>
+				<input id="attachment" type="file">
+				${record.file_name
+					? `<span class="form__help-text">Uploading a new file will overwrite the following document: <i class="file-name">${record.file_name}</i>.</span>`
+					: ''}
+			</div>
 		</div>
 
 		<div class="modal__buttons">
@@ -173,24 +183,23 @@ async function createInspectionRecord() {
 	const inspector = $('#inspector').val();
 	const date = $('#date').val();
 	const description = $('#description').val();
-	const attachment = $('#attachment').val();
+	const attachment = $('#attachment').prop('files')[0];
 	const projectID = $('#project-id').text();
 
-	console.log(attachment);
+	const inputs = { title, report_number, inspector, date, description, attachment, projectID };
 
-	const response = await axios.post(
-		'/project/inspection',
-		{ headers: { 'Content-Type': 'multipart/form-data' } }, // I KNOW THAT THE DATA HAS TO BE SENT OVER IN A MULTIPART/FORM-DATA METHOD SO NEED TO FIGURE OUT THE CORRECT SYNTAX
-		{
-			title,
-			report_number,
-			inspector,
-			date,
-			description,
-			attachment,
-			projectID
-		}
-	);
+	const inputData = new FormData();
+
+	for (key in inputs) {
+		inputData.append(key, inputs[key]);
+	}
+
+	const response = await axios({
+		method  : 'post',
+		url     : '/project/inspection',
+		data    : inputData,
+		headers : { 'Content-Type': 'multipart/form-data' }
+	});
 
 	const record = response.data;
 
@@ -232,19 +241,28 @@ async function editInspectionRecord() {
 	const date = $('#date').val();
 	const description = $('#description').val();
 	const id = $('#id').val();
+	const attachment = $('#attachment').prop('files')[0];
 
-	const response = await axios.patch('/project/inspection', {
-		title,
-		report_number,
-		inspector,
-		date,
-		description,
-		id
+	const inputs = { title, report_number, inspector, date, description, attachment, id };
+
+	const inputData = new FormData();
+
+	for (key in inputs) {
+		inputData.append(key, inputs[key]);
+	}
+
+	await axios({
+		method  : 'patch',
+		url     : '/project/inspection',
+		data    : inputData,
+		headers : { 'Content-Type': 'multipart/form-data' }
 	});
 
 	$(`#inspection-title-${id}`).text(`${title}`);
+	$(`#inspection-number-${id}`).text(`${report_number}`);
 	$(`#inspection-inspector-${id}`).text(`${inspector}`);
 	$(`#inspection-date-${id}`).text(`${date}`);
+	return id;
 }
 
 async function viewInspectionRecord(id) {
@@ -289,16 +307,21 @@ async function viewInspectionRecord(id) {
 					<td>${inspectionDate} </td>
 				</tr>
 			</table>
+
+			<h4 class="details__subheading">Attachment</h4>
+			${record.file_name
+				? `<a class="details__file-name" href="/project/inspection/document/${record.id}" target="_blank">${record.file_name}</a>`
+				: '<span class="details__file-name">Record contains no attachment.</span>'}
 			
 			<h4 class="details__subheading">Description</h4>
-    		<p>${record.description}</p>
+    		<p class="details__description">${record.description}</p>
 		</div>
 		
 	`);
 }
 
 async function deleteRecord(id) {
-	let response = await axios.delete(`/project/${activeSection}/${id}`);
+	await axios.delete(`/project/${activeSection}/${id}`);
 	$(`#${activeSection}-${id}`).remove();
 }
 
@@ -306,76 +329,81 @@ async function deleteRecord(id) {
 //RFI FUNCTIONS
 function newRFIForm() {
 	$('#modal-form').append(
-		`<h3 class="form__title">RFI</h3>
-
-		<div class="form__row">
-			<div class="form__group form__item">
-				<label for="title" class="form__label">Title</label>
-				<input id="title" type="text" class="form__field" autocomplete="off">
+		`<h3 class="form__title">Request For Information</h3>
+		<div class="form__main-content">
+			<div class="form__row">
+				<div class="form__group form__item">
+					<label for="title" class="form__label">Title</label>
+					<input id="title" type="text" class="form__field" autocomplete="off">
+				</div>
+				<div class="form__group form__item--15">
+					<label for="number" class="form__label">No.</label>
+					<input id="number" type="text" class="form__field" autocomplete="off">
+				</div>
 			</div>
-			<div class="form__group form__item--15">
-				<label for="number" class="form__label">No.</label>
-				<input id="number" type="text" class="form__field" autocomplete="off">
+
+			<div class="form__row">
+				<div class="form__group form__item--50">
+					<label for="spec-section" class="form__label">Spec Section</label>
+					<input id="spec-section" type="text" class="form__field" autocomplete="off">
+				</div>
+
+				<div class="form__group form__item">
+					<label for="drawing-number" class="form__label">Drawing No.</label>
+					<input id="drawing-number" type="text" class="form__field" autocomplete="off">
+				</div>
+			</div>
+			
+			<div class="form__row">
+				<div class="form__group form__item--75">
+					<label for="submittal-person" class="form__label">Submitted By</label>
+					<input id="submittal-person" type="text" class="form__field" autocomplete="off">
+				</div>
+
+				<div class="form__group form__item">
+					<label for="submittal-date" class="form__label">Submittal Date</label>
+					<input id="submittal-date" type="date" class="form__field" autocomplete="off">
+				</div>
+			</div>
+			
+			<div class="form__group">
+				<label for="submittal-company" class="form__label">Company</label>
+				<input id="submittal-company" type="text" class="form__field" autocomplete="off">
+			</div>
+
+			<div class="form__row">
+				<div class="form__group form__item--75">
+					<label for="responsible-person" class="form__label">Assigned To</label>
+					<input id="responsible-person" type="text" class="form__field" autocomplete="off">
+				</div>
+				<div class="form__group form__item">
+					<label for="due_date" class="form__label">Due Date</label>
+					<input id="due_date" type="date" class="form__field" autocomplete="off">
+				</div>
+			</div> 
+			
+			<div class="form__row">
+				<div class="form__group form__item--75">
+					<label for="responsible-company" class="form__label">Company</label>
+					<input id="responsible-company" type="text" class="form__field" autocomplete="off">
+				</div>
+
+				<div class="form__group form__item">
+					<label for="status" class="form__label">Status</label>
+					<input id="status" type="text" class="form__field" autocomplete="off">
+				</div>
+			</div>
+
+			<div class="form__group">
+				<label for="description" class="form__label">Description</label>
+				<textarea id="description" class="form__textarea" cols="30" rows="10"></textarea>
+			</div>
+
+			<div class="form__group">
+				<label for="attachment" class="form__label">Attachment</label>
+				<input id="attachment" type="file">
 			</div>
 		</div>
-
-		<div class="form__row">
-			<div class="form__group form__item--50">
-				<label for="spec-section" class="form__label">Spec Section</label>
-				<input id="spec-section" type="text" class="form__field" autocomplete="off">
-			</div>
-
-			<div class="form__group form__item">
-				<label for="drawing-number" class="form__label">Drawing No.</label>
-				<input id="drawing-number" type="text" class="form__field" autocomplete="off">
-			</div>
-		</div>
-		
-		<div class="form__row">
-			<div class="form__group form__item--75">
-				<label for="submittal-person" class="form__label">Submitted By</label>
-				<input id="submittal-person" type="text" class="form__field" autocomplete="off">
-			</div>
-
-			<div class="form__group form__item">
-				<label for="submittal-date" class="form__label">Submittal Date</label>
-				<input id="submittal-date" type="date" class="form__field" autocomplete="off">
-			</div>
-		</div>
-		
-		<div class="form__group">
-			<label for="submittal-company" class="form__label">Company</label>
-			<input id="submittal-company" type="text" class="form__field" autocomplete="off">
-		</div>
-
-		<div class="form__row">
-			<div class="form__group form__item--75">
-				<label for="responsible-person" class="form__label">Assigned To</label>
-				<input id="responsible-person" type="text" class="form__field" autocomplete="off">
-			</div>
-			<div class="form__group form__item">
-				<label for="due_date" class="form__label">Due Date</label>
-				<input id="due_date" type="date" class="form__field" autocomplete="off">
-			</div>
-		</div> 
-		
-		<div class="form__row">
-			<div class="form__group form__item--75">
-				<label for="responsible-company" class="form__label">Company</label>
-				<input id="responsible-company" type="text" class="form__field" autocomplete="off">
-			</div>
-
-			<div class="form__group form__item">
-				<label for="status" class="form__label">Status</label>
-				<input id="status" type="text" class="form__field" autocomplete="off">
-			</div>
-		</div>
-
-		<div class="form__group">
-			<label for="description" class="form__label">Description</label>
-			<textarea id="description" class="form__textarea" cols="30" rows="10"></textarea>
-		</div>
-		
 		<div class="modal__buttons">
 			<button class="button btn-primary-clear" data-action="close">Cancel</button>
 			<button class="button btn-primary-clear" data-action="submit">Submit</button>
@@ -391,76 +419,85 @@ async function editRFIForm(id) {
 	const dueDate = formatDate(record.due_date);
 
 	$('#modal-form').append(
-		`<h3 class="form__title">RFI</h3>
+		`<h3 class="form__title">Request For Information</h3>
 		<input id="id" type="hidden" value="${record.id}">
-
-		<div class="form__row">
-			<div class="form__group form__item">
-				<label for="title" class="form__label">Title</label>
-				<input id="title" type="text" class="form__field" autocomplete="off" value="${record.title}">
-			</div>
-			<div class="form__group form__item--15">
-				<label for="number" class="form__label">No.</label>
-				<input id="number" type="text" class="form__field" autocomplete="off" value="${record.number}">
-			</div>
-		</div>
-
-		<div class="form__row">
-			<div class="form__group form__item--50">
-				<label for="spec-section" class="form__label">Spec Section</label>
-				<input id="spec-section" type="text" class="form__field" autocomplete="off" value="${record.spec_section}">
+		<div class="form__main-content">
+			<div class="form__row">
+				<div class="form__group form__item">
+					<label for="title" class="form__label">Title</label>
+					<input id="title" type="text" class="form__field" autocomplete="off" value="${record.title}">
+				</div>
+				<div class="form__group form__item--15">
+					<label for="number" class="form__label">No.</label>
+					<input id="number" type="text" class="form__field" autocomplete="off" value="${record.number}">
+				</div>
 			</div>
 
-			<div class="form__group form__item">
-				<label for="drawing-number" class="form__label">Drawing No.</label>
-				<input id="drawing-number" type="text" class="form__field" autocomplete="off" value="${record.drawing_number}">
+			<div class="form__row">
+				<div class="form__group form__item--50">
+					<label for="spec-section" class="form__label">Spec Section</label>
+					<input id="spec-section" type="text" class="form__field" autocomplete="off" value="${record.spec_section}">
+				</div>
+
+				<div class="form__group form__item">
+					<label for="drawing-number" class="form__label">Drawing No.</label>
+					<input id="drawing-number" type="text" class="form__field" autocomplete="off" value="${record.drawing_number}">
+				</div>
 			</div>
-		</div>
-		
-		<div class="form__row">
-			<div class="form__group form__item--75">
-				<label for="submittal-person" class="form__label">Submitted By</label>
-				<input id="submittal-person" type="text" class="form__field" autocomplete="off" value="${record.submittal_person}">
+			
+			<div class="form__row">
+				<div class="form__group form__item--75">
+					<label for="submittal-person" class="form__label">Submitted By</label>
+					<input id="submittal-person" type="text" class="form__field" autocomplete="off" value="${record.submittal_person}">
+				</div>
+
+				<div class="form__group form__item">
+					<label for="submittal-date" class="form__label">Submittal Date</label>
+					<input id="submittal-date" type="date" class="form__field" autocomplete="off" value="${submittalDate}">
+				</div>
+			</div>
+			
+			<div class="form__group">
+				<label for="submittal-company" class="form__label">Company</label>
+				<input id="submittal-company" type="text" class="form__field" autocomplete="off" value="${record.submittal_company}">
 			</div>
 
-			<div class="form__group form__item">
-				<label for="submittal-date" class="form__label">Submittal Date</label>
-				<input id="submittal-date" type="date" class="form__field" autocomplete="off" value="${submittalDate}">
-			</div>
-		</div>
-		
-		<div class="form__group">
-			<label for="submittal-company" class="form__label">Company</label>
-			<input id="submittal-company" type="text" class="form__field" autocomplete="off" value="${record.submittal_company}">
-		</div>
+			<div class="form__row">
+				<div class="form__group form__item--75">
+					<label for="responsible-person" class="form__label">Assigned To</label>
+					<input id="responsible-person" type="text" class="form__field" autocomplete="off" value="${record.responsible_person}">
+				</div>
+				<div class="form__group form__item">
+					<label for="due_date" class="form__label">Due Date</label>
+					<input id="due_date" type="date" class="form__field" autocomplete="off" value="${dueDate}">
+				</div>
+			</div> 
+			
+			<div class="form__row">
+				<div class="form__group form__item--75">
+					<label for="responsible-company" class="form__label">Company</label>
+					<input id="responsible-company" type="text" class="form__field" autocomplete="off" value="${record.responsible_company}">
+				</div>
 
-		<div class="form__row">
-			<div class="form__group form__item--75">
-				<label for="responsible-person" class="form__label">Assigned To</label>
-				<input id="responsible-person" type="text" class="form__field" autocomplete="off" value="${record.responsible_person}">
-			</div>
-			<div class="form__group form__item">
-				<label for="due_date" class="form__label">Due Date</label>
-				<input id="due_date" type="date" class="form__field" autocomplete="off" value="${dueDate}">
-			</div>
-		</div> 
-		
-		<div class="form__row">
-			<div class="form__group form__item--75">
-				<label for="responsible-company" class="form__label">Company</label>
-				<input id="responsible-company" type="text" class="form__field" autocomplete="off" value="${record.responsible_company}">
+				<div class="form__group form__item">
+					<label for="status" class="form__label">Status</label>
+					<input id="status" type="text" class="form__field" autocomplete="off" value="${record.status}">
+				</div>
 			</div>
 
-			<div class="form__group form__item">
-				<label for="status" class="form__label">Status</label>
-				<input id="status" type="text" class="form__field" autocomplete="off" value="${record.status}">
+			<div class="form__group">
+				<label for="description" class="form__label">Description</label>
+				<textarea id="description" class="form__textarea" cols="30" rows="10">${record.description}</textarea>
 			</div>
-		</div>
 
-		<div class="form__group">
-			<label for="description" class="form__label">Description</label>
-			<textarea id="description" class="form__textarea" cols="30" rows="10">${record.description}</textarea>
-		</div>
+			<div class="form__group">
+				<label for="attachment" class="form__label">Attachment</label>
+				<input id="attachment" type="file">
+				${record.file_name
+					? `<span class="form__help-text">Uploading a new file will overwrite the following document: <i class="file-name">${record.file_name}</i>.</span>`
+					: ''}
+			</div>	
+		</div>	
 		
 		<div class="modal__buttons">
 			<button class="button btn-primary-clear" data-action="close">Cancel</button>
@@ -482,9 +519,10 @@ async function createRFIRecord() {
 	const responsible_company = $('#responsible-company').val();
 	const status = $('#status').val();
 	const description = $('#description').val();
+	const attachment = $('#attachment').prop('files')[0];
 	const projectID = $('#project-id').text();
 
-	const response = await axios.post('/project/rfi', {
+	const inputs = {
 		title,
 		number,
 		spec_section,
@@ -497,7 +535,21 @@ async function createRFIRecord() {
 		responsible_company,
 		status,
 		description,
+		attachment,
 		projectID
+	};
+
+	const inputData = new FormData();
+
+	for (key in inputs) {
+		inputData.append(key, inputs[key]);
+	}
+
+	const response = await axios({
+		method  : 'post',
+		url     : '/project/rfi',
+		data    : inputData,
+		headers : { 'Content-Type': 'multipart/form-data' }
 	});
 
 	const record = response.data;
@@ -553,8 +605,9 @@ async function editRFIRecord() {
 	const status = $('#status').val();
 	const description = $('#description').val();
 	const id = $('#id').val();
+	const attachment = $('#attachment').prop('files')[0];
 
-	const response = await axios.patch('/project/rfi', {
+	const inputs = {
 		title,
 		number,
 		spec_section,
@@ -567,7 +620,21 @@ async function editRFIRecord() {
 		responsible_company,
 		status,
 		description,
+		attachment,
 		id
+	};
+
+	const inputData = new FormData();
+
+	for (key in inputs) {
+		inputData.append(key, inputs[key]);
+	}
+
+	await axios({
+		method  : 'patch',
+		url     : '/project/rfi',
+		data    : inputData,
+		headers : { 'Content-Type': 'multipart/form-data' }
 	});
 
 	$(`#rfi-title-${id}`).text(title);
@@ -575,6 +642,8 @@ async function editRFIRecord() {
 	$(`#rfi-responsible_company-${id}`).text(responsible_company);
 	$(`#rfi-due_date-${id}`).text(due_date);
 	$(`#rfi-status-${id}`).text(status);
+
+	return id;
 }
 
 async function viewRFIRecord(id) {
@@ -657,9 +726,14 @@ async function viewRFIRecord(id) {
 					<td>${record.status} </td>
 				</tr>
 			</table>
-			
+
+			<h4 class="details__subheading">Attachment</h4>
+			${record.file_name
+				? `<a class="details__file-name" href="/project/rfi/document/${record.id}" target="_blank">${record.file_name}</a>`
+				: '<span class="details__file-name">Record contains no attachment.</span>'}
+		
 			<h4 class="details__subheading">Description</h4>
-    		<p>${record.description}</p>
+    		<p class="details__description">${record.description}</p>
 		</div>
 		
 	`);
@@ -669,74 +743,80 @@ async function viewRFIRecord(id) {
 //SUBMITTAL FUNCTIONS
 function newSubmittalForm() {
 	$('#modal-form').append(
-		`<h3 class="form__title">Submittals</h3>
-
+		`<h3 class="form__title">Submittal</h3>
+		<div class="form__main-content">
 			<div class="form__group">
-			<label for="title" class="form__label">Title</label>
-			<input id="title" type="text" class="form__field" autocomplete="off">
-		</div>
-
-		<div class="form__row">
-			<div class="form__group form__item--25">
-				<label for="number" class="form__label">No.</label>
-				<input id="number" type="text" class="form__field" autocomplete="off">
+				<label for="title" class="form__label">Title</label>
+				<input id="title" type="text" class="form__field" autocomplete="off">
 			</div>
 
+			<div class="form__row">
 				<div class="form__group form__item--25">
-				<label for="spec-section" class="form__label">Spec Section</label>
-				<input id="spec-section" type="text" class="form__field" autocomplete="off">
+					<label for="number" class="form__label">No.</label>
+					<input id="number" type="text" class="form__field" autocomplete="off">
+				</div>
+
+					<div class="form__group form__item--25">
+					<label for="spec-section" class="form__label">Spec Section</label>
+					<input id="spec-section" type="text" class="form__field" autocomplete="off">
+				</div>
+
+					<div class="form__group form__item">
+					<label for="type" class="form__label">Type</label>
+					<input id="type" type="text" class="form__field" autocomplete="off">
+				</div>
 			</div>
+			
+			<div class="form__row">
+				<div class="form__group form__item--75">
+					<label for="submittal-person" class="form__label">Submitted By</label>
+					<input id="submittal-person" type="text" class="form__field" autocomplete="off">
+				</div>
 
 				<div class="form__group form__item">
-				<label for="type" class="form__label">Type</label>
-				<input id="type" type="text" class="form__field" autocomplete="off">
+					<label for="submittal-date" class="form__label">Submittal Date</label>
+					<input id="submittal-date" type="date" class="form__field" autocomplete="off">
+				</div>
 			</div>
-		</div>
-		
-		<div class="form__row">
-			<div class="form__group form__item--75">
-				<label for="submittal-person" class="form__label">Submitted By</label>
-				<input id="submittal-person" type="text" class="form__field" autocomplete="off">
-			</div>
-
-			<div class="form__group form__item">
-				<label for="submittal-date" class="form__label">Submittal Date</label>
-				<input id="submittal-date" type="date" class="form__field" autocomplete="off">
-			</div>
-		</div>
-		
-		<div class="form__group">
-			<label for="submittal-company" class="form__label">Company</label>
-			<input id="submittal-company" type="text" class="form__field" autocomplete="off">
-		</div>
-
-		<div class="form__row">
-			<div class="form__group form__item--75">
-				<label for="responsible-person" class="form__label">Assigned To</label>
-				<input id="responsible-person" type="text" class="form__field" autocomplete="off">
-			</div>
-			<div class="form__group form__item">
-				<label for="due_date" class="form__label">Due Date</label>
-				<input id="due_date" type="date" class="form__field" autocomplete="off">
-			</div>
-		</div> 
-		
-		<div class="form__row">
-			<div class="form__group form__item--75">
-				<label for="responsible-company" class="form__label">Company</label>
-				<input id="responsible-company" type="text" class="form__field" autocomplete="off">
+			
+			<div class="form__group">
+				<label for="submittal-company" class="form__label">Company</label>
+				<input id="submittal-company" type="text" class="form__field" autocomplete="off">
 			</div>
 
-			<div class="form__group form__item">
-				<label for="status" class="form__label">Status</label>
-				<input id="status" type="text" class="form__field" autocomplete="off">
-			</div>
-		</div>
+			<div class="form__row">
+				<div class="form__group form__item--75">
+					<label for="responsible-person" class="form__label">Assigned To</label>
+					<input id="responsible-person" type="text" class="form__field" autocomplete="off">
+				</div>
+				<div class="form__group form__item">
+					<label for="due_date" class="form__label">Due Date</label>
+					<input id="due_date" type="date" class="form__field" autocomplete="off">
+				</div>
+			</div> 
+			
+			<div class="form__row">
+				<div class="form__group form__item--75">
+					<label for="responsible-company" class="form__label">Company</label>
+					<input id="responsible-company" type="text" class="form__field" autocomplete="off">
+				</div>
 
-		<div class="form__group">
-			<label for="description" class="form__label">Description</label>
-			<textarea id="description" class="form__textarea" cols="30" rows="10"></textarea>
-		</div>
+				<div class="form__group form__item">
+					<label for="status" class="form__label">Status</label>
+					<input id="status" type="text" class="form__field" autocomplete="off">
+				</div>
+			</div>
+
+			<div class="form__group">
+				<label for="description" class="form__label">Description</label>
+				<textarea id="description" class="form__textarea" cols="30" rows="10"></textarea>
+			</div>
+
+			<div class="form__group">
+				<label for="attachment" class="form__label">Attachment</label>
+				<input id="attachment" type="file">
+			</div>	
+		</div>	
 		
 		<div class="modal__buttons">
 			<button class="button btn-primary-clear" data-action="close">Cancel</button>
@@ -752,76 +832,84 @@ async function editSubmittalForm(id) {
 	const dueDate = formatDate(record.due_date);
 
 	$('#modal-form').append(
-		`<h3 class="form__title">Submittals</h3>
+		`<h3 class="form__title">Submittal</h3>
 		<input id="id" type="hidden" value="${record.id}">
-
-
-		<div class="form__group">
-			<label for="title" class="form__label">Title</label>
-			<input id="title" type="text" class="form__field" autocomplete="off" value="${record.title}">
-		</div>
-
-		<div class="form__row">
-			<div class="form__group form__item--25">
-				<label for="number" class="form__label">No.</label>
-				<input id="number" type="text" class="form__field" autocomplete="off" value="${record.number}">
+		<div class="form__main-content">
+			<div class="form__group">
+				<label for="title" class="form__label">Title</label>
+				<input id="title" type="text" class="form__field" autocomplete="off" value="${record.title}">
 			</div>
 
+			<div class="form__row">
 				<div class="form__group form__item--25">
-				<label for="spec-section" class="form__label">Spec Section</label>
-				<input id="spec-section" type="text" class="form__field" autocomplete="off" value="${record.spec_section}">
+					<label for="number" class="form__label">No.</label>
+					<input id="number" type="text" class="form__field" autocomplete="off" value="${record.number}">
+				</div>
+
+					<div class="form__group form__item--25">
+					<label for="spec-section" class="form__label">Spec Section</label>
+					<input id="spec-section" type="text" class="form__field" autocomplete="off" value="${record.spec_section}">
+				</div>
+
+					<div class="form__group form__item">
+					<label for="type" class="form__label">Type</label>
+					<input id="type" type="text" class="form__field" autocomplete="off" value="${record.type}">
+				</div>
 			</div>
+			
+			<div class="form__row">
+				<div class="form__group form__item--75">
+					<label for="submittal-person" class="form__label">Submitted By</label>
+					<input id="submittal-person" type="text" class="form__field" autocomplete="off" value="${record.submittal_person}">
+				</div>
 
 				<div class="form__group form__item">
-				<label for="type" class="form__label">Type</label>
-				<input id="type" type="text" class="form__field" autocomplete="off" value="${record.type}">
+					<label for="submittal-date" class="form__label">Submittal Date</label>
+					<input id="submittal-date" type="date" class="form__field" autocomplete="off" value="${submittalDate}">
+				</div>
 			</div>
-		</div>
-		
-		<div class="form__row">
-			<div class="form__group form__item--75">
-				<label for="submittal-person" class="form__label">Submitted By</label>
-				<input id="submittal-person" type="text" class="form__field" autocomplete="off" value="${record.submittal_person}">
-			</div>
-
-			<div class="form__group form__item">
-				<label for="submittal-date" class="form__label">Submittal Date</label>
-				<input id="submittal-date" type="date" class="form__field" autocomplete="off" value="${submittalDate}">
-			</div>
-		</div>
-		
-		<div class="form__group">
-			<label for="submittal-company" class="form__label">Company</label>
-			<input id="submittal-company" type="text" class="form__field" autocomplete="off" value="${record.submittal_company}">
-		</div>
-
-		<div class="form__row">
-			<div class="form__group form__item--75">
-				<label for="responsible-person" class="form__label">Assigned To</label>
-				<input id="responsible-person" type="text" class="form__field" autocomplete="off" value="${record.responsible_person}">
-			</div>
-			<div class="form__group form__item">
-				<label for="due_date" class="form__label">Due Date</label>
-				<input id="due_date" type="date" class="form__field" autocomplete="off" value="${dueDate}">
-			</div>
-		</div> 
-		
-		<div class="form__row">
-			<div class="form__group form__item--75">
-				<label for="responsible-company" class="form__label">Company</label>
-				<input id="responsible-company" type="text" class="form__field" autocomplete="off" value="${record.responsible_company}">
+			
+			<div class="form__group">
+				<label for="submittal-company" class="form__label">Company</label>
+				<input id="submittal-company" type="text" class="form__field" autocomplete="off" value="${record.submittal_company}">
 			</div>
 
-			<div class="form__group form__item">
-				<label for="status" class="form__label">Status</label>
-				<input id="status" type="text" class="form__field" autocomplete="off" value="${record.status}">
-			</div>
-		</div>
+			<div class="form__row">
+				<div class="form__group form__item--75">
+					<label for="responsible-person" class="form__label">Assigned To</label>
+					<input id="responsible-person" type="text" class="form__field" autocomplete="off" value="${record.responsible_person}">
+				</div>
+				<div class="form__group form__item">
+					<label for="due_date" class="form__label">Due Date</label>
+					<input id="due_date" type="date" class="form__field" autocomplete="off" value="${dueDate}">
+				</div>
+			</div> 
+			
+			<div class="form__row">
+				<div class="form__group form__item--75">
+					<label for="responsible-company" class="form__label">Company</label>
+					<input id="responsible-company" type="text" class="form__field" autocomplete="off" value="${record.responsible_company}">
+				</div>
 
-		<div class="form__group">
-			<label for="description" class="form__label">Description</label>
-			<textarea id="description" class="form__textarea" cols="30" rows="10">${record.description}</textarea>
-		</div>
+				<div class="form__group form__item">
+					<label for="status" class="form__label">Status</label>
+					<input id="status" type="text" class="form__field" autocomplete="off" value="${record.status}">
+				</div>
+			</div>
+
+			<div class="form__group">
+				<label for="description" class="form__label">Description</label>
+				<textarea id="description" class="form__textarea" cols="30" rows="10">${record.description}</textarea>
+			</div>
+
+			<div class="form__group">
+				<label for="attachment" class="form__label">Attachment</label>
+				<input id="attachment" type="file">
+				${record.file_name
+					? `<span class="form__help-text">Uploading a new file will overwrite the following document: <i class="file-name">${record.file_name}</i>.</span>`
+					: ''}
+			</div>
+		</div>		
 		
 		<div class="modal__buttons">
 			<button class="button btn-primary-clear" data-action="close">Cancel</button>
@@ -843,9 +931,10 @@ async function createSubmittalRecord() {
 	const responsible_company = $('#responsible-company').val();
 	const status = $('#status').val();
 	const description = $('#description').val();
+	const attachment = $('#attachment').prop('files')[0];
 	const projectID = $('#project-id').text();
 
-	const response = await axios.post('/project/submittal', {
+	const inputs = {
 		title,
 		number,
 		spec_section,
@@ -858,7 +947,21 @@ async function createSubmittalRecord() {
 		responsible_company,
 		status,
 		description,
+		attachment,
 		projectID
+	};
+
+	const inputData = new FormData();
+
+	for (key in inputs) {
+		inputData.append(key, inputs[key]);
+	}
+
+	const response = await axios({
+		method  : 'post',
+		url     : '/project/submittal',
+		data    : inputData,
+		headers : { 'Content-Type': 'multipart/form-data' }
 	});
 
 	const record = response.data;
@@ -918,8 +1021,9 @@ async function editSubmittalRecord() {
 	const status = $('#status').val();
 	const description = $('#description').val();
 	const id = $('#id').val();
+	const attachment = $('#attachment').prop('files')[0];
 
-	const response = await axios.patch('/project/submittal', {
+	const inputs = {
 		title,
 		number,
 		spec_section,
@@ -932,7 +1036,21 @@ async function editSubmittalRecord() {
 		responsible_company,
 		status,
 		description,
+		attachment,
 		id
+	};
+
+	const inputData = new FormData();
+
+	for (key in inputs) {
+		inputData.append(key, inputs[key]);
+	}
+
+	await axios({
+		method  : 'patch',
+		url     : '/project/submittal',
+		data    : inputData,
+		headers : { 'Content-Type': 'multipart/form-data' }
 	});
 
 	$(`#submittal-title-${id}`).text(title);
@@ -941,6 +1059,8 @@ async function editSubmittalRecord() {
 	$(`#submittal-responsible_company-${id}`).text(responsible_company);
 	$(`#submittal-due_date-${id}`).text(due_date);
 	$(`#submittal-status-${id}`).text(status);
+
+	return id;
 }
 
 async function viewSubmittalRecord(id) {
@@ -1025,8 +1145,13 @@ async function viewSubmittalRecord(id) {
 				</tr>
 			</table>
 			
+			<h4 class="details__subheading">Attachment</h4>
+			${record.file_name
+				? `<a class="details__file-name" href="/project/submittal/document/${record.id}" target="_blank">${record.file_name}</a>`
+				: '<span class="details__file-name">Record contains no attachment.</span>'}
+
 			<h4 class="details__subheading">Description</h4>
-    		<p>${record.description}</p>
+    		<p class="details__description">${record.description}</p>
 		</div>
 		
 	`);
@@ -1036,70 +1161,75 @@ async function viewSubmittalRecord(id) {
 function newChangeOrderForm() {
 	$('#modal-form').append(
 		`<h3 class="form__title">Change Order</h3>
+		<div class="form__main-content">
+			<div class="form__row">
+				<div class="form__group form__item">
+					<label for="title" class="form__label">Title</label>
+					<input id="title" type="text" class="form__field" autocomplete="off">
+				</div>
 
-		<div class="form__row">
-			<div class="form__group form__item">
-				<label for="title" class="form__label">Title</label>
-				<input id="title" type="text" class="form__field" autocomplete="off">
+				<div class="form__group form__item--15">
+					<label for="number" class="form__label">No.</label>
+					<input id="number" type="text" class="form__field" autocomplete="off">
+				</div>
+			</div>
+			
+			<div class="form__row">
+				<div class="form__group form__item--75">
+					<label for="submittal-person" class="form__label">Submitted By</label>
+					<input id="submittal-person" type="text" class="form__field" autocomplete="off">
+				</div>
+
+				<div class="form__group form__item">
+					<label for="submittal-date" class="form__label">Submittal Date</label>
+					<input id="submittal-date" type="date" class="form__field" autocomplete="off">
+				</div>
+			</div>
+			
+			<div class="form__group">
+				<label for="submittal-company" class="form__label">Company</label>
+				<input id="submittal-company" type="text" class="form__field" autocomplete="off">
 			</div>
 
-			<div class="form__group form__item--15">
-				<label for="number" class="form__label">No.</label>
-				<input id="number" type="text" class="form__field" autocomplete="off">
+			<div class="form__row">
+				<div class="form__group form__item--50">
+					<label for="responsible-person" class="form__label">Assigned To</label>
+					<input id="responsible-person" type="text" class="form__field" autocomplete="off">
+				</div>
+
+				<div class="form__group form__item--50">
+					<label for="responsible-company" class="form__label">Company</label>
+					<input id="responsible-company" type="text" class="form__field" autocomplete="off">
+				</div>
+			</div> 
+			
+			<div class="form__row">
+				<div class="form__group form__item--25">
+					<label for="type" class="form__label">Type</label>
+					<input id="type" type="text" class="form__field" autocomplete="off">
+				</div>
+
+				<div class="form__group form__item--25">
+					<label for="cost" class="form__label">Cost</label>
+					<input id="cost" type="text" class="form__field" autocomplete="off">
+				</div>
+
+				<div class="form__group form__item--50">
+					<label for="status" class="form__label">Status</label>
+					<input id="status" type="text" class="form__field" autocomplete="off">
+				</div>
 			</div>
+
+			<div class="form__group">
+				<label for="description" class="form__label">Description</label>
+				<textarea id="description" class="form__textarea" cols="30" rows="10"></textarea>
+			</div>
+
+			<div class="form__group">
+				<label for="attachment" class="form__label">Attachment</label>
+				<input id="attachment" type="file">
+			</div>		
 		</div>
-		
-		<div class="form__row">
-			<div class="form__group form__item--75">
-				<label for="submittal-person" class="form__label">Submitted By</label>
-				<input id="submittal-person" type="text" class="form__field" autocomplete="off">
-			</div>
-
-			<div class="form__group form__item">
-				<label for="submittal-date" class="form__label">Submittal Date</label>
-				<input id="submittal-date" type="date" class="form__field" autocomplete="off">
-			</div>
-		</div>
-		
-		<div class="form__group">
-			<label for="submittal-company" class="form__label">Company</label>
-			<input id="submittal-company" type="text" class="form__field" autocomplete="off">
-		</div>
-
-		<div class="form__row">
-			<div class="form__group form__item--50">
-				<label for="responsible-person" class="form__label">Assigned To</label>
-				<input id="responsible-person" type="text" class="form__field" autocomplete="off">
-			</div>
-
-			<div class="form__group form__item--50">
-				<label for="responsible-company" class="form__label">Company</label>
-				<input id="responsible-company" type="text" class="form__field" autocomplete="off">
-			</div>
-		</div> 
-		
-		<div class="form__row">
-			<div class="form__group form__item--25">
-				<label for="type" class="form__label">Type</label>
-				<input id="type" type="text" class="form__field" autocomplete="off">
-			</div>
-
-			<div class="form__group form__item--25">
-				<label for="cost" class="form__label">Cost</label>
-				<input id="cost" type="text" class="form__field" autocomplete="off">
-			</div>
-
-			<div class="form__group form__item--50">
-				<label for="status" class="form__label">Status</label>
-				<input id="status" type="text" class="form__field" autocomplete="off">
-			</div>
-		</div>
-
-		<div class="form__group">
-			<label for="description" class="form__label">Description</label>
-			<textarea id="description" class="form__textarea" cols="30" rows="10"></textarea>
-		</div>
-		
 		<div class="modal__buttons">
 			<button class="button btn-primary-clear" data-action="close">Cancel</button>
 			<button class="button btn-primary-clear" data-action="submit">Submit</button>
@@ -1115,69 +1245,78 @@ async function editChangeOrderForm(id) {
 	$('#modal-form').append(
 		`<h3 class="form__title">Change Order</h3>
 		<input id="id" type="hidden" value="${record.id}">
+		<div class="form__main-content">
+			<div class="form__row">
+				<div class="form__group form__item">
+					<label for="title" class="form__label">Title</label>
+					<input id="title" type="text" class="form__field" autocomplete="off" value="${record.title}">
+				</div>
 
-		<div class="form__row">
-			<div class="form__group form__item">
-				<label for="title" class="form__label">Title</label>
-				<input id="title" type="text" class="form__field" autocomplete="off" value="${record.title}">
+				<div class="form__group form__item--15">
+					<label for="number" class="form__label">No.</label>
+					<input id="number" type="text" class="form__field" autocomplete="off" value="${record.number}">
+				</div>
 			</div>
+			
+			<div class="form__row">
+				<div class="form__group form__item--75">
+					<label for="submittal-person" class="form__label">Submitted By</label>
+					<input id="submittal-person" type="text" class="form__field" autocomplete="off" value="${record.submittal_person}">
+				</div>
 
-			<div class="form__group form__item--15">
-				<label for="number" class="form__label">No.</label>
-				<input id="number" type="text" class="form__field" autocomplete="off" value="${record.number}">
+				<div class="form__group form__item">
+					<label for="submittal-date" class="form__label">Submittal Date</label>
+					<input id="submittal-date" type="date" class="form__field" autocomplete="off" value="${submittalDate}">
+				</div>
 			</div>
-		</div>
-		
-		<div class="form__row">
-			<div class="form__group form__item--75">
-				<label for="submittal-person" class="form__label">Submitted By</label>
-				<input id="submittal-person" type="text" class="form__field" autocomplete="off" value="${record.submittal_person}">
-			</div>
-
-			<div class="form__group form__item">
-				<label for="submittal-date" class="form__label">Submittal Date</label>
-				<input id="submittal-date" type="date" class="form__field" autocomplete="off" value="${submittalDate}">
-			</div>
-		</div>
-		
-		<div class="form__group">
-			<label for="submittal-company" class="form__label">Company</label>
-			<input id="submittal-company" type="text" class="form__field" autocomplete="off" value="${record.submittal_company}">
-		</div>
-
-		<div class="form__row">
-			<div class="form__group form__item--50">
-				<label for="responsible-person" class="form__label">Assigned To</label>
-				<input id="responsible-person" type="text" class="form__field" autocomplete="off" value="${record.responsible_person}">
+			
+			<div class="form__group">
+				<label for="submittal-company" class="form__label">Company</label>
+				<input id="submittal-company" type="text" class="form__field" autocomplete="off" value="${record.submittal_company}">
 			</div>
 
-			<div class="form__group form__item--50">
-				<label for="responsible-company" class="form__label">Company</label>
-				<input id="responsible-company" type="text" class="form__field" autocomplete="off" value="${record.responsible_company}">
-			</div>
-		</div> 
-		
-		<div class="form__row">
-			<div class="form__group form__item--25">
-				<label for="type" class="form__label">Type</label>
-				<input id="type" type="text" class="form__field" autocomplete="off" value="${record.type}">
+			<div class="form__row">
+				<div class="form__group form__item--50">
+					<label for="responsible-person" class="form__label">Assigned To</label>
+					<input id="responsible-person" type="text" class="form__field" autocomplete="off" value="${record.responsible_person}">
+				</div>
+
+				<div class="form__group form__item--50">
+					<label for="responsible-company" class="form__label">Company</label>
+					<input id="responsible-company" type="text" class="form__field" autocomplete="off" value="${record.responsible_company}">
+				</div>
+			</div> 
+			
+			<div class="form__row">
+				<div class="form__group form__item--25">
+					<label for="type" class="form__label">Type</label>
+					<input id="type" type="text" class="form__field" autocomplete="off" value="${record.type}">
+				</div>
+
+				<div class="form__group form__item--25">
+					<label for="cost" class="form__label">Cost</label>
+					<input id="cost" type="text" class="form__field" autocomplete="off" value="${record.cost}">
+				</div>
+
+				<div class="form__group form__item--50">
+					<label for="status" class="form__label">Status</label>
+					<input id="status" type="text" class="form__field" autocomplete="off" value="${record.status}">
+				</div>
 			</div>
 
-			<div class="form__group form__item--25">
-				<label for="cost" class="form__label">Cost</label>
-				<input id="cost" type="text" class="form__field" autocomplete="off" value="${record.cost}">
+			<div class="form__group">
+				<label for="description" class="form__label">Description</label>
+				<textarea id="description" class="form__textarea" cols="30" rows="10">${record.description}</textarea>
 			</div>
 
-			<div class="form__group form__item--50">
-				<label for="status" class="form__label">Status</label>
-				<input id="status" type="text" class="form__field" autocomplete="off" value="${record.status}">
-			</div>
-		</div>
-
-		<div class="form__group">
-			<label for="description" class="form__label">Description</label>
-			<textarea id="description" class="form__textarea" cols="30" rows="10">${record.description}</textarea>
-		</div>
+			<div class="form__group">
+				<label for="attachment" class="form__label">Attachment</label>
+				<input id="attachment" type="file">
+				${record.file_name
+					? `<span class="form__help-text">Uploading a new file will overwrite the following document: <i class="file-name">${record.file_name}</i>.</span>`
+					: ''}
+			</div>	
+		</div>	
 		
 		<div class="modal__buttons">
 			<button class="button btn-primary-clear" data-action="close">Cancel</button>
@@ -1198,9 +1337,10 @@ async function createChangeOrderRecord() {
 	const cost = $('#cost').val();
 	const status = $('#status').val();
 	const description = $('#description').val();
+	const attachment = $('#attachment').prop('files')[0];
 	const projectID = $('#project-id').text();
 
-	const response = await axios.post('/project/change_order', {
+	const inputs = {
 		title,
 		number,
 		submittal_person,
@@ -1212,7 +1352,21 @@ async function createChangeOrderRecord() {
 		cost,
 		status,
 		description,
+		attachment,
 		projectID
+	};
+
+	const inputData = new FormData();
+
+	for (key in inputs) {
+		inputData.append(key, inputs[key]);
+	}
+
+	const response = await axios({
+		method  : 'post',
+		url     : '/project/change_order',
+		data    : inputData,
+		headers : { 'Content-Type': 'multipart/form-data' }
 	});
 
 	const record = response.data;
@@ -1267,8 +1421,9 @@ async function editChangeOrderRecord() {
 	const status = $('#status').val();
 	const description = $('#description').val();
 	const id = $('#id').val();
+	const attachment = $('#attachment').prop('files')[0];
 
-	const response = await axios.patch('/project/change_order', {
+	const inputs = {
 		title,
 		number,
 		submittal_person,
@@ -1280,7 +1435,21 @@ async function editChangeOrderRecord() {
 		cost,
 		status,
 		description,
+		attachment,
 		id
+	};
+
+	const inputData = new FormData();
+
+	for (key in inputs) {
+		inputData.append(key, inputs[key]);
+	}
+
+	await axios({
+		method  : 'patch',
+		url     : '/project/change_order',
+		data    : inputData,
+		headers : { 'Content-Type': 'multipart/form-data' }
 	});
 
 	$(`#change_order-title-${id}`).text(title);
@@ -1288,6 +1457,8 @@ async function editChangeOrderRecord() {
 	$(`#change_order-type-${id}`).text(type);
 	$(`#change_order-responsible_company-${id}`).text(responsible_company);
 	$(`#change_order-status-${id}`).text(status);
+
+	return id;
 }
 
 async function viewChangeOrderRecord(id) {
@@ -1365,9 +1536,14 @@ async function viewChangeOrderRecord(id) {
 					<td>${record.status} </td>
 				</tr>
 			</table>
-			
+
+			<h4 class="details__subheading">Attachment</h4>
+			${record.file_name
+				? `<a class="details__file-name" href="/project/change_order/document/${record.id}" target="_blank">${record.file_name}</a>`
+				: '<span class="details__file-name">Record contains no attachment.</span>'}
+
 			<h4 class="details__subheading">Description</h4>
-    		<p>${record.description}</p>
+    		<p class="details__description">${record.description}</p>
 		</div>
 		
 	`);

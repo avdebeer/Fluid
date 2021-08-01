@@ -4,14 +4,16 @@
 
 {% block content %}
 <div class="user-dashboard">
+    <h2 class="user-details__name" >{{current_user.full_name}}</h2>
+    <h3 class="user-details__company" >({{current_user.company}})</h3>
 
     <div id="projects-list" class="user-projects">
         <div id="project-owner" class="user-projects__area">
-      
             <div class="user-projects__area--title">
-                <h2>Project Owner</h2>
+                <h2>My Projects</h2>
                 <button id="new-project-btn" class=" button btn-primary">new project</button>
             </div>
+            <p>Slect a project to navigate to the project dashboard.</p>
 
             {% for project in projects %}
             <div id="{{project.id}}" class="project-details">
@@ -28,24 +30,16 @@
                 </a>
             </div>
             {% endfor %}
-
-        </div>
-        <div id="project-member" class="user-projects__area">
-            <div class="user-projects__area--title">
-                <h2>Project Member</h2>
-            </div>
         </div>
     </div>
 
     <div id="modal" class="modal">
         <div class="modal__container">
-            <div id="modal-form" class="form">
-            </div>
+            <form action="#" id="modal-form" class="form" novalidate>
+            </form>
         </div>
     </div>
-   
 </div>
-
 {% endblock %}
 
 {% block scripts %}

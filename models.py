@@ -66,8 +66,6 @@ class Project(db.Model):
     city = db.Column (db.Text, nullable = False)
     zip_code = db.Column(db.Integer, nullable = False)
     description = db.Column (db.Text, nullable = True)
-
-    
     owner = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 
@@ -107,7 +105,9 @@ class RFI(db.Model):
     due_date = db.Column(db.Date, nullable = False)
     status = db.Column (db.String(30), nullable = False)
     description = db.Column (db.Text, nullable = True)
-   
+    attachment = db.Column(db.LargeBinary)
+    
+    file_name = db.Column(db.String(300))
     author = db.Column (db.String(50), nullable = False)
     created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated = db.Column(db.DateTime, onupdate=datetime.utcnow, default=datetime.utcnow)
@@ -130,6 +130,7 @@ class RFI(db.Model):
             'due_date': self.due_date,
             'status': self.status,
             'description': self.description,
+            'file_name': self.file_name,
             'author': self.author,
             'created': self.created,
             'updated': self.updated,
@@ -153,7 +154,9 @@ class Submittal(db.Model):
     responsible_company = db.Column (db.String(50), nullable = True)
     status = db.Column (db.String(30), nullable = False)
     description = db.Column (db.Text, nullable = True)
-   
+    attachment = db.Column(db.LargeBinary)
+    
+    file_name = db.Column(db.String(300))
     author = db.Column (db.String(50), nullable = False)
     created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated = db.Column(db.DateTime, onupdate=datetime.utcnow, default=datetime.utcnow)
@@ -176,6 +179,7 @@ class Submittal(db.Model):
             'responsible_company': self.responsible_company,
             'status': self.status,
             'description': self.description,
+            'file_name': self.file_name,
             'author': self.author,
             'created': self.created,
             'updated': self.updated,
@@ -197,7 +201,9 @@ class ChangeOrder(db.Model):
     cost = db.Column(db.Float, nullable = True)
     status = db.Column (db.String(30), nullable = False)
     description = db.Column (db.Text, nullable = True)
-   
+    attachment = db.Column(db.LargeBinary)
+    
+    file_name = db.Column(db.String(300))
     author = db.Column (db.String(50), nullable = False)
     created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated = db.Column(db.DateTime, onupdate=datetime.utcnow, default=datetime.utcnow)
@@ -219,6 +225,7 @@ class ChangeOrder(db.Model):
             'cost': self.cost,
             'status': self.status,
             'description': self.description,
+            'file_name': self.file_name,
             'author': self.author,
             'created': self.created,
             'updated': self.updated,
@@ -234,13 +241,13 @@ class InspectionReport(db.Model):
     title = db.Column (db.Text, nullable = False)
     report_number = db.Column(db.Text, nullable = False)
     description = db.Column (db.Text, nullable = True)
-    
     inspector = db.Column (db.String(30), nullable = False)
+    attachment = db.Column(db.LargeBinary)
+    
+    file_name = db.Column(db.String(300))
     author = db.Column (db.String(50), nullable = False)
     created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated = db.Column(db.DateTime, onupdate=datetime.utcnow, default=datetime.utcnow)
-    attachment = db.Column(db.LargeBinary)
-
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
 
     def serialize(self):
@@ -252,16 +259,13 @@ class InspectionReport(db.Model):
                 'report_number': self.report_number,
                 'description': self.description,
                 'inspector': self.inspector,
+                'file_name': self.file_name,
                 'created': self.created,
                 'author': self.author,
                 'updated': self.updated,
-                'project_id': self.project_id,
+                'project_id': self.project_id
             }
 
 
-class FileContents(db.Model):
-    __tablename__ = 'file_contents'
 
-    id = db.Column(db.Integer, primary_key = True, autoincrement = True)
-    name = db.Column(db.String(300))
-    data = db.Column(db.LargeBinary)
+

@@ -13,26 +13,37 @@
     <script src="https://kit.fontawesome.com/712e0ca9c3.js" crossorigin="anonymous"></script>
     <title>{% block title %}{% endblock %}</title>
 </head>
-<body>
-        <nav class="navbar">
-            <a class="navbar__logo" href="/">FLUID</a>
-            {% if current_user.is_authenticated %}
-            <a class="navbar__link" href="/dashboard">
-                {{current_user.first_name}}
-            </a>
-            <a class="navbar__link" href="/logout">logout</a>
-            {% else %}
-            <a class="navbar__link" href="/login">login</a>
-            <a class="navbar__link" href="/register">register</a>
-            {% endif %}
+<body class="master-container">
+    <div class="header">
+        <nav class="nav nav-top">
+            <a class="nav__logo" href="/">FLUID</a>
+            <ul class="nav__list">
+                {% if current_user.is_authenticated %}
+                <li>  
+                    <a href="/dashboard">{{current_user.first_name}}</a>
+                </li>
+                <li>
+                    <a href="/logout">logout</a>
+                </li>
+                {% else %}
+                <li>
+                    <a href="/login">login</a>
+                </li>
+                <li>
+                    <a href="/register">register</a>
+                </li>
+                {% endif %}
+            </ul>
         </nav>
+    </div>
+    <div class="body">
         {% block content %}
         {% endblock %}
-        <footer> 
-        </footer>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/axios@0.19.0/dist/axios.js"></script>
-    {% block scripts %}
-    {% endblock %}
+    </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/axios@0.19.0/dist/axios.js"></script>
+        {% block scripts %}
+        {% endblock %}
+        
 </body>
 </html>

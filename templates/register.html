@@ -1,22 +1,28 @@
 {% extends 'base.html' %}
 
-{% block title %}{% endblock %}
+{% block title %}Register{% endblock %}
 
 {% block content %}
-<div class="admin-container">
-    <form action="/register" method="POST" class="admin-form">
-        <h3 class="form__title">Register</h3>
-        {{form.hidden_tag()}}
-        {% for field in form if field.widget.input_type != 'hidden' %}
-        <div class="form__group">
-            {{field.label(class_='form__label')}}
-            {{field(class_='form__field')}}
-        </div>
-        {% for error in field.errors %}
-            {{error(class_='form__error')}}
-        {% endfor %}
-        {% endfor %}
-        <button class="button btn-primary">register</button>
-    </form>
+<div class="register">
+    <div class="admin-container">
+        <form action="/register" method="POST" class="admin-form" novalidate>
+            <h3 class="form__title">Register</h3>
+            {% for msg in get_flashed_messages() %}
+            <span class="form__entry-validation">{{msg}}</span>
+            {% endfor %}
+            
+            {{form.hidden_tag()}}
+            {% for field in form if field.widget.input_type != 'hidden' %}
+            <div class="form__group">
+                {{field.label(class_='form__label')}}
+                {{field(class_='form__field')}}
+                {% for error in field.errors %}
+                    <span class="form__error">{{error}}</span> 
+                {% endfor %}
+            </div>
+            {% endfor %}
+            <button class="button btn-primary">register</button>
+        </form>
+    </div>
 </div>
 {% endblock %} 

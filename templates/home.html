@@ -4,16 +4,48 @@
 
 {% block content %}
     <div class="grid-container">
-        <div class="g1">
-            <div class="landing-page">
-                <h1 class="landing-page__title">FLUID</h1>
-                <p>Fluid allows project teams to effectively manage small to mid-size construction projects; by allowing users to seamlessly upload and track Request for Information (RFI's), Submittals, Change Orders, and Inspection Reports.</p>
-                <div class="landing-page__button">
-                    <a href="" class="button btn-primary">Demo the app</a>
-                    <a href="" class="button btn-primary">Register</a>
+        <div class="g0">
+                <h1 class="landing__heading">FLUID</h1>
+                <span class="landing__subheading" >Construction Management</span>
+                <p class="landing__description" >An alternate solution for managing and tracking various construction documents. Easily create records and upload supporting documentation.</p>
+                <div>
+                    <div class="feature">
+                        <svg class="feature__icon">
+                            <use  xlink:href="/static/img/sprite.svg#icon-info"></use>
+                        </svg>
+                        <span class="feature__text" >Requests For Information</span>
+                    </div>
+                    <div class="feature">
+                        <svg class="feature__icon">
+                            <use  xlink:href="/static/img/sprite.svg#icon-new-message"></use>
+                        </svg>
+                        <span class="feature__text" >Submittals</span>
+                    </div>
+                    <div class="feature">
+                        <svg class="feature__icon">
+                            <use  xlink:href="/static/img/sprite.svg#icon-chat"></use>
+                        </svg>
+                        <span class="feature__text" >Change Orders</span>
+                    </div>
+                    <div class="feature">
+                        <svg class="feature__icon">
+                            <use  xlink:href="/static/img/sprite.svg#icon-man"></use>
+                        </svg>
+                        <span class="feature__text" >Inspection Reports</span>
+                    </div>
                 </div>
-            </div>
+                {% if current_user.is_authenticated %}
+                {% else %}
+                <div class="landing__buttons">
+                    <a href="/demo" class="button btn-secondary">Demo the app</a>
+                    <a href="/register" class="button btn-tertiary-clear">Register</a>
+                </div>
+                {% endif %}
+                <div class="footer">
+                    <a href=""><img src="" alt=""></a>
+                </div>
         </div>
+        <div class="g1"></div>
         <div class="g2"></div>
         <div class="g3"></div>
         <div class="g4"></div>

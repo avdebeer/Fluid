@@ -3,50 +3,60 @@ function closeModal() {
 	setTimeout(() => $('#modal-form').empty(), 500);
 }
 
+// Exits the modal and removes loaded form
+$('#modal').on('click', 'button[data-action="close"]', function(e) {
+	e.preventDefault();
+	closeModal();
+});
+
 function newProjectForm() {
 	$('#modal-form').append(`
 		<h3 class="form__title">Project</h3>
+		<div class="form__main-content">
+			<div class="form__group">
+				<label for="project-name" class="form__label">Project Name</label>
+				<input id="project-name" type="text" class="form__field" required>
+			</div>
 
-        <div class="form__group">
-            <label for="project-name" class="form__label">Project Name</label>
-            <input id="project-name" type="text" class="form__field">
-        </div>
+			<div class="form__row">
+				<div class="form__group form__item--50">
+					<label for="project-id" class="form__label">ID</label>
+					<input id="project-id" type="text" class="form__field">
+				</div>
 
-        <div class="form__row">
-            <div class="form__group form__item--50">
-                <label for="project-id" class="form__label">ID</label>
-                <input id="project-id" type="text" class="form__field">
-            </div>
+				<div class="form__group form__item">
+					<label for="project-budget" class="form__label">Construction Budget</label>
+					<input id="project-budget" type="text" class="form__field">
+				</div>
+			</div>
 
-            <div class="form__group form__item">
-                <label for="project-budget" class="form__label">Construction Budget</label>
-                <input id="project-budget" type="text" class="form__field">
-            </div>
-        </div>
+			<div class="form__group">
+					<label for="project-street" class="form__label">Street</label>
+					<input id="project-street" type="text" class="form__field">
+			</div>
 
-         <div class="form__group">
-                <label for="project-street" class="form__label">Street</label>
-                <input id="project-street" type="text" class="form__field">
-        </div>
+			<div class="form__row">
+				<div class="form__group form__item--75">
+					<label for="project-city" class="form__label">City</label>
+					<input id="project-city" type="text" class="form__field" required>
+				</div>
 
-        <div class="form__row">
-            <div class="form__group form__item--75">
-                <label for="project-city" class="form__label">City</label>
-                <input id="project-city" type="text" class="form__field">
-            </div>
+				<div class="form__group form__item">
+					<label for="project-zip-code" class="form__label">Zip Code</label>
+					<input id="project-zip-code" type="text" class="form__field" required>
+				</div>
+			</div>
 
-            <div class="form__group form__item">
-                <label for="project-zip-code" class="form__label">Zip Code</label>
-                <input id="project-zip-code" type="text" class="form__field">
-            </div>
-        </div>
+			<div class="form__group">
+				<label for="project-description" class="form__label">Description</label>
+				<textarea id="project-description" class="form__textarea" cols="30" rows="10"></textarea>
+			</div>
+		</div>
 
-        <div class="form__group">
-            <label for="project-description" class="form__label">Description</label>
-            <textarea id="project-description" class="form__textarea" cols="30" rows="10"></textarea>
-        </div>
-        
-		<button class="button btn-primary" data-action="submit">Create</button>
+		<div class="modal__buttons">
+			<button class="button btn-primary-clear" data-action="close">Cancel</button>
+			<button class="button btn-primary-clear" data-action="submit">Create</button>
+		</div>
 	`);
 }
 
@@ -56,47 +66,51 @@ async function editProjectForm(id) {
 	$('#modal-form').append(`
 		<h3 class="form__title">Project</h3>
 		<input id="id" type="hidden" value="${project.id}">
+		<div class="form__main-content">
+			<div class="form__group">
+				<label for="project-name" class="form__label">Project Name</label>
+				<input id="project-name" type="text" class="form__field" value="${project.name}">
+			</div>
 
-        <div class="form__group">
-            <label for="project-name" class="form__label">Project Name</label>
-            <input id="project-name" type="text" class="form__field" value="${project.name}">
-        </div>
+			<div class="form__row">
+				<div class="form__group form__item--50">
+					<label for="project-id" class="form__label">ID</label>
+					<input id="project-id" type="text" class="form__field" value="${project.cip_id}">
+				</div>
 
-        <div class="form__row">
-            <div class="form__group form__item--50">
-                <label for="project-id" class="form__label">ID</label>
-                <input id="project-id" type="text" class="form__field" value="${project.cip_id}">
-            </div>
+				<div class="form__group form__item">
+					<label for="project-budget" class="form__label">Construction Budget</label>
+					<input id="project-budget" type="text" class="form__field" value="${project.budget}">
+				</div>
+			</div>
 
-            <div class="form__group form__item">
-                <label for="project-budget" class="form__label">Construction Budget</label>
-                <input id="project-budget" type="text" class="form__field" value="${project.budget}">
-            </div>
-        </div>
+			<div class="form__group">
+					<label for="project-street" class="form__label">Street</label>
+					<input id="project-street" type="text" class="form__field" value="${project.street}">
+			</div>
 
-         <div class="form__group">
-                <label for="project-street" class="form__label">Street</label>
-                <input id="project-street" type="text" class="form__field" value="${project.street}">
-        </div>
+			<div class="form__row">
+				<div class="form__group form__item--75">
+					<label for="project-city" class="form__label">City</label>
+					<input id="project-city" type="text" class="form__field" value="${project.city}">
+				</div>
 
-        <div class="form__row">
-            <div class="form__group form__item--75">
-                <label for="project-city" class="form__label">City</label>
-                <input id="project-city" type="text" class="form__field" value="${project.city}">
-            </div>
+				<div class="form__group form__item">
+					<label for="project-zip-code" class="form__label">Zip Code</label>
+					<input id="project-zip-code" type="text" class="form__field" value="${project.zip_code}">
+				</div>
+			</div>
 
-            <div class="form__group form__item">
-                <label for="project-zip-code" class="form__label">Zip Code</label>
-                <input id="project-zip-code" type="text" class="form__field" value="${project.zip_code}">
-            </div>
-        </div>
+			<div class="form__group">
+				<label for="project-description" class="form__label">Description</label>
+				<textarea id="project-description" class="form__textarea" cols="30" rows="10">${project.description}</textarea>
+			</div>
+		</div>
 
-        <div class="form__group">
-            <label for="project-description" class="form__label">Description</label>
-            <textarea id="project-description" class="form__textarea" cols="30" rows="10">${project.description}</textarea>
-        </div>
-        
-		<button class="button btn-primary" data-action="update">Update</button>
+		<div class="modal__buttons">
+			<button class="button btn-primary-clear" data-action="close">Cancel</button>
+			<button class="button btn-primary-clear" data-action="update">Update</button>
+		</div>
 	`);
 }
 
@@ -109,7 +123,7 @@ async function createProject() {
 	const zip_code = $('#project-zip-code').val();
 	const description = $('#project-description').val();
 
-	const response = await axios.post('/project', {
+	const inputs = {
 		name,
 		cip_id,
 		budget,
@@ -117,6 +131,20 @@ async function createProject() {
 		city,
 		zip_code,
 		description
+	};
+	console.log(inputs);
+
+	const inputData = new FormData();
+
+	for (key in inputs) {
+		inputData.append(key, inputs[key]);
+	}
+
+	const response = await axios({
+		method  : 'post',
+		url     : '/project',
+		data    : inputData,
+		headers : { 'Content-Type': 'multipart/form-data' }
 	});
 
 	const project = response.data;
@@ -148,7 +176,7 @@ async function editProject() {
 	const description = $('#project-description').val();
 	const id = $('#id').val();
 
-	const response = await axios.patch('/project', {
+	await axios.patch('/project', {
 		name,
 		cip_id,
 		budget,

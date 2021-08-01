@@ -75,8 +75,6 @@
                         <h3 class="general__heading">Site Conditions</h3>
 
                         <div class="general__weather">
-                            <!-- <h4>{{project.address}}</h4> -->
-                           
                             <h5>
                                 <svg><use xlink:href="/static/img/sprite.svg#icon-location-pin"></use></svg>
                                 {{weather.location.name}}, {{weather.location.region}}
@@ -107,9 +105,8 @@
                     <div class="general__card">
                         <h3 h3 class="general__heading">Team</h3>
                         <div class="general__content">
-                            <p>Jose Oropeza (ABX INC.)</p>
-                            <p>Robert Jhones (ACWD) </p>
-                            <p>Ritesh Patel (DSRSD)</p>
+                            <p>{{current_user.full_name}}</p>
+                            
                         </div>
 
                     </div>
@@ -241,10 +238,6 @@
 
             <!-- INSPECTION SECTION -->
             <div id="inspection" class="is-hidden">
-                {% if project.inspection_reports %}
-                {% else %}
-                    <h3 class="details-message">No existing records.</h3>'
-                {% endif %}
                 {% for record in project.inspection_reports %}
                 <div id="inspection-{{record.id}}" class="record">
                     <div class="record__heading">
@@ -262,6 +255,11 @@
                     </div>
                     <div class="record__summary">
                         <div class="record__summary--data">
+                            <span>#</span> 
+                            <p id="inspection-number-{{record.id}}" >{{record.report_number}}</p>
+                        </div>
+
+                        <div class="record__summary--data">
                             <span>Date:</span> 
                             <p id="inspection-date-{{record.id}}" >{{record.date}}</p>
                         </div>
@@ -275,7 +273,6 @@
             </div>
 
         </div>
-
         <div class="section__new-record">
             <button id="modal-open" class="button btn-primary is-hidden" data-btn="create">New Record</button>
         </div>

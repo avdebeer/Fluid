@@ -50,9 +50,10 @@ $('#modal').on('click', 'button[data-action="submit"]', (e) => {
 });
 
 // Submits form and updates existing record
-$('#modal').on('click', 'button[data-action="update"]', (e) => {
+$('#modal').on('click', 'button[data-action="update"]', async (e) => {
 	e.preventDefault();
-	updateRecord[activeSection]();
+	const id = await updateRecord[activeSection]();
+	viewRecord[activeSection](id);
 	closeModal();
 });
 
