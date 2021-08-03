@@ -7,6 +7,7 @@ from werkzeug.utils import send_file
 from models import db, connect_db, User, Project,RFI, Submittal, ChangeOrder, InspectionReport
 from forms import RegistrationForm, LoginForm, EditUserForm, ProjectForm
 from io import BytesIO
+import os
 
 
 app = Flask(__name__)
@@ -22,7 +23,7 @@ def load_user(user_id):
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///azeporo' 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
-app.config['SECRET_KEY'] = 'hello'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'julian2019')
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 debug = DebugToolbarExtension(app)
 
