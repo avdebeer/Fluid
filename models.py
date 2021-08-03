@@ -60,8 +60,7 @@ class Project(db.Model):
 
     id = db.Column (db.Integer, primary_key = True, autoincrement = True)
     name = db.Column (db.Text, nullable = False)
-    cip_id = db.Column (db.Text, unique = True)
-    budget = db.Column(db.Integer, nullable = True)
+    cip_id = db.Column (db.Text)
     street = db.Column (db.Text, nullable = True)
     city = db.Column (db.Text, nullable = False)
     zip_code = db.Column(db.Integer, nullable = False)
@@ -80,7 +79,6 @@ class Project(db.Model):
             'id': self.id,
             'name': self.name,
             'cip_id': self.cip_id,
-            'budget': self.budget,
             'street': self.street,
             'city': self.city,
             'zip_code': self.zip_code,
@@ -102,7 +100,7 @@ class RFI(db.Model):
     submittal_date = db.Column(db.Date, nullable = False)
     responsible_person = db.Column (db.String(50), nullable = True)
     responsible_company = db.Column (db.String(50), nullable = True)
-    due_date = db.Column(db.Date, nullable = False)
+    due_date = db.Column(db.Date, nullable = True)
     status = db.Column (db.String(30), nullable = False)
     description = db.Column (db.Text, nullable = True)
     attachment = db.Column(db.LargeBinary)
@@ -150,7 +148,7 @@ class Submittal(db.Model):
     submittal_date = db.Column(db.Date, nullable = False)
     submittal_company = db.Column (db.String(50), nullable = False)
     responsible_person = db.Column (db.String(50), nullable = True)
-    due_date = db.Column(db.Date, nullable = False)
+    due_date = db.Column(db.Date, nullable = True)
     responsible_company = db.Column (db.String(50), nullable = True)
     status = db.Column (db.String(30), nullable = False)
     description = db.Column (db.Text, nullable = True)
@@ -198,7 +196,7 @@ class ChangeOrder(db.Model):
     responsible_person = db.Column (db.String(50), nullable = True)
     responsible_company = db.Column (db.String(50), nullable = True)
     type = db.Column (db.String(50), nullable = True)
-    cost = db.Column(db.Float, nullable = True)
+    cost = db.Column(db.Float, nullable = True, default=0.0)
     status = db.Column (db.String(30), nullable = False)
     description = db.Column (db.Text, nullable = True)
     attachment = db.Column(db.LargeBinary)
@@ -239,7 +237,7 @@ class InspectionReport(db.Model):
     id = db.Column(db.Integer, primary_key = True, autoincrement = True)   
     date = db.Column(db.Date, nullable = True)
     title = db.Column (db.Text, nullable = False)
-    report_number = db.Column(db.Text, nullable = False)
+    report_number = db.Column(db.Float, nullable = False)
     description = db.Column (db.Text, nullable = True)
     inspector = db.Column (db.String(30), nullable = False)
     attachment = db.Column(db.LargeBinary)

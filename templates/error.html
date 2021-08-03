@@ -6,11 +6,7 @@
 <div class="error">
     <div class="error__message">
         <h1>{{error}} Error</h1>
-        {% if message %}
-        <p>Oops! {{message}}</p>
-        {% else %}
-        <p>Oops! Something went wrong.</p>   
-        {% endif %}
+        <p>{{message}}</p>
     </div>
 </div>
 {% endblock %} 

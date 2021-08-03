@@ -15,6 +15,11 @@ function projectMenu() {
 	$('#menu-item-3').removeClass('side-nav__item--active');
 	$('#menu-item-4').removeClass('side-nav__item--active');
 	$('#menu-item-5').removeClass('side-nav__item--active');
+	$('#menu-item-1m').removeClass('side-nav__item--active');
+	$('#menu-item-2m').removeClass('side-nav__item--active');
+	$('#menu-item-3m').removeClass('side-nav__item--active');
+	$('#menu-item-4m').removeClass('side-nav__item--active');
+	$('#menu-item-5m').removeClass('side-nav__item--active');
 }
 
 function closeModal() {
@@ -86,36 +91,44 @@ function newInspectionForm() {
 	$('#modal-form').append(
 		`<h3 class="form__title">Inspection</h3>
 		<div class="form__main-content">
+
 			<div class="form__row">
-				<div class="form__group form__item">
-					<label for="title" class="form__label">Title</label>
-					<input id="title" type="text" class="form__field" autocomplete="off">
+				<div class="form__group form__item--85">
+					<label for="title" class="form__label">Title <span class="form__required">*</span></label>
+					<input id="title" type="text" class="form__field" autocomplete="off" required>
 				</div>
 				<div class="form__group form__item--15">
-					<label for="report_number" class="form__label">No.</label>
-					<input id="report_number" type="text" class="form__field" autocomplete="off">
+					<label for="report_number" class="form__label">No. <span class="form__required">*</span></label>
+					<input id="report_number" type="number" step="any" class="form__field" autocomplete="off" required>
 				</div>
 			</div>
 
-			<div class="form__group">
-				<label for="inspector" class="form__label">Inspector</label>
-				<input id="inspector" type="text" class="form__field" autocomplete="off" value="">
+			<div class="form__row">
+				<div class="form__group form__item--75">
+					<label for="inspector" class="form__label">Inspector <span class="form__required">*</span></label>
+					<input id="inspector" type="text" class="form__field" autocomplete="off" value="" required>
+				</div>
+
+				<div class="form__group form__item--25">
+					<label for="date" class="form__label">Inspection Date <span class="form__required">*</span></label>
+					<input id="date" type="date" class="form__field" value="" required>
+				</div>
 			</div>
 
-			<div class="form__group">
-				<label for="date" class="form__label">Inspection Date</label>
-				<input id="date" type="date" class="form__field" value="">
+			<div class="form__row">
+				<div class="form__group form__item--100">
+					<label for="description" class="form__label">Description</label>
+					<textarea id="description" class="form__textarea" cols="30" rows="10"></textarea>
+				</div>
 			</div>
 
-			<div class="form__group">
-				<label for="description" class="form__label">Description</label>
-				<textarea id="description" class="form__textarea" cols="30" rows="10"></textarea>
+			<div class="form__row">
+				<div class="form__group form__item--100">
+					<label for="attachment" class="form__label">Attachment</label>
+					<input id="attachment" type="file">
+				</div>
 			</div>
 
-			<div class="form__group">
-				<label for="attachment" class="form__label">Attachment</label>
-				<input id="attachment" type="file">
-			</div>
 		</div>
 		
 		<div class="modal__buttons">
@@ -135,38 +148,45 @@ async function editInspectionForm(id) {
 		`<h3 class="form__title">Inspection</h3>
 		<input id="id" type="hidden" value="${record.id}">
 		<div class="form__main-content">
+
 			<div class="form__row">
-				<div class="form__group form__item">
-					<label for="title" class="form__label">Title</label>
-					<input id="title" type="text" class="form__field" autocomplete="off" value="${record.title}">
+				<div class="form__group form__item--85">
+					<label for="title" class="form__label">Title <span class="form__required">*</span></label>
+					<input id="title" type="text" class="form__field" autocomplete="off" value="${record.title}" required>
 				</div>
 				<div class="form__group form__item--15">
-					<label for="report_number" class="form__label">No.</label>
-					<input id="report_number" type="text" class="form__field" autocomplete="off" value="${record.report_number}">
+					<label for="report_number" class="form__label">No. <span class="form__required">*</span></label>
+					<input id="report_number" type="number" step="any" class="form__field" autocomplete="off" value="${record.report_number}" required>
 				</div>
 			</div>
 
-			<div class="form__group">
-				<label for="inspector" class="form__label">Inspector</label>
-				<input id="inspector" type="text" class="form__field" autocomplete="off" value="${record.inspector}">
+			<div class="form__row">
+				<div class="form__group form__item--75">
+					<label for="inspector" class="form__label">Inspector <span class="form__required">*</span></label>
+					<input id="inspector" type="text" class="form__field" autocomplete="off" value="${record.inspector}" required>
+				</div>
+
+				<div class="form__group form__item--25">
+					<label for="date" class="form__label">Inspection Date <span class="form__required">*</span></label>
+					<input id="date" type="date" class="form__field" autocomplete="off" value="${inspectionDate}" required>
+				</div>
 			</div>
 
-			<div class="form__group">
-				<label for="date" class="form__label">Inspection Date</label>
-				<input id="date" type="date" class="form__field" autocomplete="off" value="${inspectionDate}">
+			<div class="form__row">
+				<div class="form__group form__item--100">
+					<label for="description" class="form__label">Description</label>
+					<textarea id="description" class="form__textarea" cols="30" rows="10">${record.description}</textarea>
+				</div>
 			</div>
 
-			<div class="form__group">
-				<label for="description" class="form__label">Description</label>
-				<textarea id="description" class="form__textarea" cols="30" rows="10">${record.description}</textarea>
-			</div>
-
-			<div class="form__group">
-				<label for="attachment" class="form__label">Attachment</label>
-				<input id="attachment" type="file">
-				${record.file_name
-					? `<span class="form__help-text">Uploading a new file will overwrite the following document: <i class="file-name">${record.file_name}</i>.</span>`
-					: ''}
+			<div class="form__row">
+				<div class="form__group">
+					<label for="attachment" class="form__label">Attachment</label>
+					<input id="attachment" type="file">
+					${record.file_name
+						? `<span class="form__help-text">Uploading a new file will overwrite the following document: <i class="file-name">${record.file_name}</i>.</span>`
+						: ''}
+				</div>
 			</div>
 		</div>
 
@@ -331,14 +351,15 @@ function newRFIForm() {
 	$('#modal-form').append(
 		`<h3 class="form__title">Request For Information</h3>
 		<div class="form__main-content">
+
 			<div class="form__row">
-				<div class="form__group form__item">
-					<label for="title" class="form__label">Title</label>
-					<input id="title" type="text" class="form__field" autocomplete="off">
+				<div class="form__group form__item--85">
+					<label for="title" class="form__label">Title <span class="form__required">*</span></label>
+					<input id="title" type="text" class="form__field" autocomplete="off" required>
 				</div>
 				<div class="form__group form__item--15">
-					<label for="number" class="form__label">No.</label>
-					<input id="number" type="text" class="form__field" autocomplete="off">
+					<label for="number" class="form__label">No. <span class="form__required">*</span></label>
+					<input id="number" type="number" step="any" class="form__field" autocomplete="off"required>
 				</div>
 			</div>
 
@@ -348,7 +369,7 @@ function newRFIForm() {
 					<input id="spec-section" type="text" class="form__field" autocomplete="off">
 				</div>
 
-				<div class="form__group form__item">
+				<div class="form__group form__item--50">
 					<label for="drawing-number" class="form__label">Drawing No.</label>
 					<input id="drawing-number" type="text" class="form__field" autocomplete="off">
 				</div>
@@ -356,29 +377,32 @@ function newRFIForm() {
 			
 			<div class="form__row">
 				<div class="form__group form__item--75">
-					<label for="submittal-person" class="form__label">Submitted By</label>
-					<input id="submittal-person" type="text" class="form__field" autocomplete="off">
+					<label for="submittal-person" class="form__label">Submitted By <span class="form__required">*</span></label>
+					<input id="submittal-person" type="text" class="form__field" autocomplete="off" required>
 				</div>
 
-				<div class="form__group form__item">
-					<label for="submittal-date" class="form__label">Submittal Date</label>
-					<input id="submittal-date" type="date" class="form__field" autocomplete="off">
+				<div class="form__group form__item--25">
+					<label for="submittal-date" class="form__label">Submittal Date <span class="form__required">*</span></label>
+					<input id="submittal-date" type="date" class="form__field" autocomplete="off" required>
 				</div>
 			</div>
-			
-			<div class="form__group">
-				<label for="submittal-company" class="form__label">Company</label>
-				<input id="submittal-company" type="text" class="form__field" autocomplete="off">
+
+			<div class="form__row">
+				<div class="form__group form__item--100">
+					<label for="submittal-company" class="form__label">Company <span class="form__required">*</span></label>
+					<input id="submittal-company" type="text" class="form__field" autocomplete="off" required>
+				</div>
 			</div>
+
 
 			<div class="form__row">
 				<div class="form__group form__item--75">
 					<label for="responsible-person" class="form__label">Assigned To</label>
 					<input id="responsible-person" type="text" class="form__field" autocomplete="off">
 				</div>
-				<div class="form__group form__item">
-					<label for="due_date" class="form__label">Due Date</label>
-					<input id="due_date" type="date" class="form__field" autocomplete="off">
+				<div class="form__group form__item--25">
+					<label for="due_date" class="form__label">Due Date <span class="form__required">*</span></label>
+					<input id="due_date" type="date" class="form__field" autocomplete="off" required>
 				</div>
 			</div> 
 			
@@ -388,20 +412,24 @@ function newRFIForm() {
 					<input id="responsible-company" type="text" class="form__field" autocomplete="off">
 				</div>
 
-				<div class="form__group form__item">
-					<label for="status" class="form__label">Status</label>
-					<input id="status" type="text" class="form__field" autocomplete="off">
+				<div class="form__group form__item--25">
+					<label for="status" class="form__label">Status <span class="form__required">*</span></label>
+					<input id="status" type="text" class="form__field" autocomplete="off" required>
 				</div>
 			</div>
 
-			<div class="form__group">
-				<label for="description" class="form__label">Description</label>
-				<textarea id="description" class="form__textarea" cols="30" rows="10"></textarea>
+			<div class="form__row">
+				<div class="form__group form__item--100">
+					<label for="description" class="form__label">Description</label>
+					<textarea id="description" class="form__textarea" cols="30" rows="10"></textarea>
+				</div>
 			</div>
 
-			<div class="form__group">
-				<label for="attachment" class="form__label">Attachment</label>
-				<input id="attachment" type="file">
+			<div class="form__row">
+				<div class="form__group">
+					<label for="attachment" class="form__label">Attachment</label>
+					<input id="attachment" type="file">
+				</div>
 			</div>
 		</div>
 		<div class="modal__buttons">
@@ -422,14 +450,15 @@ async function editRFIForm(id) {
 		`<h3 class="form__title">Request For Information</h3>
 		<input id="id" type="hidden" value="${record.id}">
 		<div class="form__main-content">
+
 			<div class="form__row">
-				<div class="form__group form__item">
-					<label for="title" class="form__label">Title</label>
-					<input id="title" type="text" class="form__field" autocomplete="off" value="${record.title}">
+				<div class="form__group form__item--85">
+					<label for="title" class="form__label">Title <span class="form__required">*</span></label>
+					<input id="title" type="text" class="form__field" autocomplete="off" value="${record.title}" required>
 				</div>
 				<div class="form__group form__item--15">
-					<label for="number" class="form__label">No.</label>
-					<input id="number" type="text" class="form__field" autocomplete="off" value="${record.number}">
+					<label for="number" class="form__label">No. <span class="form__required">*</span></label>
+					<input id="number" type="number" step="any" class="form__field" autocomplete="off" value="${record.number}" required>
 				</div>
 			</div>
 
@@ -439,7 +468,7 @@ async function editRFIForm(id) {
 					<input id="spec-section" type="text" class="form__field" autocomplete="off" value="${record.spec_section}">
 				</div>
 
-				<div class="form__group form__item">
+				<div class="form__group form__item--50">
 					<label for="drawing-number" class="form__label">Drawing No.</label>
 					<input id="drawing-number" type="text" class="form__field" autocomplete="off" value="${record.drawing_number}">
 				</div>
@@ -447,19 +476,21 @@ async function editRFIForm(id) {
 			
 			<div class="form__row">
 				<div class="form__group form__item--75">
-					<label for="submittal-person" class="form__label">Submitted By</label>
-					<input id="submittal-person" type="text" class="form__field" autocomplete="off" value="${record.submittal_person}">
+					<label for="submittal-person" class="form__label">Submitted By <span class="form__required">*</span></label>
+					<input id="submittal-person" type="text" class="form__field" autocomplete="off" value="${record.submittal_person}" required>
 				</div>
 
-				<div class="form__group form__item">
-					<label for="submittal-date" class="form__label">Submittal Date</label>
-					<input id="submittal-date" type="date" class="form__field" autocomplete="off" value="${submittalDate}">
+				<div class="form__group form__item--25">
+					<label for="submittal-date" class="form__label">Submittal Date <span class="form__required">*</span></label>
+					<input id="submittal-date" type="date" class="form__field" autocomplete="off" value="${submittalDate}" required>
 				</div>
 			</div>
-			
-			<div class="form__group">
-				<label for="submittal-company" class="form__label">Company</label>
-				<input id="submittal-company" type="text" class="form__field" autocomplete="off" value="${record.submittal_company}">
+
+			<div class="form__row">
+				<div class="form__group form__item--100">
+					<label for="submittal-company" class="form__label">Company <span class="form__required">*</span></label>
+					<input id="submittal-company" type="text" class="form__field" autocomplete="off" value="${record.submittal_company}" required>
+				</div>
 			</div>
 
 			<div class="form__row">
@@ -467,9 +498,9 @@ async function editRFIForm(id) {
 					<label for="responsible-person" class="form__label">Assigned To</label>
 					<input id="responsible-person" type="text" class="form__field" autocomplete="off" value="${record.responsible_person}">
 				</div>
-				<div class="form__group form__item">
-					<label for="due_date" class="form__label">Due Date</label>
-					<input id="due_date" type="date" class="form__field" autocomplete="off" value="${dueDate}">
+				<div class="form__group form__item--25">
+					<label for="due_date" class="form__label">Due Date <span class="form__required">*</span></label>
+					<input id="due_date" type="date" class="form__field" autocomplete="off" value="${dueDate}" required>
 				</div>
 			</div> 
 			
@@ -479,23 +510,27 @@ async function editRFIForm(id) {
 					<input id="responsible-company" type="text" class="form__field" autocomplete="off" value="${record.responsible_company}">
 				</div>
 
-				<div class="form__group form__item">
-					<label for="status" class="form__label">Status</label>
-					<input id="status" type="text" class="form__field" autocomplete="off" value="${record.status}">
+				<div class="form__group form__item--25">
+					<label for="status" class="form__label">Status <span class="form__required">*</span></label>
+					<input id="status" type="text" class="form__field" autocomplete="off" value="${record.status}" required>
 				</div>
 			</div>
 
-			<div class="form__group">
-				<label for="description" class="form__label">Description</label>
-				<textarea id="description" class="form__textarea" cols="30" rows="10">${record.description}</textarea>
+			<div class="form__row">
+				<div class="form__group form__item--100">
+					<label for="description" class="form__label">Description</label>
+					<textarea id="description" class="form__textarea" cols="30" rows="10">${record.description}</textarea>
+				</div>
 			</div>
 
-			<div class="form__group">
-				<label for="attachment" class="form__label">Attachment</label>
-				<input id="attachment" type="file">
-				${record.file_name
-					? `<span class="form__help-text">Uploading a new file will overwrite the following document: <i class="file-name">${record.file_name}</i>.</span>`
-					: ''}
+			<div class="form__row">
+				<div class="form__group form__item--100">
+					<label for="attachment" class="form__label">Attachment</label>
+					<input id="attachment" type="file">
+					${record.file_name
+						? `<span class="form__help-text">Uploading a new file will overwrite the following document: <i class="file-name">${record.file_name}</i>.</span>`
+						: ''}
+				</div>	
 			</div>	
 		</div>	
 		
@@ -745,23 +780,26 @@ function newSubmittalForm() {
 	$('#modal-form').append(
 		`<h3 class="form__title">Submittal</h3>
 		<div class="form__main-content">
-			<div class="form__group">
-				<label for="title" class="form__label">Title</label>
-				<input id="title" type="text" class="form__field" autocomplete="off">
+			
+		<div class="form__row">
+				<div class="form__group form__item--85">
+					<label for="title" class="form__label">Title <span class="form__required">*</span></label>
+					<input id="title" type="text" class="form__field" autocomplete="off" required>
+				</div>
+
+				<div class="form__group form__item--15">
+					<label for="number" class="form__label">No. <span class="form__required">*</span></label>
+					<input id="number" type="number" step="any" class="form__field" autocomplete="off" required>
+				</div>
 			</div>
 
 			<div class="form__row">
-				<div class="form__group form__item--25">
-					<label for="number" class="form__label">No.</label>
-					<input id="number" type="text" class="form__field" autocomplete="off">
-				</div>
-
-					<div class="form__group form__item--25">
+					<div class="form__group form__item--50">
 					<label for="spec-section" class="form__label">Spec Section</label>
 					<input id="spec-section" type="text" class="form__field" autocomplete="off">
 				</div>
 
-					<div class="form__group form__item">
+					<div class="form__group form__item--50">
 					<label for="type" class="form__label">Type</label>
 					<input id="type" type="text" class="form__field" autocomplete="off">
 				</div>
@@ -769,19 +807,21 @@ function newSubmittalForm() {
 			
 			<div class="form__row">
 				<div class="form__group form__item--75">
-					<label for="submittal-person" class="form__label">Submitted By</label>
-					<input id="submittal-person" type="text" class="form__field" autocomplete="off">
+					<label for="submittal-person" class="form__label">Submitted By <span class="form__required">*</span></label>
+					<input id="submittal-person" type="text" class="form__field" autocomplete="off" required>
 				</div>
 
-				<div class="form__group form__item">
-					<label for="submittal-date" class="form__label">Submittal Date</label>
-					<input id="submittal-date" type="date" class="form__field" autocomplete="off">
+				<div class="form__group form__item--25">
+					<label for="submittal-date" class="form__label">Submittal Date <span class="form__required">*</span></label>
+					<input id="submittal-date" type="date" class="form__field" autocomplete="off" required>
 				</div>
 			</div>
-			
-			<div class="form__group">
-				<label for="submittal-company" class="form__label">Company</label>
-				<input id="submittal-company" type="text" class="form__field" autocomplete="off">
+
+			<div class="form__row">
+				<div class="form__group form__item--100">
+					<label for="submittal-company" class="form__label">Company <span class="form__required">*</span></label>
+					<input id="submittal-company" type="text" class="form__field" autocomplete="off" required>
+				</div>
 			</div>
 
 			<div class="form__row">
@@ -789,9 +829,9 @@ function newSubmittalForm() {
 					<label for="responsible-person" class="form__label">Assigned To</label>
 					<input id="responsible-person" type="text" class="form__field" autocomplete="off">
 				</div>
-				<div class="form__group form__item">
-					<label for="due_date" class="form__label">Due Date</label>
-					<input id="due_date" type="date" class="form__field" autocomplete="off">
+				<div class="form__group form__item--25">
+					<label for="due_date" class="form__label">Due Date <span class="form__required">*</span></label>
+					<input id="due_date" type="date" class="form__field" autocomplete="off" required>
 				</div>
 			</div> 
 			
@@ -801,20 +841,24 @@ function newSubmittalForm() {
 					<input id="responsible-company" type="text" class="form__field" autocomplete="off">
 				</div>
 
-				<div class="form__group form__item">
-					<label for="status" class="form__label">Status</label>
-					<input id="status" type="text" class="form__field" autocomplete="off">
+				<div class="form__group form__item--25">
+					<label for="status" class="form__label">Status <span class="form__required">*</span></label>
+					<input id="status" type="text" class="form__field" autocomplete="off" required>
 				</div>
 			</div>
 
 			<div class="form__group">
-				<label for="description" class="form__label">Description</label>
-				<textarea id="description" class="form__textarea" cols="30" rows="10"></textarea>
+				<div class="form__group form__item--100">
+					<label for="description" class="form__label">Description</label>
+					<textarea id="description" class="form__textarea" cols="30" rows="10"></textarea>
+				</div>
 			</div>
 
 			<div class="form__group">
-				<label for="attachment" class="form__label">Attachment</label>
-				<input id="attachment" type="file">
+				<div class="form__group form__item--100">
+					<label for="attachment" class="form__label">Attachment</label>
+					<input id="attachment" type="file">
+				</div>	
 			</div>	
 		</div>	
 		
@@ -835,23 +879,24 @@ async function editSubmittalForm(id) {
 		`<h3 class="form__title">Submittal</h3>
 		<input id="id" type="hidden" value="${record.id}">
 		<div class="form__main-content">
-			<div class="form__group">
-				<label for="title" class="form__label">Title</label>
-				<input id="title" type="text" class="form__field" autocomplete="off" value="${record.title}">
+			<div class="form__row">
+				<div class="form__group form__item--85">
+					<label for="title" class="form__label">Title <span class="form__required">*</span></label>
+					<input id="title" type="text" class="form__field" autocomplete="off" value="${record.title}" required>
+				</div>
+				<div class="form__group form__item--15">
+					<label for="number" class="form__label">No. <span class="form__required">*</span></label>
+					<input id="number" type="number" step="any" class="form__field" autocomplete="off" value="${record.number}" required>
+				</div>
 			</div>
 
 			<div class="form__row">
-				<div class="form__group form__item--25">
-					<label for="number" class="form__label">No.</label>
-					<input id="number" type="text" class="form__field" autocomplete="off" value="${record.number}">
-				</div>
-
-					<div class="form__group form__item--25">
+				<div class="form__group form__item--50">
 					<label for="spec-section" class="form__label">Spec Section</label>
 					<input id="spec-section" type="text" class="form__field" autocomplete="off" value="${record.spec_section}">
 				</div>
 
-					<div class="form__group form__item">
+					<div class="form__group form__item--50">
 					<label for="type" class="form__label">Type</label>
 					<input id="type" type="text" class="form__field" autocomplete="off" value="${record.type}">
 				</div>
@@ -859,19 +904,21 @@ async function editSubmittalForm(id) {
 			
 			<div class="form__row">
 				<div class="form__group form__item--75">
-					<label for="submittal-person" class="form__label">Submitted By</label>
-					<input id="submittal-person" type="text" class="form__field" autocomplete="off" value="${record.submittal_person}">
+					<label for="submittal-person" class="form__label">Submitted By <span class="form__required">*</span></label>
+					<input id="submittal-person" type="text" class="form__field" autocomplete="off" value="${record.submittal_person}" required>
 				</div>
 
-				<div class="form__group form__item">
-					<label for="submittal-date" class="form__label">Submittal Date</label>
-					<input id="submittal-date" type="date" class="form__field" autocomplete="off" value="${submittalDate}">
+				<div class="form__group form__item--25">
+					<label for="submittal-date" class="form__label">Submittal Date <span class="form__required">*</span></label>
+					<input id="submittal-date" type="date" class="form__field" autocomplete="off" value="${submittalDate}" required>
 				</div>
 			</div>
-			
-			<div class="form__group">
-				<label for="submittal-company" class="form__label">Company</label>
-				<input id="submittal-company" type="text" class="form__field" autocomplete="off" value="${record.submittal_company}">
+
+			<div class="form__row">
+				<div class="form__group form__item--100">
+					<label for="submittal-company" class="form__label">Company <span class="form__required">*</span></label>
+					<input id="submittal-company" type="text" class="form__field" autocomplete="off" value="${record.submittal_company}" required>
+				</div>
 			</div>
 
 			<div class="form__row">
@@ -879,9 +926,9 @@ async function editSubmittalForm(id) {
 					<label for="responsible-person" class="form__label">Assigned To</label>
 					<input id="responsible-person" type="text" class="form__field" autocomplete="off" value="${record.responsible_person}">
 				</div>
-				<div class="form__group form__item">
-					<label for="due_date" class="form__label">Due Date</label>
-					<input id="due_date" type="date" class="form__field" autocomplete="off" value="${dueDate}">
+				<div class="form__group form__item--25">
+					<label for="due_date" class="form__label">Due Date <span class="form__required">*</span></label>
+					<input id="due_date" type="date" class="form__field" autocomplete="off" value="${dueDate}" required>
 				</div>
 			</div> 
 			
@@ -891,23 +938,27 @@ async function editSubmittalForm(id) {
 					<input id="responsible-company" type="text" class="form__field" autocomplete="off" value="${record.responsible_company}">
 				</div>
 
-				<div class="form__group form__item">
-					<label for="status" class="form__label">Status</label>
-					<input id="status" type="text" class="form__field" autocomplete="off" value="${record.status}">
+				<div class="form__group form__item--25">
+					<label for="status" class="form__label">Status <span class="form__required">*</span></label>
+					<input id="status" type="text" class="form__field" autocomplete="off" value="${record.status}" required>
 				</div>
 			</div>
 
-			<div class="form__group">
-				<label for="description" class="form__label">Description</label>
-				<textarea id="description" class="form__textarea" cols="30" rows="10">${record.description}</textarea>
+			<div class="form__row">
+				<div class="form__group form__item--100">
+					<label for="description" class="form__label">Description</label>
+					<textarea id="description" class="form__textarea" cols="30" rows="10">${record.description}</textarea>
+				</div>
 			</div>
 
-			<div class="form__group">
-				<label for="attachment" class="form__label">Attachment</label>
-				<input id="attachment" type="file">
-				${record.file_name
-					? `<span class="form__help-text">Uploading a new file will overwrite the following document: <i class="file-name">${record.file_name}</i>.</span>`
-					: ''}
+			<div class="form__row">
+				<div class="form__group form__item--100">
+					<label for="attachment" class="form__label">Attachment</label>
+					<input id="attachment" type="file">
+					${record.file_name
+						? `<span class="form__help-text">Uploading a new file will overwrite the following document: <i class="file-name">${record.file_name}</i>.</span>`
+						: ''}
+				</div>
 			</div>
 		</div>		
 		
@@ -1162,33 +1213,36 @@ function newChangeOrderForm() {
 	$('#modal-form').append(
 		`<h3 class="form__title">Change Order</h3>
 		<div class="form__main-content">
+
 			<div class="form__row">
-				<div class="form__group form__item">
-					<label for="title" class="form__label">Title</label>
-					<input id="title" type="text" class="form__field" autocomplete="off">
+				<div class="form__group form__item--85">
+					<label for="title" class="form__label">Title <span class="form__required">*</span></label>
+					<input id="title" type="text" class="form__field" autocomplete="off" required>
 				</div>
 
 				<div class="form__group form__item--15">
-					<label for="number" class="form__label">No.</label>
-					<input id="number" type="text" class="form__field" autocomplete="off">
+					<label for="number" class="form__label">No. <span class="form__required">*</span></label>
+					<input id="number" type="number" step="any" class="form__field" autocomplete="off" required>
 				</div>
 			</div>
 			
 			<div class="form__row">
 				<div class="form__group form__item--75">
-					<label for="submittal-person" class="form__label">Submitted By</label>
-					<input id="submittal-person" type="text" class="form__field" autocomplete="off">
+					<label for="submittal-person" class="form__label">Submitted By <span class="form__required">*</span></label>
+					<input id="submittal-person" type="text" class="form__field" autocomplete="off" required>
 				</div>
 
-				<div class="form__group form__item">
-					<label for="submittal-date" class="form__label">Submittal Date</label>
-					<input id="submittal-date" type="date" class="form__field" autocomplete="off">
+				<div class="form__group form__item--25">
+					<label for="submittal-date" class="form__label">Submittal Date <span class="form__required">*</span></label>
+					<input id="submittal-date" type="date" class="form__field" autocomplete="off" required>
 				</div>
 			</div>
-			
-			<div class="form__group">
-				<label for="submittal-company" class="form__label">Company</label>
-				<input id="submittal-company" type="text" class="form__field" autocomplete="off">
+
+			<div class="form__row">
+				<div class="form__group form__item--100">
+					<label for="submittal-company" class="form__label">Company <span class="form__required">*</span></label>
+					<input id="submittal-company" type="text" class="form__field" autocomplete="off" required>
+				</div>
 			</div>
 
 			<div class="form__row">
@@ -1210,24 +1264,28 @@ function newChangeOrderForm() {
 				</div>
 
 				<div class="form__group form__item--25">
-					<label for="cost" class="form__label">Cost</label>
-					<input id="cost" type="text" class="form__field" autocomplete="off">
+					<label for="cost" class="form__label">Cost <span class="form__required">*</span></label>
+					<input id="cost" type="number" step="any" class="form__field" autocomplete="off" required>
 				</div>
 
 				<div class="form__group form__item--50">
-					<label for="status" class="form__label">Status</label>
-					<input id="status" type="text" class="form__field" autocomplete="off">
+					<label for="status" class="form__label">Status <span class="form__required">*</span></label>
+					<input id="status" type="text" class="form__field" autocomplete="off" required>
 				</div>
 			</div>
 
-			<div class="form__group">
-				<label for="description" class="form__label">Description</label>
-				<textarea id="description" class="form__textarea" cols="30" rows="10"></textarea>
+			<div class="form__row">
+				<div class="form__group form__item--100">
+					<label for="description" class="form__label">Description</label>
+					<textarea id="description" class="form__textarea" cols="30" rows="10"></textarea>
+				</div>
 			</div>
 
-			<div class="form__group">
-				<label for="attachment" class="form__label">Attachment</label>
-				<input id="attachment" type="file">
+			<div class="form__row">
+				<div class="form__group form__item--100">
+					<label for="attachment" class="form__label">Attachment</label>
+					<input id="attachment" type="file">
+				</div>		
 			</div>		
 		</div>
 		<div class="modal__buttons">
@@ -1246,33 +1304,36 @@ async function editChangeOrderForm(id) {
 		`<h3 class="form__title">Change Order</h3>
 		<input id="id" type="hidden" value="${record.id}">
 		<div class="form__main-content">
+
 			<div class="form__row">
-				<div class="form__group form__item">
-					<label for="title" class="form__label">Title</label>
-					<input id="title" type="text" class="form__field" autocomplete="off" value="${record.title}">
+				<div class="form__group form__item--85">
+					<label for="title" class="form__label">Title <span class="form__required">*</span></label>
+					<input id="title" type="text" class="form__field" autocomplete="off" value="${record.title}" required>
 				</div>
 
 				<div class="form__group form__item--15">
-					<label for="number" class="form__label">No.</label>
-					<input id="number" type="text" class="form__field" autocomplete="off" value="${record.number}">
+					<label for="number" class="form__label">No. <span class="form__required">*</span></label>
+					<input id="number" type="number" step="any" class="form__field" autocomplete="off" value="${record.number}" required>
 				</div>
 			</div>
 			
 			<div class="form__row">
 				<div class="form__group form__item--75">
-					<label for="submittal-person" class="form__label">Submitted By</label>
-					<input id="submittal-person" type="text" class="form__field" autocomplete="off" value="${record.submittal_person}">
+					<label for="submittal-person" class="form__label">Submitted By <span class="form__required">*</span></label>
+					<input id="submittal-person" type="text" class="form__field" autocomplete="off" value="${record.submittal_person}" required>
 				</div>
 
-				<div class="form__group form__item">
-					<label for="submittal-date" class="form__label">Submittal Date</label>
-					<input id="submittal-date" type="date" class="form__field" autocomplete="off" value="${submittalDate}">
+				<div class="form__group form__item--25">
+					<label for="submittal-date" class="form__label">Submittal Date <span class="form__required">*</span></label>
+					<input id="submittal-date" type="date" class="form__field" autocomplete="off" value="${submittalDate}" required>
 				</div>
 			</div>
-			
-			<div class="form__group">
-				<label for="submittal-company" class="form__label">Company</label>
-				<input id="submittal-company" type="text" class="form__field" autocomplete="off" value="${record.submittal_company}">
+
+			<div class="form__row">
+				<div class="form__group form__item--100">
+					<label for="submittal-company" class="form__label">Company <span class="form__required">*</span></label>
+					<input id="submittal-company" type="text" class="form__field" autocomplete="off" value="${record.submittal_company}" required>
+				</div>
 			</div>
 
 			<div class="form__row">
@@ -1294,27 +1355,31 @@ async function editChangeOrderForm(id) {
 				</div>
 
 				<div class="form__group form__item--25">
-					<label for="cost" class="form__label">Cost</label>
-					<input id="cost" type="text" class="form__field" autocomplete="off" value="${record.cost}">
+					<label for="cost" class="form__label">Cost <span class="form__required">*</span></label>
+					<input id="cost" type="number" step="any" class="form__field" autocomplete="off" value="${record.cost}" required>
 				</div>
 
 				<div class="form__group form__item--50">
-					<label for="status" class="form__label">Status</label>
-					<input id="status" type="text" class="form__field" autocomplete="off" value="${record.status}">
+					<label for="status" class="form__label">Status <span class="form__required">*</span></label>
+					<input id="status" type="text" class="form__field" autocomplete="off" value="${record.status}" required>
 				</div>
 			</div>
 
 			<div class="form__group">
-				<label for="description" class="form__label">Description</label>
-				<textarea id="description" class="form__textarea" cols="30" rows="10">${record.description}</textarea>
+				<div class="form__group form__item--100">
+					<label for="description" class="form__label">Description</label>
+					<textarea id="description" class="form__textarea" cols="30" rows="10">${record.description}</textarea>
+				</div>
 			</div>
 
 			<div class="form__group">
-				<label for="attachment" class="form__label">Attachment</label>
-				<input id="attachment" type="file">
-				${record.file_name
-					? `<span class="form__help-text">Uploading a new file will overwrite the following document: <i class="file-name">${record.file_name}</i>.</span>`
-					: ''}
+				<div class="form__group form__item--100">
+					<label for="attachment" class="form__label">Attachment</label>
+					<input id="attachment" type="file">
+					${record.file_name
+						? `<span class="form__help-text">Uploading a new file will overwrite the following document: <i class="file-name">${record.file_name}</i>.</span>`
+						: ''}
+				</div>	
 			</div>	
 		</div>	
 		

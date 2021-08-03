@@ -10,17 +10,24 @@ $('.side-nav').on('click', (e) => {
 	projectMenu();
 
 	if (activeSection === 'general') {
-		$('#modal-open').addClass('is-hidden');
+		$('#new-record-section').addClass('is-hidden'); //changed
 		$('#details').addClass('is-hidden');
 	}
 	else {
-		$('#modal-open').removeClass('is-hidden');
+		$('#new-record-section').removeClass('is-hidden'); //changed
 		$('#details').removeClass('is-hidden');
 	}
 
 	$(`#${activeSection}`).removeClass('is-hidden');
 	$('.record').removeClass('selected');
 	$(`#${menuItem}`).addClass('side-nav__item--active');
+	$(`#${menuItem}m`).addClass('side-nav__item--active');
+});
+
+document.addEventListener('keypress', (e) => {
+	if (e.keyCode === 13) {
+		e.preventDefault();
+	}
 });
 
 // Loads modal with form for new record
@@ -42,9 +49,16 @@ $('#modal').on('click', 'button[data-action="close"]', function(e) {
 	closeModal();
 });
 
+let myForm = document.querySelector('#modal-form');
+
 // Submits form and creates new record
 $('#modal').on('click', 'button[data-action="submit"]', (e) => {
 	e.preventDefault();
+
+	if (myForm.checkValidity() === false) {
+		return myForm.reportValidity();
+	}
+
 	createRecord[activeSection]();
 	closeModal();
 });
@@ -52,6 +66,11 @@ $('#modal').on('click', 'button[data-action="submit"]', (e) => {
 // Submits form and updates existing record
 $('#modal').on('click', 'button[data-action="update"]', async (e) => {
 	e.preventDefault();
+
+	if (myForm.checkValidity() === false) {
+		return myForm.reportValidity();
+	}
+
 	const id = await updateRecord[activeSection]();
 	viewRecord[activeSection](id);
 	closeModal();

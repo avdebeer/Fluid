@@ -1,6 +1,45 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<nav class="mobile-menu">
+        <ul class="side-nav">
+            <li class="side-nav__item side-nav__item--active" id="menu-item-1m" data-section='general'>
+                <a href="" class="side-nav__link">
+                    <svg class="side-nav__icon">
+                        <use xlink:href="/static/img/sprite.svg#icon-home"></use>
+                    </svg>
+                </a>
+            </li>
+            <li class="side-nav__item" id="menu-item-2m" data-section='rfi'>
+                <a href="" class="side-nav__link">
+                    <svg class="side-nav__icon">
+                        <use xlink:href="/static/img/sprite.svg#icon-info"></use>
+                    </svg>
+                </a>
+            </li>
+            <li class="side-nav__item" id="menu-item-3m" data-section='submittal'>
+                <a href="" class="side-nav__link">
+                    <svg class="side-nav__icon">
+                        <use xlink:href="/static/img/sprite.svg#icon-new-message"></use>
+                    </svg>
+                </a>
+            </li>
+            <li class="side-nav__item" id="menu-item-4m" data-section='change_order'>
+                <a href="" class="side-nav__link">
+                    <svg class="side-nav__icon">
+                        <use xlink:href="/static/img/sprite.svg#icon-chat"></use>
+                    </svg>
+                </a>
+            </li>
+            <li class="side-nav__item" id="menu-item-5m" data-section='inspection'>
+                <a  href="" class="side-nav__link">
+                    <svg class="side-nav__icon">
+                        <use xlink:href="/static/img/sprite.svg#icon-man"></use>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+</nav>
 <div class="project-title">
     <h1>{{project.name}} - ({{project.cip_id}})</h1>
     <p id="project-id">{{project.id}}</p>
@@ -273,8 +312,8 @@
             </div>
 
         </div>
-        <div class="section__new-record">
-            <button id="modal-open" class="button btn-primary is-hidden" data-btn="create">New Record</button>
+        <div  id="new-record-section"    class="section__new-record is-hidden">
+            <button id="modal-open" class="button btn-primary" data-btn="create">New Record</button>
         </div>
     </div>
 
@@ -283,8 +322,8 @@
 
      <div id="modal" class="modal">
         <div class="modal__container">
-            <div id="modal-form" class="form">
-            </div>
+            <form action="#" id="modal-form" class="form">
+            </form>
         </div>
     </div>
 </div>

@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file, render_template, redirect, flash, session, jsonify
+from flask import Flask, request, send_file, render_template, redirect, flash, session, jsonify, abort
 import requests
 from flask_login import UserMixin, LoginManager, login_user, login_required, logout_user, current_user
 from flask_debugtoolbar import DebugToolbarExtension
@@ -49,7 +49,7 @@ def manage_project(project_id):
     session['project_owner'] = project.owner
 
     if current_user.id != session['project_owner']:
-        return redirect ('/error/401')
+        abort(401)
 
     APIKey = '6798297896f344a985a174057212605'
 
@@ -80,7 +80,6 @@ def project():
     new_project = Project(
         name = data['name'], 
         cip_id = data['cip_id'], 
-        budget = data['budget'],
         street = data['street'],
         city = data['city'],
         zip_code = data['zip_code'],
@@ -104,7 +103,6 @@ def update_project():
 
     project.name = data['name'] 
     project.cip_id = data['cip_id'] 
-    project.budget = data['budget']
     project.street = data['street']
     project.city = data['city']
     project.zip_code = data['zip_code']
@@ -589,7 +587,6 @@ def demo_app():
     user = User.authenticate(email, password)
     if user:
         login_user(user)
-        flash('Logged in successfully.')
         return redirect('/dashboard')
 
 
@@ -607,7 +604,6 @@ def update_profile():
         user = User.authenticate(email, password)
         if user:
             login_user(user)
-            flash('Logged in successfully.')
             return redirect('/dashboard')
 
     return render_template('profile_update.html', form=form, user = user)
@@ -630,21 +626,24 @@ def dashboard():
     return render_template('user_dashboard.html', projects = projects)
 
 
-@app.route('/error/<int:code>')
-def error_page(code):
-    '''Provides a generic error handeling page'''
-    error = code
-    message = ''
+@app.errorhandler(400)
+def processing_error(e):
 
-    if code == 400:
-        message = "We can't seem to process your request."
-    if code == 401:
-        message = 'You are not authorized to access this page.'
-    if code == 404:
-        message = "The page can't be found or does not exist."
-    if code == 500:
-        message = 'Our server is having a bad day.'
+    return render_template('error.html', error = 400, message = "Oops! We can't seem to process your request.")
 
-    return render_template('error.html', error = error, message = message)
+@app.errorhandler(401)
+def unauthorized(e):
+
+    return render_template('error.html', error = 401, message = "You are not authorized to access this page.")
+
+@app.errorhandler(404)
+def not_found(e):
+
+    return render_template('error.html', error = 404, message = "Oops! The page can't be found.")
+
+@app.errorhandler(500)
+def server_error(e):
+
+    return render_template('error.html', error = 404, message = "Oops! Our server is having a bad day.")
 
 
