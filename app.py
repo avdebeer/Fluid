@@ -30,7 +30,7 @@ debug = DebugToolbarExtension(app)
 connect_db(app)
 
 # db.drop_all() #DROPS ALL TABLES
-db.create_all() #CREATES ALL THE TABLES
+# db.create_all() #CREATES ALL THE TABLES
 
 
 @app.route('/')
