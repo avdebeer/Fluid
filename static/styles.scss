@@ -1075,7 +1075,15 @@ body {
 
 	.modal__container {
 		max-width: 90%;
-		max-height: 90%; //testing
+		max-height: 100vh; //testing
+	}
+
+	.form {
+		&__main-content {
+			// height: 100%; //testing
+			overflow-y: auto;
+			padding-right: 2.4rem;
+		}
 	}
 
 	//USER DASHBOARD
@@ -1090,7 +1098,7 @@ body {
 		}
 	}
 	.user-projects {
-		height: 100vh; //testing
+		height: initial; //fixed
 	}
 	//Project Dashboard
 

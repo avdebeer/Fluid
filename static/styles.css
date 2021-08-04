@@ -1286,7 +1286,11 @@ body {
   }
   .modal__container {
     max-width: 90%;
-    max-height: 90%;
+    max-height: 100vh;
+  }
+  .form__main-content {
+    overflow-y: auto;
+    padding-right: 2.4rem;
   }
   .user-details__name {
     font-size: 2rem;
@@ -1296,7 +1300,7 @@ body {
     letter-spacing: .1rem;
   }
   .user-projects {
-    height: 100vh;
+    height: initial;
   }
   .project-title {
     letter-spacing: none;

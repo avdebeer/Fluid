@@ -91,7 +91,6 @@ function newInspectionForm() {
 	$('#modal-form').append(
 		`<h3 class="form__title">Inspection</h3>
 		<div class="form__main-content">
-
 			<div class="form__row">
 				<div class="form__group form__item--85">
 					<label for="title" class="form__label">Title <span class="form__required">*</span></label>
