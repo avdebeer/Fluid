@@ -1289,7 +1289,6 @@ body {
     max-height: 100vh;
   }
   .form__main-content {
-    height: 70%;
     overflow-y: auto;
     padding-right: 2.4rem;
   }
