@@ -1075,12 +1075,12 @@ body {
 
 	.modal__container {
 		max-width: 90%;
-		max-height: 100vh; //testing
+		max-height: 100vh; //fixed
 	}
 
 	.form {
 		&__main-content {
-			// height: 100%; //testing
+			height: 70%; //testing
 			overflow-y: auto;
 			padding-right: 2.4rem;
 		}
