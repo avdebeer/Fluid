@@ -109,6 +109,49 @@ body {
   color: #20c9df;
 }
 
+.footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: auto;
+}
+
+.footer .about-me {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: .5rem;
+}
+
+.footer .about-me a {
+  padding: 0 1.5rem;
+}
+
+.footer .about-me__icon {
+  width: 2rem;
+  height: 2rem;
+  fill: #fff;
+}
+
+.footer .about-me__icon:hover {
+  -webkit-transform: translateY(-0.3rem);
+          transform: translateY(-0.3rem);
+  fill: #eb2f64;
+}
+
 .user-dashboard {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1089,6 +1132,7 @@ body {
       -ms-flex-align: center;
           align-items: center;
   padding: 3rem;
+  padding-bottom: 1rem;
   color: #fff;
   -ms-grid-row: 1;
   -ms-grid-row-span: 4;
@@ -1230,6 +1274,9 @@ body {
   .admin-form {
     width: 100%;
   }
+  .modal__container {
+    max-width: 90%;
+  }
   .user-details__name {
     font-size: 2rem;
     padding: 2rem 2rem 1rem;
@@ -1353,6 +1400,20 @@ body {
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
+  }
+  .error__message {
+    padding-top: 10rem;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+  }
+  .error h1 {
+    font-size: 5rem;
+    letter-spacing: .5rem;
+  }
+  .error p {
+    font-size: 1.5rem;
+    letter-spacing: .5rem;
   }
 }
 /*# sourceMappingURL=styles.css.map */
