@@ -155,16 +155,30 @@
                 
             <!-- RFI SECTION -->
             <div id="rfi" class="is-hidden">
+                {% if current_user.email == 'julian@gmail.com' %}                        
+                    <p class="demo-text-records">Demo has edit/delete functionality disabeled for the first two records.</p>
+                {% endif %}
+
                 {% for record in project.rfis %}
                 <div id="rfi-{{record.id}}" class="record">
                     <div class="record__heading">
                         <h4 id="rfi-title-{{record.id}}" data-id="{{record.id}}" data-record="details">{{record.title}}</h4>
+                        {% if current_user.email == 'julian@gmail.com' and record.id > 2 %}                        
                         <a data-action="delete" data-id="{{record.id}}">
+                        {% else %}
+                        <a data-action="" data-id="{{record.id}}">
+                        {% endif %}
                             <svg class="icon icon-delete">
                                 <use xlink:href="/static/img/sprite.svg#icon-trash"></use>
                             </svg>
                         </a>
+                        {% if current_user.email == 'julian@gmail.com' and record.id > 2 %}                        
                         <a data-action="edit" data-id="{{record.id}}">
+                        {% else %}
+                        <a data-action="" data-id="{{record.id}}">
+                        {% endif %}
+
+
                             <svg class="icon icon-edit">
                                 <use xlink:href="/static/img/sprite.svg#icon-pencil"></use>
                             </svg>
@@ -195,16 +209,27 @@
 
             <!-- SUBMITTAL SECTION -->
             <div id="submittal" class="is-hidden">
+                {% if current_user.email == 'julian@gmail.com' %}                        
+                    <p class="demo-text-records">Demo has edit/delete functionality disabeled for the first two records.</p>
+                {% endif %}
                 {% for record in project.submittals %}
                 <div id="submittal-{{record.id}}" class="record">
                     <div class="record__heading">
                         <h4 id="submittal-title-{{record.id}}" data-id="{{record.id}}" data-record="details">{{record.title}}</h4>
+                        {% if current_user.email == 'julian@gmail.com' and record.id > 2 %}                        
                         <a data-action="delete" data-id="{{record.id}}">
+                        {% else %}
+                        <a data-action="" data-id="{{record.id}}">
+                        {% endif %}
                             <svg class="icon icon-delete">
                                 <use xlink:href="/static/img/sprite.svg#icon-trash"></use>
                             </svg>
                         </a>
+                        {% if current_user.email == 'julian@gmail.com' and record.id > 2 %}                        
                         <a data-action="edit" data-id="{{record.id}}">
+                        {% else %}
+                        <a data-action="" data-id="{{record.id}}">
+                        {% endif %}
                             <svg class="icon icon-edit">
                                 <use xlink:href="/static/img/sprite.svg#icon-pencil"></use>
                             </svg>
@@ -238,16 +263,27 @@
 
             <!-- CHANGE ORDER SECTION -->
             <div id="change_order" class="is-hidden">
+                {% if current_user.email == 'julian@gmail.com' %}                        
+                    <p class="demo-text-records">Demo has edit/delete functionality disabeled for the first two records.</p>
+                {% endif %}                
                 {% for record in project.change_orders %}
                 <div id="change_order-{{record.id}}" class="record">
                     <div class="record__heading">
                         <h4 id="change_order-title-{{record.id}}" data-id="{{record.id}}" data-record="details">{{record.title}}</h4>
+                        {% if current_user.email == 'julian@gmail.com' and record.id > 2 %}                        
                         <a data-action="delete" data-id="{{record.id}}">
+                        {% else %}
+                        <a data-action="" data-id="{{record.id}}">
+                        {% endif %}
                             <svg class="icon icon-delete">
                                 <use xlink:href="/static/img/sprite.svg#icon-trash"></use>
                             </svg>
                         </a>
+                        {% if current_user.email == 'julian@gmail.com' and record.id > 2 %}                        
                         <a data-action="edit" data-id="{{record.id}}">
+                        {% else %}
+                        <a data-action="" data-id="{{record.id}}">
+                        {% endif %}
                             <svg class="icon icon-edit">
                                 <use xlink:href="/static/img/sprite.svg#icon-pencil"></use>
                             </svg>
@@ -277,16 +313,27 @@
 
             <!-- INSPECTION SECTION -->
             <div id="inspection" class="is-hidden">
+                {% if current_user.email == 'julian@gmail.com' %}                        
+                    <p class="demo-text-records">Demo has edit/delete functionality disabeled for the first two records.</p>
+                {% endif %}                
                 {% for record in project.inspection_reports %}
                 <div id="inspection-{{record.id}}" class="record">
                     <div class="record__heading">
                         <h4 id="inspection-title-{{record.id}}" data-id="{{record.id}}" data-record="details">{{record.title}}</h4>
+                        {% if current_user.email == 'julian@gmail.com' and record.id > 2 %}                        
                         <a data-action="delete" data-id="{{record.id}}">
+                        {% else %}
+                        <a data-action="" data-id="{{record.id}}">
+                        {% endif %}
                             <svg class="icon icon-delete">
                                 <use xlink:href="/static/img/sprite.svg#icon-trash"></use>
                             </svg>
                         </a>
+                        {% if current_user.email == 'julian@gmail.com' and record.id > 2 %}                        
                         <a data-action="edit" data-id="{{record.id}}">
+                        {% else %}
+                        <a data-action="" data-id="{{record.id}}">
+                        {% endif %}
                             <svg class="icon icon-edit">
                                 <use xlink:href="/static/img/sprite.svg#icon-pencil"></use>
                             </svg>

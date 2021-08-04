@@ -113,9 +113,16 @@ body {
 }
 
 .footer {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+	// display: flex;
+	// flex-direction: column;
+	// align-items: center;
+	// margin-top: auto;
+
+	// justify-content: center;
+	margin: 0 -1rem;
+	position: sticky;
+	bottom: 0;
+	padding: 1rem;
 	margin-top: auto;
 
 	.about-me {
@@ -176,6 +183,7 @@ body {
 	display: flex;
 	justify-content: center;
 	min-width: 50%;
+	height: 100%;
 
 	&__area {
 		flex: 1 1 50%;
@@ -514,6 +522,20 @@ body {
 	align-items: center;
 	height: 100%;
 	color: $color-primary-1;
+}
+
+.demo-text-records {
+	font-size: 1.3rem;
+	text-align: center;
+	color: red;
+	padding-bottom: 1rem;
+}
+
+#demo-text-records {
+	font-size: 1.3rem;
+	text-align: center;
+	color: red;
+	// padding-bottom: 1rem;
 }
 
 //////////////////////////////////////////////////////////////
@@ -915,11 +937,6 @@ body {
 	margin-bottom: 2rem;
 	transition: all .2s;
 
-	&:hover {
-		transform: translateY(-.3rem);
-		box-shadow: 0 1rem 2rem rgba(0, 0, 0, .2);
-	}
-
 	&__icon {
 		display: flex;
 		width: 3rem;
@@ -1023,6 +1040,10 @@ body {
 	}
 	.nav {
 		padding: 1.2rem 1.8rem;
+
+		&__list {
+			font-size: 1.5rem;
+		}
 	}
 	.grid-container {
 		display: flex;
@@ -1065,7 +1086,9 @@ body {
 			letter-spacing: .1rem;
 		}
 	}
-
+	.user-projects {
+		height: 100%;
+	}
 	//Project Dashboard
 
 	.project-title {

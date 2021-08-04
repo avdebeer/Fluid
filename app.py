@@ -20,15 +20,16 @@ login_manager.login_view = 'login'
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-# postgres doesn't work correctly with heroku anymore, so in the environment variable, had to make sure to change to postgresql, uncomment these lines and comment out the app.config database line when pushing to heroku
+# UNCOMMENT FOR DEPLOYMENT TO HEROKU
 uri = os.environ.get("DATABASE_URL")  
 if uri.startswith("postgres://"):
     uri = uri.replace("postgres://", "postgresql://", 1)
 app.config['SQLALCHEMY_DATABASE_URI'] = (uri)
 
-
-
+# UNCOMMENT FOR LOCAL DEPLOYMENT
 # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL','postgresql:///azeporo') 
+
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'julian2019')
