@@ -1270,6 +1270,10 @@ body {
   .nav__list {
     font-size: 1.5rem;
   }
+  .footer {
+    position: -webkit-sticky;
+    position: sticky;
+  }
   .grid-container {
     display: -webkit-box;
     display: -ms-flexbox;
