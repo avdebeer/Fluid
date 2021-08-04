@@ -1286,7 +1286,7 @@ body {
   }
   .modal__container {
     max-width: 90%;
-    max-height: 100vh;
+    max-height: 90vh;
     overflow-y: auto;
   }
   .form__main-content {
