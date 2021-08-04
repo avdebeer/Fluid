@@ -114,6 +114,7 @@
                         <h3 class="general__heading">Site Conditions</h3>
 
                         <div class="general__weather">
+                            {% if weather %}
                             <h5>
                                 <svg><use xlink:href="/static/img/sprite.svg#icon-location-pin"></use></svg>
                                 {{weather.location.name}}, {{weather.location.region}}
@@ -139,6 +140,10 @@
                                     <td class="general__weather--td">{{weather.current.humidity}}%</td>
                                 </tr>
                             </table>
+                            {% else %}
+                            <p class="weather-error">The project does not contain a valid zip code.</p>
+                            <a href="/dashboard" class="button btn-error">fix zip code</a>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="general__card">

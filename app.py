@@ -63,8 +63,16 @@ def manage_project(project_id):
 
     APIKey = '6798297896f344a985a174057212605'
 
+    
     response = requests.get(f'http://api.weatherapi.com/v1/current.json?key={APIKey}&q={project.zip_code}')
     weather = response.json()
+
+    if response.status_code == 400:
+        return render_template(
+        'project_dashboard.html', 
+        project = project
+        )
+    
 
     return render_template(
         'project_dashboard.html', 

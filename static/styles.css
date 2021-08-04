@@ -111,8 +111,6 @@ body {
 
 .footer {
   margin: 0 -1rem;
-  position: -webkit-sticky;
-  position: sticky;
   bottom: 0;
   padding: 1rem;
   justify-self: flex-end;
@@ -478,6 +476,14 @@ body {
 
 .general__weather--td {
   text-align: center;
+}
+
+.weather-error {
+  font: bold;
+  text-align: center;
+  color: #cc0000;
+  padding: 0 1rem;
+  margin-bottom: 1rem;
 }
 
 .section {
@@ -932,6 +938,15 @@ body {
   background-color: #ba265d;
 }
 
+.btn-error {
+  color: #fff;
+  background-color: #cc0000;
+}
+
+.btn-error:hover {
+  background-color: #ff3333;
+}
+
 .btn-tertiary-clear {
   color: #394e60;
   background-color: #fff;
@@ -1324,6 +1339,24 @@ body {
   }
   .sidebar {
     display: none;
+  }
+  .record {
+    padding: 1rem;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+    border: 1px solid #394e60;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    -webkit-transition: all .1s;
+    transition: all .1s;
+  }
+  .record:hover {
+    border: 1px solid #394e60;
+    padding: 1rem;
+  }
+  .selected {
+    border: none;
+    padding: 1rem;
   }
   .mobile-menu {
     display: -webkit-box;

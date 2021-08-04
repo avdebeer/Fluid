@@ -114,7 +114,7 @@ body {
 
 .footer {
 	margin: 0 -1rem;
-	position: sticky;
+	// position: sticky;
 	bottom: 0;
 	padding: 1rem;
 	justify-self: flex-end;
@@ -411,6 +411,15 @@ body {
 			text-align: center;
 		}
 	}
+}
+
+.weather-error {
+	// font-size: 1.3rem;
+	font: bold;
+	text-align: center;
+	color: hsl(360, 100, 40%);
+	padding: 0 1rem;
+	margin-bottom: 1rem;
 }
 
 .section {
@@ -793,6 +802,15 @@ body {
 	}
 }
 
+.btn-error {
+	color: $color-white;
+	background-color: hsl(360, 100, 40%);
+
+	&:hover {
+		background-color: hsl(360, 100, 60%);
+	}
+}
+
 .btn-tertiary-clear {
 	color: $color-primary-3;
 	background-color: $color-white;
@@ -1075,13 +1093,12 @@ body {
 
 	.modal__container {
 		max-width: 90%;
-		max-height: 86.5vh; //fixed
+		max-height: 86.5vh;
 		overflow-y: auto;
 	}
 
 	.form {
 		&__main-content {
-			// height: 70%; //testing
 			overflow-y: auto;
 			padding-right: 2.4rem;
 		}
@@ -1119,6 +1136,25 @@ body {
 
 	.sidebar {
 		display: none;
+	}
+
+	.record {
+		padding: 1rem;
+		border-radius: 1rem;
+		margin-bottom: 2rem;
+		border: 1px solid $color-primary-3;
+		box-shadow: $shadow-medium;
+		transition: all .1s;
+
+		&:hover {
+			border: 1px solid $color-primary-3;
+			padding: 1rem;
+		}
+	}
+
+	.selected {
+		border: none;
+		padding: 1rem;
 	}
 
 	//MOBILE MENU
