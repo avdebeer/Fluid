@@ -5,57 +5,57 @@
 {% block content %}
     <div class="grid-container">
         <div class="g0">
-                <h1 class="landing__heading">FLUID</h1>
-                <span class="landing__subheading" >Construction Management</span>
-                <p class="landing__description" >An alternate solution for managing and tracking various construction documents. Easily create records and upload supporting documentation.</p>
-                <div>
-                    <div class="feature">
-                        <svg class="feature__icon">
-                            <use  xlink:href="/static/img/sprite.svg#icon-info"></use>
-                        </svg>
-                        <span class="feature__text" >Requests For Information</span>
-                    </div>
-                    <div class="feature">
-                        <svg class="feature__icon">
-                            <use  xlink:href="/static/img/sprite.svg#icon-new-message"></use>
-                        </svg>
-                        <span class="feature__text" >Submittals</span>
-                    </div>
-                    <div class="feature">
-                        <svg class="feature__icon">
-                            <use  xlink:href="/static/img/sprite.svg#icon-chat"></use>
-                        </svg>
-                        <span class="feature__text" >Change Orders</span>
-                    </div>
-                    <div class="feature">
-                        <svg class="feature__icon">
-                            <use  xlink:href="/static/img/sprite.svg#icon-man"></use>
-                        </svg>
-                        <span class="feature__text" >Inspection Reports</span>
-                    </div>
+            <h1 class="landing__heading">FLUID</h1>
+            <span class="landing__subheading" >Construction Management</span>
+            <p class="landing__description" >An alternate solution for managing and tracking various construction documents. Easily create records and upload supporting documentation.</p>
+            <div>
+                <div class="feature">
+                    <svg class="feature__icon">
+                        <use  xlink:href="/static/img/sprite.svg#icon-info"></use>
+                    </svg>
+                    <span class="feature__text" >Requests For Information</span>
                 </div>
-                {% if current_user.is_authenticated %}
-                {% else %}
-                <div class="landing__buttons">
-                    <a href="/demo" class="button btn-secondary">Demo the app</a>
-                    <a href="/register" class="button btn-tertiary-clear">Register</a>
+                <div class="feature">
+                    <svg class="feature__icon">
+                        <use  xlink:href="/static/img/sprite.svg#icon-new-message"></use>
+                    </svg>
+                    <span class="feature__text" >Submittals</span>
                 </div>
-                {% endif %}
-                <div class="footer">
-                    <div class="about-me"> 
-                        <a href="https://www.linkedin.com/in/joropeza/" target="_blank">
-                            <svg class="about-me__icon">
-                                <use  xlink:href="/static/img/sprite.svg#icon-linkedin"></use>
-                            </svg>
-                        </a>
-                        <a href="https://github.com/azeporo/Fluid" target="_blank">
-                            <svg class="about-me__icon">
-                                <use  xlink:href="/static/img/sprite.svg#icon-github"></use>
-                            </svg>
-                        </a>
-                    </div>
-                    <small>Developed By: Jose Oropeza</small>
+                <div class="feature">
+                    <svg class="feature__icon">
+                        <use  xlink:href="/static/img/sprite.svg#icon-chat"></use>
+                    </svg>
+                    <span class="feature__text" >Change Orders</span>
                 </div>
+                <div class="feature">
+                    <svg class="feature__icon">
+                        <use  xlink:href="/static/img/sprite.svg#icon-man"></use>
+                    </svg>
+                    <span class="feature__text" >Inspection Reports</span>
+                </div>
+            </div>
+            {% if current_user.is_authenticated %}
+            {% else %}
+            <div class="landing__buttons">
+                <a href="/demo" class="button btn-secondary">Demo the app</a>
+                <a href="/register" class="button btn-tertiary-clear">Register</a>
+            </div>
+            {% endif %}
+            <div class="footer">
+                <div class="about-me"> 
+                    <a href="https://www.linkedin.com/in/joropeza/" target="_blank">
+                        <svg class="about-me__icon">
+                            <use  xlink:href="/static/img/sprite.svg#icon-linkedin"></use>
+                        </svg>
+                    </a>
+                    <a href="https://github.com/azeporo/Fluid" target="_blank">
+                        <svg class="about-me__icon">
+                            <use  xlink:href="/static/img/sprite.svg#icon-github"></use>
+                        </svg>
+                    </a>
+                </div>
+                <small>Developed By: Jose Oropeza</small>
+            </div>
         </div>
         <div class="g1"></div>
         <div class="g2"></div>
