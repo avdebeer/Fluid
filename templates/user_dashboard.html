@@ -14,9 +14,9 @@
                 <button id="new-project-btn" class=" button btn-primary">new project</button>
             </div>
              {% if current_user.email == 'julian@gmail.com' %}                        
-                    <p id="demo-text-records">Demo has edit/delete functionality disabeled for the first project.</p>
+                    <p id="demo-text-records">Demo has edit/delete functionality disabled for the first project.</p>
             {% endif %} 
-            <p>Slect a project to navigate to the project dashboard.</p>
+            <p>Select a project to navigate to the project dashboard.</p>
 
             {% for project in projects %}
             <div id="{{project.id}}" class="project-details">
