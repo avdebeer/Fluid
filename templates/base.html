@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/styles.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,300&display=swap"
+        rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/712e0ca9c3.js" crossorigin="anonymous"></script>
     <title>{% block title %}{% endblock %}</title>
-    <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+    <link rel="rel" href="../favicon.png">
 </head>
+
 <body class="master-container">
     <div class="header">
         <nav class="nav nav-top">
             <a class="nav__logo" href="/">FLUID</a>
             <ul class="nav__list">
                 {% if current_user.is_authenticated %}
-                <li>  
+                <li>
                     <a href="/dashboard">{{current_user.first_name}}</a>
                 </li>
                 <li>
@@ -41,10 +45,12 @@
         {% block content %}
         {% endblock %}
     </div>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-        <script src="https://unpkg.com/axios@0.19.0/dist/axios.js"></script>
-        {% block scripts %}
-        {% endblock %}
-        
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios@0.19.0/dist/axios.js"></script>
+    {% block scripts %}
+    {% endblock %}
+
 </body>
+
 </html>

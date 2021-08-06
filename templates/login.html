@@ -7,17 +7,17 @@
     <div class="admin-container">
         <form action="/login" method="POST" class="admin-form" novalidate>
             <h3 class="form__title">Login</h3>
-             {% for msg in get_flashed_messages() %}
+            {% for msg in get_flashed_messages() %}
             <span class="form__entry-validation">{{msg}}</span>
             {% endfor %}
 
             {{form.hidden_tag()}}
             {% for field in form if field.widget.input_type != 'hidden' %}
             <div class="form__group">
-                    {{field.label(class_='form__label')}}
-                    {{field(class_='form__field autocomplete="off"')}}
+                {{field.label(class_='form__label')}}
+                {{field(class_='form__field autocomplete="off"')}}
                 {% for error in field.errors %}
-                    <span class="form__error">{{error}}</span> 
+                <span class="form__error">{{error}}</span>
                 {% endfor %}
             </div>
             {% endfor %}
@@ -27,5 +27,4 @@
 </div>
 
 
-{% endblock %} 
-            
+{% endblock %}

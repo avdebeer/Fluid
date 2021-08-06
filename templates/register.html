@@ -10,14 +10,14 @@
             {% for msg in get_flashed_messages() %}
             <span class="form__entry-validation">{{msg}}</span>
             {% endfor %}
-            
+
             {{form.hidden_tag()}}
             {% for field in form if field.widget.input_type != 'hidden' %}
             <div class="form__group">
                 {{field.label(class_='form__label')}}
                 {{field(class_='form__field')}}
                 {% for error in field.errors %}
-                    <span class="form__error">{{error}}</span> 
+                <span class="form__error">{{error}}</span>
                 {% endfor %}
             </div>
             {% endfor %}
@@ -25,4 +25,4 @@
         </form>
     </div>
 </div>
-{% endblock %} 
+{% endblock %}

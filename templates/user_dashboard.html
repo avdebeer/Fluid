@@ -4,8 +4,8 @@
 
 {% block content %}
 <div class="user-dashboard">
-    <h2 class="user-details__name" >{{current_user.full_name}}</h2>
-    <h3 class="user-details__company" >({{current_user.company}})</h3>
+    <h2 class="user-details__name">{{current_user.full_name}}</h2>
+    <h3 class="user-details__company">({{current_user.company}})</h3>
 
     <div id="projects-list" class="user-projects">
         <div id="project-owner" class="user-projects__area">
@@ -13,40 +13,41 @@
                 <h2>My Projects</h2>
                 <button id="new-project-btn" class=" button btn-primary">new project</button>
             </div>
-             {% if current_user.email == 'julian@gmail.com' %}                        
-                    <p id="demo-text-records">Demo has edit/delete functionality disabled for the first project.</p>
-            {% endif %} 
+            {% if current_user.email == 'julian@gmail.com' %}
+            <p id="demo-text-records">Demo has edit/delete functionality disabled for the first project.</p>
+            {% endif %}
             <p>Select a project to navigate to the project dashboard.</p>
 
             {% for project in projects %}
             <div id="{{project.id}}" class="project-details">
-                <a id="{{project.id}}-title" class="project-details__title" href="/project/{{project.id}}">{{project.name}}</a>
-                {% if current_user.email == 'julian@gmail.com' and project.id != 1 %}                        
+                <a id="{{project.id}}-title" class="project-details__title"
+                    href="/project/{{project.id}}">{{project.name}}</a>
+                {% if current_user.email == 'julian@gmail.com' and project.id != 1 %}
                 <a data-action="delete" data-id="{{project.id}}">
-                {% else %}
-                <a data-action="" data-id="{{project.id}}">
-                {% endif %}
-                    <svg class="icon icon-delete">
-                        <use xlink:href="/static/img/sprite.svg#icon-trash"></use>
-                    </svg>
-                </a>
-                {% if current_user.email == 'julian@gmail.com' and project.id != 1 %}                        
-                <a data-action="edit" data-id="{{project.id}}">
-                {% else %}
-                <a data-action="" data-id="{{project.id}}">
-                {% endif %}
-                    <svg class="icon icon-edit">
-                        <use xlink:href="/static/img/sprite.svg#icon-pencil"></use>
-                    </svg>
-                </a>
+                    {% else %}
+                    <a data-action="" data-id="{{project.id}}">
+                        {% endif %}
+                        <svg class="icon icon-delete">
+                            <use xlink:href="/static/img/sprite.svg#icon-trash"></use>
+                        </svg>
+                    </a>
+                    {% if current_user.email == 'julian@gmail.com' and project.id != 1 %}
+                    <a data-action="edit" data-id="{{project.id}}">
+                        {% else %}
+                        <a data-action="" data-id="{{project.id}}">
+                            {% endif %}
+                            <svg class="icon icon-edit">
+                                <use xlink:href="/static/img/sprite.svg#icon-pencil"></use>
+                            </svg>
+                        </a>
             </div>
             {% endfor %}
         </div>
     </div>
 
     <div id="modal" class="modal">
-        <div  class="modal__container">
-		    <form action="#" id="modal-form" class="form" n>
+        <div class="modal__container">
+            <form action="#" id="modal-form" class="form" n>
             </form>
         </div>
     </div>
@@ -56,5 +57,3 @@
 {% block scripts %}
 <script src="/static/js/user_dashboard.js" defer></script>
 {% endblock %}
-
-      

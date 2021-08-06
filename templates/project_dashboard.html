@@ -2,43 +2,43 @@
 
 {% block content %}
 <nav class="mobile-menu">
-        <ul class="side-nav">
-            <li class="side-nav__item side-nav__item--active" id="menu-item-1m" data-section='general'>
-                <a href="" class="side-nav__link">
-                    <svg class="side-nav__icon">
-                        <use xlink:href="/static/img/sprite.svg#icon-home"></use>
-                    </svg>
-                </a>
-            </li>
-            <li class="side-nav__item" id="menu-item-2m" data-section='rfi'>
-                <a href="" class="side-nav__link">
-                    <svg class="side-nav__icon">
-                        <use xlink:href="/static/img/sprite.svg#icon-info"></use>
-                    </svg>
-                </a>
-            </li>
-            <li class="side-nav__item" id="menu-item-3m" data-section='submittal'>
-                <a href="" class="side-nav__link">
-                    <svg class="side-nav__icon">
-                        <use xlink:href="/static/img/sprite.svg#icon-new-message"></use>
-                    </svg>
-                </a>
-            </li>
-            <li class="side-nav__item" id="menu-item-4m" data-section='change_order'>
-                <a href="" class="side-nav__link">
-                    <svg class="side-nav__icon">
-                        <use xlink:href="/static/img/sprite.svg#icon-chat"></use>
-                    </svg>
-                </a>
-            </li>
-            <li class="side-nav__item" id="menu-item-5m" data-section='inspection'>
-                <a  href="" class="side-nav__link">
-                    <svg class="side-nav__icon">
-                        <use xlink:href="/static/img/sprite.svg#icon-man"></use>
-                    </svg>
-                </a>
-            </li>
-        </ul>
+    <ul class="side-nav">
+        <li class="side-nav__item side-nav__item--active" id="menu-item-1m" data-section='general'>
+            <a href="" class="side-nav__link">
+                <svg class="side-nav__icon">
+                    <use xlink:href="/static/img/sprite.svg#icon-home"></use>
+                </svg>
+            </a>
+        </li>
+        <li class="side-nav__item" id="menu-item-2m" data-section='rfi'>
+            <a href="" class="side-nav__link">
+                <svg class="side-nav__icon">
+                    <use xlink:href="/static/img/sprite.svg#icon-info"></use>
+                </svg>
+            </a>
+        </li>
+        <li class="side-nav__item" id="menu-item-3m" data-section='submittal'>
+            <a href="" class="side-nav__link">
+                <svg class="side-nav__icon">
+                    <use xlink:href="/static/img/sprite.svg#icon-new-message"></use>
+                </svg>
+            </a>
+        </li>
+        <li class="side-nav__item" id="menu-item-4m" data-section='change_order'>
+            <a href="" class="side-nav__link">
+                <svg class="side-nav__icon">
+                    <use xlink:href="/static/img/sprite.svg#icon-chat"></use>
+                </svg>
+            </a>
+        </li>
+        <li class="side-nav__item" id="menu-item-5m" data-section='inspection'>
+            <a href="" class="side-nav__link">
+                <svg class="side-nav__icon">
+                    <use xlink:href="/static/img/sprite.svg#icon-man"></use>
+                </svg>
+            </a>
+        </li>
+    </ul>
 </nav>
 <div class="project-title">
     <h1>{{project.name}} - ({{project.cip_id}})</h1>
@@ -80,7 +80,7 @@
                 </a>
             </li>
             <li class="side-nav__item" id="menu-item-5" data-section='inspection'>
-                <a  href="" class="side-nav__link">
+                <a href="" class="side-nav__link">
                     <svg class="side-nav__icon">
                         <use xlink:href="/static/img/sprite.svg#icon-man"></use>
                         <span>Inspections</span>
@@ -105,7 +105,8 @@
                     <div class="general__card">
                         <h3 h3 class="general__heading">Overview</h3>
                         <div class="general__content">
-                            <p>Summary of outstanding items including submittal, RFI's, Change Orders, and inspections.</p>
+                            <p>Summary of outstanding items including submittal, RFI's, Change Orders, and inspections.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -116,7 +117,9 @@
                         <div class="general__weather">
                             {% if weather %}
                             <h5>
-                                <svg><use xlink:href="/static/img/sprite.svg#icon-location-pin"></use></svg>
+                                <svg>
+                                    <use xlink:href="/static/img/sprite.svg#icon-location-pin"></use>
+                                </svg>
                                 {{weather.location.name}}, {{weather.location.region}}
                             </h5>
                             <img src="{{weather.current.condition.icon}}" alt="">
@@ -133,7 +136,8 @@
                                 </tr>
                                 <tr>
                                     <td>Wind:</td>
-                                    <td class="general__weather--td">{{weather.current.wind_mph}} mph - {{weather.current.wind_dir}}</td>
+                                    <td class="general__weather--td">{{weather.current.wind_mph}} mph -
+                                        {{weather.current.wind_dir}}</td>
                                 </tr>
                                 <tr>
                                     <td>Humidity:</td>
@@ -150,61 +154,62 @@
                         <h3 h3 class="general__heading">Team</h3>
                         <div class="general__content">
                             <p>{{current_user.full_name}}</p>
-                            
+
                         </div>
 
                     </div>
                 </div>
 
             </div>
-                
+
             <!-- RFI SECTION -->
             <div id="rfi" class="is-hidden">
-                {% if current_user.email == 'julian@gmail.com'  and project.id == 1 %}                        
-                    <p class="demo-text-records">Demo has edit/delete functionality disabled for the first two records.</p>
+                {% if current_user.email == 'julian@gmail.com' and project.id == 1 %}
+                <p class="demo-text-records">Demo has edit/delete functionality disabled for the first two records.</p>
                 {% endif %}
 
                 {% for record in project.rfis %}
                 <div id="rfi-{{record.id}}" class="record">
                     <div class="record__heading">
-                        <h4 id="rfi-title-{{record.id}}" data-id="{{record.id}}" data-record="details">{{record.title}}</h4>
-                        {% if current_user.email == 'julian@gmail.com' and record.id > 2  %}                        
+                        <h4 id="rfi-title-{{record.id}}" data-id="{{record.id}}" data-record="details">{{record.title}}
+                        </h4>
+                        {% if current_user.email == 'julian@gmail.com' and record.id > 2 %}
                         <a data-action="delete" data-id="{{record.id}}">
-                        {% else %}
-                        <a data-action="" data-id="{{record.id}}">
-                        {% endif %}
-                            <svg class="icon icon-delete">
-                                <use xlink:href="/static/img/sprite.svg#icon-trash"></use>
-                            </svg>
-                        </a>
-                        {% if current_user.email == 'julian@gmail.com' and record.id > 2  %}                        
-                        <a data-action="edit" data-id="{{record.id}}">
-                        {% else %}
-                        <a data-action="" data-id="{{record.id}}">
-                        {% endif %}
+                            {% else %}
+                            <a data-action="" data-id="{{record.id}}">
+                                {% endif %}
+                                <svg class="icon icon-delete">
+                                    <use xlink:href="/static/img/sprite.svg#icon-trash"></use>
+                                </svg>
+                            </a>
+                            {% if current_user.email == 'julian@gmail.com' and record.id > 2 %}
+                            <a data-action="edit" data-id="{{record.id}}">
+                                {% else %}
+                                <a data-action="" data-id="{{record.id}}">
+                                    {% endif %}
 
 
-                            <svg class="icon icon-edit">
-                                <use xlink:href="/static/img/sprite.svg#icon-pencil"></use>
-                            </svg>
-                        </a>
+                                    <svg class="icon icon-edit">
+                                        <use xlink:href="/static/img/sprite.svg#icon-pencil"></use>
+                                    </svg>
+                                </a>
                     </div>
                     <div class="record__summary">
                         <div class="record__summary--data">
-                            <span>#</span> 
-                            <p id="rfi-number-{{record.id}}" >{{record.number}}</p>
+                            <span>#</span>
+                            <p id="rfi-number-{{record.id}}">{{record.number}}</p>
                         </div>
                         <div class="record__summary--data">
-                            <span>Assigned:</span> 
-                            <p id="rfi-responsible_company-{{record.id}}" >{{record.responsible_company}}</p>
+                            <span>Assigned:</span>
+                            <p id="rfi-responsible_company-{{record.id}}">{{record.responsible_company}}</p>
                         </div>
                         <div class="record__summary--data">
-                            <span>Due Date:</span> 
-                            <p id="rfi-due_date-{{record.id}}" >{{record.due_date}}</p>
+                            <span>Due Date:</span>
+                            <p id="rfi-due_date-{{record.id}}">{{record.due_date}}</p>
                         </div>
                         <div class="record__summary--data">
-                            <span>Status:</span> 
-                            <p id="rfi-status-{{record.id}}" >{{record.status}}</p>
+                            <span>Status:</span>
+                            <p id="rfi-status-{{record.id}}">{{record.status}}</p>
                         </div>
                     </div>
                 </div>
@@ -214,52 +219,53 @@
 
             <!-- SUBMITTAL SECTION -->
             <div id="submittal" class="is-hidden">
-                {% if current_user.email == 'julian@gmail.com' and project.id == 1 %}                        
-                    <p class="demo-text-records">Demo has edit/delete functionality disabled for the first two records.</p>
+                {% if current_user.email == 'julian@gmail.com' and project.id == 1 %}
+                <p class="demo-text-records">Demo has edit/delete functionality disabled for the first two records.</p>
                 {% endif %}
                 {% for record in project.submittals %}
                 <div id="submittal-{{record.id}}" class="record">
                     <div class="record__heading">
-                        <h4 id="submittal-title-{{record.id}}" data-id="{{record.id}}" data-record="details">{{record.title}}</h4>
-                        {% if current_user.email == 'julian@gmail.com' and record.id > 2  %}                        
+                        <h4 id="submittal-title-{{record.id}}" data-id="{{record.id}}" data-record="details">
+                            {{record.title}}</h4>
+                        {% if current_user.email == 'julian@gmail.com' and record.id > 2 %}
                         <a data-action="delete" data-id="{{record.id}}">
-                        {% else %}
-                        <a data-action="" data-id="{{record.id}}">
-                        {% endif %}
-                            <svg class="icon icon-delete">
-                                <use xlink:href="/static/img/sprite.svg#icon-trash"></use>
-                            </svg>
-                        </a>
-                        {% if current_user.email == 'julian@gmail.com' and record.id > 2   %}                        
-                        <a data-action="edit" data-id="{{record.id}}">
-                        {% else %}
-                        <a data-action="" data-id="{{record.id}}">
-                        {% endif %}
-                            <svg class="icon icon-edit">
-                                <use xlink:href="/static/img/sprite.svg#icon-pencil"></use>
-                            </svg>
-                        </a>
+                            {% else %}
+                            <a data-action="" data-id="{{record.id}}">
+                                {% endif %}
+                                <svg class="icon icon-delete">
+                                    <use xlink:href="/static/img/sprite.svg#icon-trash"></use>
+                                </svg>
+                            </a>
+                            {% if current_user.email == 'julian@gmail.com' and record.id > 2 %}
+                            <a data-action="edit" data-id="{{record.id}}">
+                                {% else %}
+                                <a data-action="" data-id="{{record.id}}">
+                                    {% endif %}
+                                    <svg class="icon icon-edit">
+                                        <use xlink:href="/static/img/sprite.svg#icon-pencil"></use>
+                                    </svg>
+                                </a>
                     </div>
                     <div class="record__summary">
                         <div class="record__summary--data">
-                            <span>#</span> 
-                            <p id="submittal-number-{{record.id}}" >{{record.number}}</p>
+                            <span>#</span>
+                            <p id="submittal-number-{{record.id}}">{{record.number}}</p>
                         </div>
                         <div class="record__summary--data">
-                            <span>Type:</span> 
-                            <p id="submittal-type-{{record.id}}" >{{record.type}}</p>
+                            <span>Type:</span>
+                            <p id="submittal-type-{{record.id}}">{{record.type}}</p>
                         </div>
                         <div class="record__summary--data">
-                            <span>Assigned:</span> 
-                            <p id="submittal-responsible_company-{{record.id}}" >{{record.responsible_company}}</p>
+                            <span>Assigned:</span>
+                            <p id="submittal-responsible_company-{{record.id}}">{{record.responsible_company}}</p>
                         </div>
                         <div class="record__summary--data">
-                            <span>Due Date:</span> 
-                            <p id="submittal-due_date-{{record.id}}" >{{record.due_date}}</p>
+                            <span>Due Date:</span>
+                            <p id="submittal-due_date-{{record.id}}">{{record.due_date}}</p>
                         </div>
                         <div class="record__summary--data">
-                            <span>Status:</span> 
-                            <p id="submittal-status-{{record.id}}" >{{record.status}}</p>
+                            <span>Status:</span>
+                            <p id="submittal-status-{{record.id}}">{{record.status}}</p>
                         </div>
                     </div>
                 </div>
@@ -268,48 +274,49 @@
 
             <!-- CHANGE ORDER SECTION -->
             <div id="change_order" class="is-hidden">
-                {% if current_user.email == 'julian@gmail.com' and project.id == 1 %}                        
-                    <p class="demo-text-records">Demo has edit/delete functionality disabled for the first two records.</p>
-                {% endif %}                
+                {% if current_user.email == 'julian@gmail.com' and project.id == 1 %}
+                <p class="demo-text-records">Demo has edit/delete functionality disabled for the first two records.</p>
+                {% endif %}
                 {% for record in project.change_orders %}
                 <div id="change_order-{{record.id}}" class="record">
                     <div class="record__heading">
-                        <h4 id="change_order-title-{{record.id}}" data-id="{{record.id}}" data-record="details">{{record.title}}</h4>
-                        {% if current_user.email == 'julian@gmail.com' and record.id > 2  %}                        
+                        <h4 id="change_order-title-{{record.id}}" data-id="{{record.id}}" data-record="details">
+                            {{record.title}}</h4>
+                        {% if current_user.email == 'julian@gmail.com' and record.id > 2 %}
                         <a data-action="delete" data-id="{{record.id}}">
-                        {% else %}
-                        <a data-action="" data-id="{{record.id}}">
-                        {% endif %}
-                            <svg class="icon icon-delete">
-                                <use xlink:href="/static/img/sprite.svg#icon-trash"></use>
-                            </svg>
-                        </a>
-                        {% if current_user.email == 'julian@gmail.com' and record.id > 2  %}                        
-                        <a data-action="edit" data-id="{{record.id}}">
-                        {% else %}
-                        <a data-action="" data-id="{{record.id}}">
-                        {% endif %}
-                            <svg class="icon icon-edit">
-                                <use xlink:href="/static/img/sprite.svg#icon-pencil"></use>
-                            </svg>
-                        </a>
+                            {% else %}
+                            <a data-action="" data-id="{{record.id}}">
+                                {% endif %}
+                                <svg class="icon icon-delete">
+                                    <use xlink:href="/static/img/sprite.svg#icon-trash"></use>
+                                </svg>
+                            </a>
+                            {% if current_user.email == 'julian@gmail.com' and record.id > 2 %}
+                            <a data-action="edit" data-id="{{record.id}}">
+                                {% else %}
+                                <a data-action="" data-id="{{record.id}}">
+                                    {% endif %}
+                                    <svg class="icon icon-edit">
+                                        <use xlink:href="/static/img/sprite.svg#icon-pencil"></use>
+                                    </svg>
+                                </a>
                     </div>
                     <div class="record__summary">
                         <div class="record__summary--data">
-                            <span>#</span> 
-                            <p id="change_order-number-{{record.id}}" >{{record.number}}</p>
+                            <span>#</span>
+                            <p id="change_order-number-{{record.id}}">{{record.number}}</p>
                         </div>
                         <div class="record__summary--data">
-                            <span>Type:</span> 
-                            <p id="change_order-type-{{record.id}}" >{{record.type}}</p>
+                            <span>Type:</span>
+                            <p id="change_order-type-{{record.id}}">{{record.type}}</p>
                         </div>
                         <div class="record__summary--data">
-                            <span>Assigned:</span> 
-                            <p id="change_order-responsible_company-{{record.id}}" >{{record.responsible_company}}</p>
+                            <span>Assigned:</span>
+                            <p id="change_order-responsible_company-{{record.id}}">{{record.responsible_company}}</p>
                         </div>
                         <div class="record__summary--data">
-                            <span>Status:</span> 
-                            <p id="change_order-status-{{record.id}}" >{{record.status}}</p>
+                            <span>Status:</span>
+                            <p id="change_order-status-{{record.id}}">{{record.status}}</p>
                         </div>
                     </div>
                 </div>
@@ -318,45 +325,46 @@
 
             <!-- INSPECTION SECTION -->
             <div id="inspection" class="is-hidden">
-                {% if current_user.email == 'julian@gmail.com'  and project.id == 1 %}                        
-                    <p class="demo-text-records">Demo has edit/delete functionality disabled for the first two records.</p>
-                {% endif %}                
+                {% if current_user.email == 'julian@gmail.com' and project.id == 1 %}
+                <p class="demo-text-records">Demo has edit/delete functionality disabled for the first two records.</p>
+                {% endif %}
                 {% for record in project.inspection_reports %}
                 <div id="inspection-{{record.id}}" class="record">
                     <div class="record__heading">
-                        <h4 id="inspection-title-{{record.id}}" data-id="{{record.id}}" data-record="details">{{record.title}}</h4>
-                        {% if current_user.email == 'julian@gmail.com' and record.id > 2  %}                        
+                        <h4 id="inspection-title-{{record.id}}" data-id="{{record.id}}" data-record="details">
+                            {{record.title}}</h4>
+                        {% if current_user.email == 'julian@gmail.com' and record.id > 2 %}
                         <a data-action="delete" data-id="{{record.id}}">
-                        {% else %}
-                        <a data-action="" data-id="{{record.id}}">
-                        {% endif %}
-                            <svg class="icon icon-delete">
-                                <use xlink:href="/static/img/sprite.svg#icon-trash"></use>
-                            </svg>
-                        </a>
-                        {% if current_user.email == 'julian@gmail.com' and record.id > 2  %}                        
-                        <a data-action="edit" data-id="{{record.id}}">
-                        {% else %}
-                        <a data-action="" data-id="{{record.id}}">
-                        {% endif %}
-                            <svg class="icon icon-edit">
-                                <use xlink:href="/static/img/sprite.svg#icon-pencil"></use>
-                            </svg>
-                        </a>
+                            {% else %}
+                            <a data-action="" data-id="{{record.id}}">
+                                {% endif %}
+                                <svg class="icon icon-delete">
+                                    <use xlink:href="/static/img/sprite.svg#icon-trash"></use>
+                                </svg>
+                            </a>
+                            {% if current_user.email == 'julian@gmail.com' and record.id > 2 %}
+                            <a data-action="edit" data-id="{{record.id}}">
+                                {% else %}
+                                <a data-action="" data-id="{{record.id}}">
+                                    {% endif %}
+                                    <svg class="icon icon-edit">
+                                        <use xlink:href="/static/img/sprite.svg#icon-pencil"></use>
+                                    </svg>
+                                </a>
                     </div>
                     <div class="record__summary">
                         <div class="record__summary--data">
-                            <span>#</span> 
-                            <p id="inspection-number-{{record.id}}" >{{record.report_number}}</p>
+                            <span>#</span>
+                            <p id="inspection-number-{{record.id}}">{{record.report_number}}</p>
                         </div>
 
                         <div class="record__summary--data">
-                            <span>Date:</span> 
-                            <p id="inspection-date-{{record.id}}" >{{record.date}}</p>
+                            <span>Date:</span>
+                            <p id="inspection-date-{{record.id}}">{{record.date}}</p>
                         </div>
                         <div class="record__summary--data">
-                            <span>Inspector:</span> 
-                            <p id="inspection-inspector-{{record.id}}" >{{record.inspector}}</p>
+                            <span>Inspector:</span>
+                            <p id="inspection-inspector-{{record.id}}">{{record.inspector}}</p>
                         </div>
                     </div>
                 </div>
@@ -364,7 +372,7 @@
             </div>
 
         </div>
-        <div  id="new-record-section"    class="section__new-record is-hidden">
+        <div id="new-record-section" class="section__new-record is-hidden">
             <button id="modal-open" class="button btn-primary" data-btn="create">New Record</button>
         </div>
     </div>
@@ -372,7 +380,7 @@
     <div id="details" class="details is-hidden">
     </div>
 
-     <div id="modal" class="modal">
+    <div id="modal" class="modal">
         <div class="modal__container">
             <form action="#" id="modal-form" class="form">
             </form>
@@ -382,7 +390,6 @@
 {% endblock %}
 
 {% block scripts %}
- <script src="/static/js/functions.js" defer></script>
+<script src="/static/js/functions.js" defer></script>
 <script src="/static/js/app.js" defer></script>
 {% endblock %}
- 
