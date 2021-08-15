@@ -21,13 +21,13 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 # UNCOMMENT FOR DEPLOYMENT TO HEROKU
-uri = os.environ.get("DATABASE_URL")  
-if uri.startswith("postgres://"):
-    uri = uri.replace("postgres://", "postgresql://", 1)
-app.config['SQLALCHEMY_DATABASE_URI'] = (uri)
+# uri = os.environ.get("DATABASE_URL")  
+# if uri.startswith("postgres://"):
+#     uri = uri.replace("postgres://", "postgresql://", 1)
+# app.config['SQLALCHEMY_DATABASE_URI'] = (uri)
 
 # UNCOMMENT FOR LOCAL DEPLOYMENT
-# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL','postgresql:///azeporo') 
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL','postgresql:///azeporo') 
 
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -553,6 +553,10 @@ def register_new_user():
     if user_exists == True:
         flash('A profile for this email already exists.')
         return render_template('register.html', form = form)
+    
+    if form.password.data != form.password2.data:
+        flash('Password fields do not match')
+        return render_template('register.html', form = form)
 
 
     if form.validate_on_submit():
@@ -567,6 +571,7 @@ def register_new_user():
         db.session.add(new_user)
         db.session.commit()
 
+        login_user(new_user)
         return redirect('/dashboard')
         
     else:

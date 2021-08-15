@@ -10,6 +10,7 @@ class RegistrationForm(FlaskForm):
     company = StringField('Company', validators = [InputRequired(message = 'Company is a required field')])
     email = StringField('Email', validators = [InputRequired(message = 'Email is a required field')])
     password = PasswordField('Password', validators = [InputRequired(message = 'Password is a required field')])
+    password2 = PasswordField('Verify Password', validators = [InputRequired(message = 'Password is a required field')])
 
 
 class LoginForm(FlaskForm):

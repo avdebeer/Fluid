@@ -1060,6 +1060,25 @@ body {
   display: none;
 }
 
+.landing {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
 .landing__heading {
   font-size: 6rem;
   font-weight: 700;
@@ -1067,7 +1086,6 @@ body {
   letter-spacing: 2.5rem;
   text-align: center;
   margin-right: -2rem;
-  margin-top: 15rem;
 }
 
 .landing__subheading {
@@ -1084,6 +1102,7 @@ body {
   font-family: 'Roboto', sans-serif;
   font-size: 1.6rem;
   letter-spacing: .1rem;
+  line-height: 1.5;
   margin-bottom: 3rem;
   text-align: center;
 }
@@ -1269,10 +1288,6 @@ body {
   }
   .nav__list {
     font-size: 1.5rem;
-  }
-  .footer {
-    position: -webkit-sticky;
-    position: sticky;
   }
   .grid-container {
     display: -webkit-box;

@@ -114,7 +114,6 @@ body {
 
 .footer {
 	margin: 0 -1rem;
-	// position: sticky;
 	bottom: 0;
 	padding: 1rem;
 	justify-self: flex-end;
@@ -907,6 +906,11 @@ body {
 }
 
 .landing {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	flex: 1;
 	&__heading {
 		font-size: 6rem;
 		font-weight: 700;
@@ -914,7 +918,6 @@ body {
 		letter-spacing: 2.5rem;
 		text-align: center;
 		margin-right: -2rem;
-		margin-top: 15rem;
 	}
 	&__subheading {
 		font-size: 2rem;
@@ -930,6 +933,7 @@ body {
 		font-family: 'Roboto', sans-serif;
 		font-size: 1.6rem;
 		letter-spacing: .1rem;
+		line-height: 1.5;
 		margin-bottom: 3rem;
 		text-align: center;
 	}
@@ -1060,9 +1064,9 @@ body {
 		}
 	}
 
-	.footer {
-		position: sticky;
-	}
+	// .footer {
+	// 	position: sticky;
+	// }
 
 	.grid-container {
 		display: flex;
