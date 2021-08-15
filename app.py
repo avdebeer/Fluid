@@ -21,13 +21,13 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 # UNCOMMENT FOR DEPLOYMENT TO HEROKU
-# uri = os.environ.get("DATABASE_URL")  
-# if uri.startswith("postgres://"):
-#     uri = uri.replace("postgres://", "postgresql://", 1)
-# app.config['SQLALCHEMY_DATABASE_URI'] = (uri)
+uri = os.environ.get("DATABASE_URL")  
+if uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
+app.config['SQLALCHEMY_DATABASE_URI'] = (uri)
 
 # UNCOMMENT FOR LOCAL DEPLOYMENT
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL','postgresql:///azeporo') 
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL','postgresql:///azeporo') 
 
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
