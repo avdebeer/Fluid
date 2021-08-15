@@ -1064,9 +1064,9 @@ body {
 		}
 	}
 
-	// .footer {
-	// 	position: sticky;
-	// }
+	.footer {
+		position: sticky;
+	}
 
 	.grid-container {
 		display: flex;
@@ -1081,6 +1081,7 @@ body {
 	}
 
 	.landing {
+		flex: 0;
 		&__heading {
 			margin-top: 0;
 		}

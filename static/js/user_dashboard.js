@@ -88,7 +88,7 @@ async function editProjectForm(id) {
 				</div>
 
 				<div class="form__group form__item">
-					<label for="project-zip-code" class="form__label">Zip Code< <span class="form__required">*</span>/label>
+					<label for="project-zip-code" class="form__label">Zip Code< <span class="form__required">*</span></label>
 					<input id="project-zip-code" type="number" class="form__field" value="${project.zip_code}" required>
 				</div>
 			</div>
