@@ -16,13 +16,13 @@ Fluid is a construction management application that provides an alternative solu
 To view or demo the live application simply click [here](https://fluid-construction-management.herokuapp.com/). Note that the app has a demo feature, which allows users to checkout the app without the need to register.
 
 # Table of contents
-- [Project Title](#project-title)
+- [Fluid](#fluid)
 - [Demo-Preview](#demo-preview)
 - [Table of contents](#table-of-contents)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Development](#development)
-- [Author](#author)
+- [Authors](#authors)
 
 # Installation
 
@@ -86,13 +86,16 @@ This is the place where you give instructions to developers on how to modify the
 
 You could give **instructions in depth** of **how the code works** and how everything is put together.
 
-You could also give specific instructions to how they can setup their development environment.
-
-<img src="https://github.com/devicons/devicon/blob/master/icons/javascript/javascript-original.svg" alt="JavaScript Logo" height="50px" width="50px">
+You could also give specific instructions to how they can setup their development environment.  
 
 ##Tech Stack
 
-<img src="https://github.com/devicons/devicon/blob/master/icons/javascript/javascript-original.svg" alt="JavaScript Logo" height="50px" width="50px"> <img src="https://github.com/devicons/devicon/blob/master/icons/python/python-original.svg" alt="Python Logo" height="50px" width="50px"><img src="https://github.com/devicons/devicon/blob/master/icons/postgresql/postgresql-original.svg" alt="PostgreSQL Logo" height="50px" width="50px"><img src="https://github.com/devicons/devicon/blob/master/icons/flask/flask-original.svg" alt="Flask Logo" height="50px" width="50px"><img src="https://github.com/devicons/devicon/blob/master/icons/html5/html5-original.svg" alt="HTML Logo" height="50px" width="50px"><img src="https://github.com/devicons/devicon/blob/master/icons/css3/css3-original.svg" alt="CSS Logo" height="50px" width="50px"><img src="https://github.com/devicons/devicon/blob/master/icons/git/git-original.svg" alt="GIT Logo" height="50px" width="50px"><img src="https://github.com/devicons/devicon/blob/master/icons/jquery/jquery-original.svg" alt="JQuery Logo" height="50px" width="50px"><img src="https://github.com/devicons/devicon/blob/master/icons/sqlalchemy/sqlalchemy-original.svg" alt="SQLAlchemy Logo" height="50px" width="50px">
+<img src="https://github.com/devicons/devicon/blob/master/icons/html5/html5-original.svg" alt="HTML Logo" height="50px" width="50px"><img src="https://github.com/devicons/devicon/blob/master/icons/css3/css3-original.svg" alt="CSS Logo" height="50px" width="50px"><img src="https://github.com/devicons/devicon/blob/master/icons/javascript/javascript-original.svg" alt="JavaScript Logo" height="50px" width="50px"> <img src="https://github.com/devicons/devicon/blob/master/icons/jquery/jquery-original.svg" alt="JQuery Logo" height="50px" width="50px"><img src="https://github.com/devicons/devicon/blob/master/icons/python/python-original.svg" alt="Python Logo" height="50px" width="50px"><img src="https://github.com/devicons/devicon/blob/master/icons/flask/flask-original.svg" alt="Flask Logo" height="50px" width="50px"><img src="https://github.com/devicons/devicon/blob/master/icons/sqlalchemy/sqlalchemy-original.svg" alt="SQLAlchemy Logo" height="50px" width="50px"><img src="https://github.com/devicons/devicon/blob/master/icons/postgresql/postgresql-original.svg" alt="PostgreSQL Logo" height="50px" width="50px">
+
+
+
+
+
 
 
 
@@ -101,7 +104,7 @@ You could also give specific instructions to how they can setup their developmen
 
 [(Back to top)](#table-of-contents)
 
-## Authors
+# Authors
 
 Jose Oropeza (Full Stack Developer)
 
