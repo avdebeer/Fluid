@@ -2,25 +2,23 @@
 
 # FLUID
 
-![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/navendu-pottekkat/awesome-readme?include_prereleases) 
-![GitHub last commit](https://img.shields.io/github/last-commit/azeporo/Fluid)
-![GitHub issues](https://img.shields.io/github/issues-raw/navendu-pottekkat/awesome-readme)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/navendu-pottekkat/awesome-readme)
-![Tweet](https://img.shields.io/twitter/url?style=flat-square&logo=twitter&url=https%3A%2F%2Fnavendu.me%2Fnsfw-filter%2Findex.html) 
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/azeporo/fluid?color=orange)
+![GitHub last commit](https://img.shields.io/github/last-commit/azeporo/fluid)
+![Lines of code](https://img.shields.io/tokei/lines/github/azeporo/fluid)
+![GitHub language count](https://img.shields.io/github/languages/count/azeporo/fluid?color=red)
+![GitHub repo size](https://img.shields.io/github/repo-size/azeporo/fluid?color=cyan)
 
-
-
-Fluid is a construction management application that provides an alternative solution for managing and tracking various construction documents. Authenticated users can easily create records and upload supporting documentation to an unlimited number of projects. Requests for information, change orders, submittals and inspection reports can all be managed on per project basis. Projects are then managed via the project dashboard, which allows users to seamlessly view, create, update, and delete various record types.
+Fluid is a construction management application that provides an alternative solution for managing and tracking various construction documents. Authenticated users can easily create records and upload supporting documentation to an unlimited number of projects. Requests for Information, Change Orders, Submittals and Inspection Reports can all be managed on per project basis. Projects are then managed via the project dashboard, which allows users to seamlessly view, create, update, and delete various record types.
 
 # Demo-Preview
-To view or demo the live application simply click [here](https://fluid-construction-management.herokuapp.com/). Note that the app has a demo feature, which allows users to checkout the app without the need to register.
+To view or demo the live application simply click [here](https://fluid-construction-management.herokuapp.com/). Note that the app has a demo feature, which does not require user registration. 
 
 # Table of contents
-- [Fluid](#fluid)
+- [Description](#fluid)
 - [Demo-Preview](#demo-preview)
 - [Table of contents](#table-of-contents)
 - [Installation](#installation)
-- [Usage](#usage)
+- [App Features](#app-features)
 - [Development](#development)
 - [Authors](#authors)
 
@@ -74,32 +72,30 @@ The following set of instructions will allow you to clone the application and ru
 	
 [(Back to top)](#table-of-contents)
 
-# Usage
+# App Features
 
-This is optional and it is used to give the user info on how to use the project after installation. This could be added in the Installation section also.
+The application is broken down into two main areas: the user dashboard and the project dashboard. In both areas users have the flexibility to seamlessly create, delete and modify content all without ever leaving the page.
+
+### User Dashboard
+The user dashboard, provides a list of all user projects. From within the user dashboard, a user is able to create, edit, or delete projects. This page also serves as the main access point for all project dashboards. Selecting a project will take the user to a specific project dashboard that contains all the relevant information.
+
+### Project Dashboard
+
+The project dashboard provides a convenient location for managing all project data. A navigation menu allows users to navigate between the different record types. In addition to creating, modifying and deleting records, users can also select an individual record to see the full record details as well as open any associated attachments. All these actions occur within the same page which results in a better workflow for the user.
+
 [(Back to top)](#table-of-contents)
 
-## Project Features
-
 # Development
-This is the place where you give instructions to developers on how to modify the code.
+  
+The front-end was built with JavaScript and JQuery. Custom CSS was written using SCSS and all images were sourced from Unsplash. JQuery was primarily used to facilitate the multiple Axios requests that enabeled the user and project dashboards to behave as single page applications, this was primarily done to enhance the user experience.
 
-You could give **instructions in depth** of **how the code works** and how everything is put together.
-
-You could also give specific instructions to how they can setup their development environment.  
-
-##Tech Stack
+The back-end was developed with Python, Flask, and a PostgreSQl database. A complete REST API was developed, and one external API was used to obtain weather data. In addition, full user authentication was used.
 
 <img src="https://github.com/devicons/devicon/blob/master/icons/html5/html5-original.svg" alt="HTML Logo" height="50px" width="50px"><img src="https://github.com/devicons/devicon/blob/master/icons/css3/css3-original.svg" alt="CSS Logo" height="50px" width="50px"><img src="https://github.com/devicons/devicon/blob/master/icons/javascript/javascript-original.svg" alt="JavaScript Logo" height="50px" width="50px"> <img src="https://github.com/devicons/devicon/blob/master/icons/jquery/jquery-original.svg" alt="JQuery Logo" height="50px" width="50px"><img src="https://github.com/devicons/devicon/blob/master/icons/python/python-original.svg" alt="Python Logo" height="50px" width="50px"><img src="https://github.com/devicons/devicon/blob/master/icons/flask/flask-original.svg" alt="Flask Logo" height="50px" width="50px"><img src="https://github.com/devicons/devicon/blob/master/icons/sqlalchemy/sqlalchemy-original.svg" alt="SQLAlchemy Logo" height="50px" width="50px"><img src="https://github.com/devicons/devicon/blob/master/icons/postgresql/postgresql-original.svg" alt="PostgreSQL Logo" height="50px" width="50px">
 
+###API's
 
-
-
-
-
-
-
-##API's
+In addition to the built in REST API, the application uses the [Weather API](https://www.weatherapi.com/) to render the appropriate wether data for every project. Weather data is visible within the project dashboard. 
 
 
 [(Back to top)](#table-of-contents)
@@ -110,5 +106,4 @@ Jose Oropeza (Full Stack Developer)
 
 joropeza11172@gmail.com
 
-
-
+[(Back to top)](#table-of-contents)
