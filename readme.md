@@ -20,7 +20,7 @@ To view or demo the live application simply click [here](https://fluid-construct
 - [Installation](#installation)
 - [App Features](#app-features)
 - [Development](#development)
-- [Authors](#authors)
+- [Author](#author)
 
 # Installation
 
@@ -93,14 +93,14 @@ The back-end was developed with Python, Flask, and a PostgreSQl database. A comp
 
 <img src="https://github.com/devicons/devicon/blob/master/icons/html5/html5-original.svg" alt="HTML Logo" height="50px" width="50px"><img src="https://github.com/devicons/devicon/blob/master/icons/css3/css3-original.svg" alt="CSS Logo" height="50px" width="50px"><img src="https://github.com/devicons/devicon/blob/master/icons/javascript/javascript-original.svg" alt="JavaScript Logo" height="50px" width="50px"> <img src="https://github.com/devicons/devicon/blob/master/icons/jquery/jquery-original.svg" alt="JQuery Logo" height="50px" width="50px"><img src="https://github.com/devicons/devicon/blob/master/icons/python/python-original.svg" alt="Python Logo" height="50px" width="50px"><img src="https://github.com/devicons/devicon/blob/master/icons/flask/flask-original.svg" alt="Flask Logo" height="50px" width="50px"><img src="https://github.com/devicons/devicon/blob/master/icons/sqlalchemy/sqlalchemy-original.svg" alt="SQLAlchemy Logo" height="50px" width="50px"><img src="https://github.com/devicons/devicon/blob/master/icons/postgresql/postgresql-original.svg" alt="PostgreSQL Logo" height="50px" width="50px">
 
-###API's
+### API's
 
 In addition to the built in REST API, the application uses the [Weather API](https://www.weatherapi.com/) to render the appropriate wether data for every project. Weather data is visible within the project dashboard. 
 
 
 [(Back to top)](#table-of-contents)
 
-# Authors
+# Author
 
 Jose Oropeza (Full Stack Developer)
 
